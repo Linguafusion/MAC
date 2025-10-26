@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: backend_enquetes
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://mac_root:Tipo1978@db:5432/mac_db
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: postgres_enquetes
+    restart: always
+    environment:
+      POSTGRES_USER: mac_root
+      POSTGRES_PASSWORD: Tipo1978
+      POSTGRES_DB: mac_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  frontend:
+    build: ./frontend
+    container_name: frontend_enquetes
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
