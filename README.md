@@ -85,3 +85,4 @@ Une fois que VS Code est attaché au conteneur (le terminal par défaut est main
 
 Application Web	http://localhost:3000
 Documentation API	http://localhost:8000/docs
+
