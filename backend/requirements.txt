@@ -1,7 +1,21 @@
-fastapi
-uvicorn
-sqlalchemy
-psycopg2-binary
-python-dotenv
-numpy
-pandas
+# --- Framework Web & BDD ---
+fastapi[standard] # Le framework API, inclut Uvicorn
+uvicorn[standard] # Serveur ASGI pour lancer FastAPI
+sqlalchemy # L'ORM pour interagir avec PostgreSQL
+pydantic # Gestion de la validation et sérialisation des données (dépendance de FastAPI, mais utile à spécifier)
+psycopg2-binary # Le driver pour se connecter à PostgreSQL
+
+# --- Analyse de Données et Statistiques (pour les fonctionnalités F6 à F9) ---
+numpy # Calcul numérique haute performance
+pandas # Manipulation et analyse de données (DataFrames)
+scipy # Outils scientifiques, y compris pour les statistiques avancées
+
+# --- Sécurité et Authentification ---
+python-jose[cryptography] # Pour la gestion des JWT (Tokens d'authentification)
+passlib[bcrypt] # Pour le hachage des mots de passe
+
+# --- Outils de Développement ---
+# Ajouté pour le type-checking et le linting
+black # Formatteur de code Python
+isort # Tri des imports
+mypy # Type-checker statique (utile pour la robustesse)
