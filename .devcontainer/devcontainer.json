@@ -1,18 +1,34 @@
 {
-  "name": "Plateforme Enquêtes - DevContainer",
-  "dockerComposeFile": "../docker-compose.yml",
-  "service": "backend",
+  "name": "Plateforme Enquêtes Stats (FastAPI + React)",
+  "dockerComposeFile": "docker-compose.yml",
+  
+  // Le service auquel VS Code doit s'attacher
+  "service": "dev-workspace",
+  
+  // Le dossier de travail dans le conteneur
   "workspaceFolder": "/workspace",
-  "forwardPorts": [8000, 3000, 5432],
+  
+  // Extensions VS Code à installer automatiquement dans le conteneur
   "customizations": {
     "vscode": {
       "extensions": [
-        "ms-python.python",
-        "ms-python.vscode-pylance",
-        "esbenp.prettier-vscode",
-        "dbaeumer.vscode-eslint"
+        "ms-python.python",              // Support Python
+        "ms-python.vscode-pylance",      // IntelliSense Python
+        "esbenp.prettier-vscode",        // Formatteur de code
+        "dbaeumer.vscode-eslint",        // Linter JavaScript/React
+        "ms-azuretools.vscode-docker",   // Gestion Docker
+        "bradlc.vscode-tailwindcss",     // Support Tailwind CSS [cite: 69]
+        "streetsidesoftware.code-spell-checker-french" // Correcteur FR
       ]
     }
   },
-  "remoteUser": "vscode"
+  
+  // Transfère les ports du conteneur vers votre machine locale
+  "forwardPorts": [
+    8000, // Port pour FastAPI (Backend) [cite: 71]
+    3000  // Port pour React (Frontend) [cite: 68]
+  ],
+  
+  // Commande à exécuter après la création du conteneur
+  "postCreateCommand": "python3.10 -m venv .venv && . .venv/bin/activate && pip install -r backend/requirements.txt"
 }
