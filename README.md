@@ -10,7 +10,9 @@ Prérequis
     3-L'extension Dev Containers (ou Remote - Containers) doit être installée dans VS Code.
 
 1.Ouvrez votre terminal local ou le terminal de VS Code (Terminal > New Terminal) et clonez le projet.
+
 2.git clone https://github.com/Linguafusion/MAC.git
+
 3.cd MAC
 
 Étape 1 : Ouvrir le Projet dans VS Code
@@ -85,4 +87,5 @@ Une fois que VS Code est attaché au conteneur (le terminal par défaut est main
 
 Application Web	http://localhost:3000
 Documentation API	http://localhost:8000/docs
+
 
