@@ -7,6 +7,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
     python3.10 python3-pip python3.10-venv \
     postgresql-client \
+    build-essential libffi-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

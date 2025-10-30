@@ -7,6 +7,7 @@ from datetime import timedelta
 from . import crud, schemas, models, security
 from .database import engine, get_db
 from .config import ACCESS_TOKEN_EXPIRE_MINUTES # Import nécessaire
+from fastapi.middleware.cors import CORSMiddleware
 
 # --- INITIALISATION ---
 
@@ -16,6 +17,22 @@ models.Base.metadata.create_all(bind=engine)
 # Instanciation de l'application FastAPI (CORRECTION: app=FastAPI())
 app = FastAPI() 
 
+# 🛑 CONFIGURATION CORS
+origins = [
+    # C'est l'URL de votre Frontend React en développement
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    # Si vous ajoutez des domaines de production plus tard, ils vont ici
+    # "https://mon-domaine-production.com",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,              # Liste des origines autorisées
+    allow_credentials=True,             # Autorise les cookies et les en-têtes d'autorisation
+    allow_methods=["*"],                # Autorise toutes les méthodes (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],                # Autorise tous les en-têtes, y compris 'Authorization'
+)
 # --- ROUTES D'AUTHENTIFICATION (F4) ---
 
 # Route pour l'inscription
@@ -30,7 +47,16 @@ def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 @app.post("/token", response_model=schemas.Token)
 def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = crud.get_user_by_email(db, email=form_data.username) 
-    
+    # --- DÉBOGAGE AJOUTÉ ---
+    print(f"DEBUG: Tentative de connexion pour l'email: {form_data.username}")
+    if user:
+        is_valid = security.verify_password(form_data.password, user.hashed_password)
+        print(f"DEBUG: Mot de passe haché en base: {user.hashed_password[:30]}...")
+        print(f"DEBUG: Résultat de la vérification (verify_password): {is_valid}")
+    else:
+        print("DEBUG: Utilisateur non trouvé.")
+        is_valid = False
+    # --- FIN DÉBOGAGE ---
     if not user or not security.verify_password(form_data.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

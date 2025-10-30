@@ -1,21 +1,22 @@
-# --- Framework Web & BDD ---
-fastapi[standard] # Le framework API, inclut Uvicorn
-uvicorn[standard] # Serveur ASGI pour lancer FastAPI
-sqlalchemy # L'ORM pour interagir avec PostgreSQL
-pydantic # Gestion de la validation et sérialisation des données (dépendance de FastAPI, mais utile à spécifier)
-psycopg2-binary # Le driver pour se connecter à PostgreSQL
+# --- 1. Framework Web & Base de Données (Core) ---
+fastapi[standard] 
+uvicorn[standard] 
+sqlalchemy
+psycopg2-binary # Driver PostgreSQL
+python-dotenv # Pour charger les variables d'environnement (ex: URL BDD, clé secrète)
 
-# --- Analyse de Données et Statistiques (pour les fonctionnalités F6 à F9) ---
+# --- 2. Sécurité et Authentification (F4) ---
+python-jose[cryptography] # Gestion des JWT
+passlib[argon2] # Hachage de mot de passe (Syntaxe optimale pour éviter les conflits)
+
+# --- 3. Analyse de Données et Statistiques (F6 à F9) ---
 numpy # Calcul numérique haute performance
-pandas # Manipulation et analyse de données (DataFrames)
-scipy # Outils scientifiques, y compris pour les statistiques avancées
+pandas # Manipulation de DataFrames
+scipy # Outils scientifiques (Statistiques avancées)
 
-# --- Sécurité et Authentification ---
-python-jose[cryptography] # Pour la gestion des JWT (Tokens d'authentification)
-passlib[bcrypt] # Pour le hachage des mots de passe
-
-# --- Outils de Développement ---
-# Ajouté pour le type-checking et le linting
-black # Formatteur de code Python
-isort # Tri des imports
-mypy # Type-checker statique (utile pour la robustesse)
+# --- 4. Outils de Développement (Dépendances non requises en production) ---
+# Note: Ces outils sont souvent mieux gérés par des crochets [dev] dans un pyproject.toml ou installés séparément, 
+# mais les lister ici est courant en petits projets.
+black 
+isort 
+mypy

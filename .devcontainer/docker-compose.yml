@@ -39,7 +39,7 @@ services:
     ports:
       # Expose le port 5432 au local si besoin, mais la communication
       # service-à-service se fait par le nom 'db'
-      - "5432:5432"
+      - "5433:5432"
 
 volumes:
   postgres_data:
