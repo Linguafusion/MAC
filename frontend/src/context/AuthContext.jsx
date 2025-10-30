@@ -1,14 +1,15 @@
+/* eslint-disable react-refresh/only-export-components */
 // frontend/src/context/AuthContext.jsx
 
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 // L'URL de base de votre API FastAPI
 const API_BASE_URL = 'http://localhost:8000'; 
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
-export const useAuth = () => useContext(AuthContext);
+// export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('access_token'));
