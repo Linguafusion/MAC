@@ -12,7 +12,7 @@ from . import config, schemas, crud # Note: crud sera utilisé par get_current_u
 from .database import get_db # <<< CORRECTION: Import de get_db
 
 # Contexte pour le hachage des mots de passe
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
 # Schéma de sécurité
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token") 
