@@ -1,23 +1,22 @@
 // frontend/src/pages/CreateEnquetePage.jsx
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // Ajout de useEffect
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+
+const API_BASE_URL = "http://localhost:8000"; // Assurez-vous que cette URL est correcte ou configurée via Vite
 
 const initialQuestion = { texte: '', type_question: 'text', is_required: false };
 const initialItem = { stimulus: '', sequence: 1 };
 
 const CreateEnquetePage = () => {
-    const { token } = useAuth();
-    const navigate = useNavigate();
+    // ------------------------------------------------------------------
+    // 1. TOUS LES HOOKS SONT APPELÉS EN PREMIER (sans condition de retour)
+    // ------------------------------------------------------------------
+    const { token } = useAuth(); // Hook
+    const navigate = useNavigate(); // Hook
     
-    // Si pas de token, rediriger immédiatement (méthode simple, PrivateRoute est mieux)
-    if (!token) {
-        navigate('/login');
-        return null;
-    }
-
     const [enquete, setEnquete] = useState({
         titre: '',
         description: '',
@@ -29,8 +28,23 @@ const CreateEnquetePage = () => {
     const [items, setItems] = useState([initialItem]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    // ------------------------------------------------------------------
 
-    // Fonctions de gestion des changements
+
+    // 2. LOGIQUE DE REDIRECTION GÉRÉE PAR useEffect (F4 / Règle des Hooks)
+    useEffect(() => {
+        if (!token) {
+            navigate('/login');
+        }
+    }, [token, navigate]); // Dépendances
+
+    // Afficher un message pendant que la redirection s'effectue (si l'utilisateur n'est pas connecté)
+    if (!token) {
+        return <p style={{ textAlign: 'center', marginTop: '50px' }}>Redirection vers la page de connexion...</p>;
+    }
+
+
+    // Fonctions de gestion des changements (Le reste de votre code est correct)
     const handleEnqueteChange = (e) => {
         const { name, value, type, checked } = e.target;
         setEnquete(prev => ({
@@ -38,7 +52,7 @@ const CreateEnquetePage = () => {
             [name]: type === 'checkbox' ? checked : value,
         }));
     };
-
+    
     const handleQuestionChange = (index, e) => {
         const { name, value, type, checked } = e.target;
         const newQuestions = questions.map((q, i) => 
@@ -67,7 +81,6 @@ const CreateEnquetePage = () => {
         setLoading(true);
         setError(null);
 
-        // Construction du payload final (doit correspondre au schéma EnqueteCreate de FastAPI)
         const payload = {
             ...enquete,
             questions: questions.map(q => ({
@@ -81,10 +94,15 @@ const CreateEnquetePage = () => {
         };
         
         try {
-            // Le token est automatiquement ajouté par axios grâce à AuthContext
-            const response = await axios.post('/enquetes/', payload);
+            // Utiliser le contexte pour l'URL si axios est configuré globalement
+            const response = await axios.post(`${API_BASE_URL}/enquetes/`, payload, {
+                headers: {
+                    'Authorization': `Bearer ${token}` 
+                    // Si l'intercepteur axios n'est pas utilisé dans AuthContext, il faut passer le token ici.
+                }
+            });
             alert(`Enquête "${response.data.titre}" créée avec succès!`);
-            navigate('/'); // Rediriger vers l'accueil après succès
+            navigate('/');
         } catch (err) {
             console.error("Erreur de création d'enquête:", err.response ? err.response.data : err);
             setError(err.response?.data?.detail || "Échec de la création. Assurez-vous d'avoir rempli tous les champs.");
