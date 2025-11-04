@@ -12,6 +12,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   // Rediriger si déjà connecté
+  // TEST SHLCNX
   if (currentUser) {
     navigate('/');
     return null;
