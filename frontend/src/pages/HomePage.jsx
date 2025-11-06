@@ -12,8 +12,8 @@ const HomePage = () => {
   }
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Bienvenue sur la Plateforme d'Enquêtes</h1>
+    <div className='m-72'>
+      <h1 className='text-white'>Bienvenue sur la Plateforme d'Enquêtes</h1>
       
       {currentUser ? (
         // CONTENU POUR UTILISATEUR CONNECTÉ
