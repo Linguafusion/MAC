@@ -1,82 +1,97 @@
-// frontend/src/pages/LoginPage.jsx
-
+// src/pages/LoginPage.jsx
 import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+// CORRECTION : Remplacement de LoginIcon par le nom actuel (ArrowRightOnRectangleIcon)
+import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline'; 
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-  const { login, currentUser } = useAuth();
-  const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
+    const { login, currentUser } = useAuth();
+    const navigate = useNavigate();
 
-  // Rediriger si déjà connecté
-  // TEST SHLCNX
-  if (currentUser) {
-    navigate('/');
-    return null;
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
-    try {
-      await login(email, password);
-      navigate('/'); // Redirection vers la page d'accueil
-    } catch (err) {
-      setError(err.message || 'Une erreur inconnue est survenue. Vérifiez vos identifiants.');
+    if (currentUser) {
+        navigate('/');
+        return null;
     }
-  };
 
-  return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-  <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-    <img src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" className="mx-auto h-10 w-auto" />
-    <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">Sign in to your account</h2>
-  </div>
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError(null);
+        try {
+            // NOTE: Assurez-vous que votre fonction login(email, password) gère correctement la connexion API
+            await login(email, password);
+            navigate('/');
+        } catch (err) {
+            // Gestion d'erreur améliorée
+            setError(err.message || 'Échec de la connexion. Veuillez vérifier vos identifiants.');
+        }
+    };
 
-  <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div>
-        <label for="email" className="block text-sm/6 font-medium text-gray-100">Email address</label>
-        <div className="mt-2">
-          <input 
-           id="email"
-           type="email" 
-           name="email" 
-           required 
-           value={email}
-           onChange={(e) => setEmail(e.target.value)}
-           autocomplete="email" 
-           className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+    return (
+        <div className="flex items-center justify-center min-h-[calc(100vh-80px)] px-4 py-16">
+            <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl p-8 sm:p-10 shadow-2xl border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-indigo-500/20">
+                <div className="flex flex-col items-center mb-8">
+                    <div className="h-12 w-12 bg-indigo-600 rounded-xl flex items-center justify-center mb-3 shadow-lg">
+                        {/* Utilisation de la nouvelle icône */}
+                        <ArrowRightOnRectangleIcon className="h-6 w-6 text-white" />
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
+                        Connexion à la Plateforme
+                    </h2>
+                    <p className="text-gray-500 dark:text-gray-400 mt-1">
+                        Utilisez votre compte universitaire.
+                    </p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            Adresse e-mail
+                        </label>
+                        <input
+                            type="email"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="form-input"
+                            placeholder="exemple@univ.ma"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            Mot de passe
+                        </label>
+                        <input
+                            type="password"
+                            required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="form-input"
+                            placeholder="••••••••"
+                        />
+                    </div>
+
+                    {error && (
+                        <div className="bg-red-100 dark:bg-red-900/30 border border-red-400 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg text-sm transition duration-300" role="alert">
+                            {error}
+                        </div>
+                    )}
+
+                    <button
+                        type="submit"
+                        className="btn-primary w-full flex items-center justify-center mt-6"
+                    >
+                        <ArrowRightOnRectangleIcon className="h-5 w-5 mr-2" />
+                        Se connecter
+                    </button>
+                </form>
+            </div>
         </div>
-      </div>
-
-      <div>
-        <div className="flex items-center justify-between">
-          <label for="password" className="block text-sm/6 font-medium text-gray-100">Password</label>
-        </div>
-        <div className="mt-2">
-          <input 
-          id="password" 
-          type="password" 
-          name="password" 
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required autocomplete="current-password" 
-          className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
-        </div>
-      </div>
-
-      <div>
-        {error && <p style={{ color: 'red', marginBottom: '15px' }}>Erreur: {error}</p>}
-        <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Se connecter</button>
-      </div>
-    </form>
-  </div>
-</div>
-  );
+    );
 };
 
 export default LoginPage;
