@@ -1,62 +1,93 @@
+/* frontend/src/index.css */
+
+/* 1. Importation du cœur de Tailwind (méthode V4) */
 @import "tailwindcss";
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@tailwind utilities;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* 2. Styles globaux (Ancien @layer base) */
+/* Utilisation de la fonction theme() pour éviter le conflit @apply sur les sélecteurs globaux */
+html, body {
+    background-color: theme('colors.gray.50'); 
+    color: theme('colors.gray.900');
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
+.dark html, .dark body {
+    background-color: theme('colors.gray.900');
+    color: theme('colors.gray.100');
+}
+
+/* Styles des liens */
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+    @apply text-indigo-600 hover:text-indigo-800 transition-colors dark:text-indigo-400 dark:hover:text-indigo-300;
 }
-a:hover {
-  color: #535bf2;
+
+/* Styles des titres */
+h1, h2, h3, h4, h5 {
+    @apply font-bold tracking-tight;
 }
 
 
+/* 3. Injection des utilitaires et des classes personnalisées */
+/* Le moteur V4 a besoin de cette directive pour résoudre les utilitaires complexes 
+   (comme ring-opacity, shadow-lg, etc.) utilisés dans @apply. */
+@tailwind utilities; 
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-.button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-.button:hover {
-  border-color: #646cff;
-}
-.button:focus,
-.button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+/* Classes personnalisées utilisant @apply */
+.btn-primary {
+    @apply bg-indigo-600 text-white font-semibold py-2 px-6 rounded-xl shadow-lg hover:bg-indigo-700 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-indigo-500;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.btn-secondary {
+    @apply bg-gray-200 text-gray-800 font-medium py-2 px-6 rounded-xl shadow-sm hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600;
+}
+
+.form-input {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg bg-white dark:bg-gray-800 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150;
+}
+
+@keyframes pulse-slow-v2 {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1); 
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); 
+    }
+    50% {
+        opacity: 0.95;
+        transform: scale(0.995); 
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); 
+    }
+}
+
+.animate-pulse-slow-v2 {
+    animation: pulse-slow-v2 5s cubic-bezier(0.4, 0, 0.6, 1) infinite; 
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation-name: fade-in;
+  animation-duration: 0.8s; 
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes glow-pulse {
+    0%, 100% {
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); 
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.4), 0 0 15px rgba(99, 102, 241, 0.5); 
+        transform: scale(1.005); 
+    }
+}
+
+.animate-glow-pulse {
+    animation: glow-pulse 3s ease-in-out infinite alternate; 
 }
