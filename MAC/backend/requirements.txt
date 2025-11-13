@@ -1,0 +1,22 @@
+# --- 1. Framework Web & Base de Données (Core) ---
+fastapi[standard] 
+uvicorn[standard] 
+sqlalchemy
+psycopg2-binary # Driver PostgreSQL
+python-dotenv # Pour charger les variables d'environnement (ex: URL BDD, clé secrète)
+
+# --- 2. Sécurité et Authentification (F4) ---
+python-jose[cryptography] # Gestion des JWT
+passlib[argon2] # Hachage de mot de passe (Syntaxe optimale pour éviter les conflits)
+
+# --- 3. Analyse de Données et Statistiques (F6 à F9) ---
+numpy # Calcul numérique haute performance
+pandas # Manipulation de DataFrames
+scipy # Outils scientifiques (Statistiques avancées)
+
+# --- 4. Outils de Développement (Dépendances non requises en production) ---
+# Note: Ces outils sont souvent mieux gérés par des crochets [dev] dans un pyproject.toml ou installés séparément, 
+# mais les lister ici est courant en petits projets.
+black 
+isort 
+mypy

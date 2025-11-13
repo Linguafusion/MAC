@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 220 80% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 80% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 80% 15%;
+
+    --primary: 220 80% 20%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 200 20% 90%;
+    --secondary-foreground: 220 80% 20%;
+
+    --muted: 210 20% 95%;
+    --muted-foreground: 220 20% 45%;
+
+    --accent: 190 80% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 30% 88%;
+    --input: 210 30% 88%;
+    --ring: 190 80% 50%;
+
+    --radius: 0.75rem;
+
+    /* Custom tokens for scientific theme */
+    --scientific-blue: 220 80% 20%;
+    --scientific-cyan: 190 80% 50%;
+    --scientific-teal: 180 70% 45%;
+    --scientific-silver: 210 15% 75%;
+    --gradient-primary: linear-gradient(135deg, hsl(220 80% 20%) 0%, hsl(220 70% 30%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(190 80% 50%) 0%, hsl(180 70% 45%) 100%);
+    --shadow-glow: 0 0 40px hsla(190, 80%, 50%, 0.15);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 220 80% 8%;
+    --foreground: 0 0% 98%;
+
+    --card: 220 70% 12%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 220 70% 12%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 190 80% 50%;
+    --primary-foreground: 220 80% 10%;
+
+    --secondary: 220 50% 18%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 220 50% 18%;
+    --muted-foreground: 210 20% 70%;
+
+    --accent: 190 80% 50%;
+    --accent-foreground: 220 80% 10%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 50% 20%;
+    --input: 220 50% 20%;
+    --ring: 190 80% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

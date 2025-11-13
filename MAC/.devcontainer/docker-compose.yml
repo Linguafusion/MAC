@@ -1,0 +1,45 @@
+
+mversion: '3.8'
+
+services:
+  # Service pour l'espace de travail (Python + Node.js)
+  dev-workspace:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    # Garde le conteneur en vie pour que VS Code puisse s'y attacher
+    command: sleep infinity
+    
+    # Monte le dossier parent (racine du projet) dans le conteneur
+    volumes:
+      - ..:/workspace:cached
+    
+    depends_on:
+      - db
+    
+    # Variables d'environnement pour connecter le backend à la DB
+    environment:
+      - DATABASE_URL=postgresql://mac_root:Tipo1978@db:5432/mac_db
+
+  # Service pour la base de données PostgreSQL
+  db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    
+    # Volume pour sauvegarder les données de la DB
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    
+    # Variables pour la création de la base de données
+    environment:
+      - POSTGRES_USER=mac_root
+      - POSTGRES_PASSWORD=Tipo1978
+      - POSTGRES_DB=mac_db
+    ports:
+      # Expose le port 5432 au local si besoin, mais la communication
+      # service-à-service se fait par le nom 'db'
+      - "5433:5432"
+
+volumes:
+  postgres_data:
