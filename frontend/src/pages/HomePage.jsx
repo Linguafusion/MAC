@@ -74,7 +74,7 @@ const HomePage = () => {
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8"> 
                             <ActionCard 
-                                to="/create-enquete"
+                                to="/enquetes"
                                 label="Créer une nouvelle enquête"
                                 icon={PlusCircleIcon} 
                                 colorClass="bg-green-600 hover:bg-green-700 shadow-green-500/50" 
