@@ -8,6 +8,9 @@ from . import crud, schemas, models, security
 from .database import engine, get_db
 from .config import ACCESS_TOKEN_EXPIRE_MINUTES # Import nécessaire
 from fastapi.middleware.cors import CORSMiddleware
+from .routes_users import router as users_router
+from .routes_surveys import router as surveys_router
+
 
 # --- INITIALISATION ---
 
@@ -76,26 +79,7 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
 def read_users_me(current_user: schemas.User = Depends(security.get_current_user)):
     return current_user
 
-# --- ROUTES ENQUÊTE (F1) ---
+# --- ROUTES USERS ---
+app.include_router(users_router)
+app.include_router(surveys_router)
 
-# Route PROTÉGÉE pour la création d'enquête
-@app.post("/enquetes/", response_model=schemas.EnqueteRead)
-def create_enquete_for_user(
-    enquete: schemas.EnqueteCreate, 
-    db: Session = Depends(get_db),
-    # Dépendance essentielle pour la sécurité
-    current_user: models.User = Depends(security.get_current_user) 
-):
-    """Crée une nouvelle enquête statistique par un utilisateur authentifié."""
-    
-    # Utilisation de l'ID de l'utilisateur connecté
-    db_enquete = crud.create_user_enquete(db=db, enquete=enquete, user_id=current_user.id) 
-    return db_enquete
-
-# Route pour lire une enquête
-@app.get("/enquetes/{enquete_id}", response_model=schemas.EnqueteRead)
-def read_enquete(enquete_id: int, db: Session = Depends(get_db)):
-    db_enquete = crud.get_enquete(db, enquete_id=enquete_id)
-    if db_enquete is None:
-        raise HTTPException(status_code=404, detail="Enquête non trouvée")
-    return db_enquete

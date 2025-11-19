@@ -1,6 +1,6 @@
 // src/Components/Navbar.jsx
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from '../hooks/useAuth'; 
 import logo from "../assets/logomac.jpg"; 
 
@@ -19,6 +19,7 @@ export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [darkMode, setDarkMode] = useState(true); 
     const location = useLocation();
+    const navigate = useNavigate();
     
     const { currentUser, logout, isLoading } = useAuth(); 
 
@@ -30,6 +31,11 @@ export default function Navbar() {
         }
     }, [darkMode]);
 
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
+
     const toggleDarkMode = () => setDarkMode(!darkMode);
 
     const navItems = [
@@ -37,10 +43,18 @@ export default function Navbar() {
     ];
     
     if (currentUser) {
+        // Tous les utilisateurs connectés peuvent créer une enquête
         navItems.push(
-            { label: "Créer enquête", path: "/create-enquete", icon: PlusCircleIcon },
+            { label: "Gérer enquêtes", path: "/enquetes", icon: PlusCircleIcon },
         );
-    } 
+
+        // Seuls ROOT et ADMIN peuvent gérer les utilisateurs
+        if (currentUser.role === "ADMIN" || currentUser.role === "ROOT") {
+            navItems.push(
+                { label: "Gérer utilisateurs", path: "/users", icon: UserIcon },
+            );
+        }
+    }
 
     const getLinkClass = (path) => 
         `flex items-center px-4 py-2 rounded-lg font-medium transition duration-200 text-lg md:text-base ${
@@ -141,7 +155,7 @@ export default function Navbar() {
                             {currentUser ? (
                                 // BOUTON DÉCONNEXION
                                 <button
-                                    onClick={logout}
+                                    onClick={handleLogout}
                                     className="btn-primary flex items-center px-4 py-2 bg-red-600 hover:bg-red-700"
                                 >
                                     <ArrowLeftOnRectangleIcon className="h-5 w-5 mr-2" />
