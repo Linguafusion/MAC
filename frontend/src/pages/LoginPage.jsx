@@ -32,23 +32,23 @@ const LoginPage = () => {
 
     return (
         <div className="flex items-center justify-center min-h-[calc(100vh-80px)] px-4 py-16">
-            <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl p-8 sm:p-10 shadow-2xl border border-gray-100 dark:border-gray-700 transform transition-all duration-500 hover:shadow-indigo-500/20">
+            <div className="w-full max-w-md rounded-2xl p-8 sm:p-10 shadow-2xl transform transition-all duration-500 hover:shadow-indigo-500/20">
                 <div className="flex flex-col items-center mb-8">
                     <div className="h-12 w-12 bg-indigo-600 rounded-xl flex items-center justify-center mb-3 shadow-lg">
                         {/* Utilisation de la nouvelle icône */}
                         <ArrowRightOnRectangleIcon className="h-6 w-6 text-white" />
                     </div>
-                    <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
+                    <h2 className="text-3xl font-bold">
                         Connexion à la Plateforme
                     </h2>
-                    <p className="text-gray-500 dark:text-gray-400 mt-1">
+                    <p className=" dark:text-gray-600 mt-1">
                         Utilisez votre compte universitaire.
                     </p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        <label className="block text-sm font-medium mb-1">
                             Adresse e-mail
                         </label>
                         <input
@@ -56,13 +56,13 @@ const LoginPage = () => {
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="form-input"
+                            className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-lg focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                             placeholder="exemple@univ.ma"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        <label className="block text-sm font-medium mb-1">
                             Mot de passe
                         </label>
                         <input
@@ -70,7 +70,7 @@ const LoginPage = () => {
                             required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="form-input"
+                            className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-lg focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                             placeholder="••••••••"
                         />
                     </div>
