@@ -131,7 +131,7 @@ export default function SurveyResponses() {
         {/* Centered Header Section */}
         <div className="text-center mb-12 animate-fade-in-up">
             {/* Title: Gradient Blue/Purple */}
-            <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-blue-600 via-indigo-500 to-purple-600 mb-6 leading-tight">
                 {enquete.titre}
             </h1>
 

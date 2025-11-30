@@ -1,6 +1,11 @@
 // src/App.jsx
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import Navbar from "./Components/Navbar";
@@ -16,25 +21,19 @@ import SurveyResponses from "./pages/SurveyResponses";
 import ThankYou from "./pages/ThankYou";
 import Footer from "./Components/Footer";
 import Content from "./Components/Content";
+import { BookDetails } from "./pages/BookDetails";
+import About from "./pages/About";
+import Team from "./pages/Team";
 
 const AppWrapper = () => {
   const location = useLocation();
 
   // Regex patterns for pages where Content must NOT be shown
-  const hideContentPatterns = [
-    /^\/login$/,
-    /^\/users$/,
-    /^\/users\/create$/,
-    /^\/users\/\d+\/edit$/,
-    /^\/enquetes$/,
-    /^\/enquetes\/create$/,
-    /^\/enquetes\/\d+\/edit$/,
-    /^\/enquetes\/\d+\/responses$/,
-    /^\/public\/[^/]+$/,
-    /^\/merci$/,
+  const showContentPatterns = [
+    /^\/$/,
   ];
 
-  const shouldHideContent = hideContentPatterns.some((pattern) =>
+  const shouldShowContent = showContentPatterns.some((pattern) =>
     pattern.test(location.pathname)
   );
 
@@ -45,7 +44,11 @@ const AppWrapper = () => {
       <main className="flex-1 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />          
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/book-details" element={<BookDetails />} />
+
+          <Route path="/about" element={<About />} />
+           <Route path="/Team" element={<Team />} />
 
           <Route
             path="/users"
@@ -113,7 +116,7 @@ const AppWrapper = () => {
         </Routes>
       </main>
 
-      {!shouldHideContent && <Content />}
+      {shouldShowContent && <Content />}
 
       <Footer />
     </div>

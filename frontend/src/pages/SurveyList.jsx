@@ -82,7 +82,7 @@ export default function SurveyList() {
         <div className="flex flex-col md:flex-row justify-between items-end mb-8 border-b border-gray-200 dark:border-gray-700 pb-6">
           <div>
             {/* Title adapts automatically */}
-            <h1 className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-2">
+            <h1 className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600 mb-2">
               Mes Enquêtes
             </h1>
             <p className="text-gray-500 dark:text-gray-400 text-sm">
@@ -179,7 +179,7 @@ export default function SurveyList() {
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                             </svg>
-                            <span className="hidden xl:inline">Voir</span>
+                            <span className="hidden xl:inline">Répondre</span>
                           </Link>
 
                           {/* Responses Link */}
