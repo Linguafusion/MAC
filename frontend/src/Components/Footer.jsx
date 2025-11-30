@@ -2,12 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logomac.jpg";
 import logoAUF from "../assets/LogoAUF.png";
-import logoCNRT from "../assets/LogoCNRST.png";
 import logoLARSLAM from "../assets/LogoLARSLAM.png";
 import logoFLSH from "../assets/LogoFLSH.png";
 import logoUIZ from "../assets/LogoUIZ.png";
 
-const logos = [logoAUF, logoCNRT, logoLARSLAM, logoFLSH, logoUIZ];
+const logos = [logoAUF, logoLARSLAM, logoUIZ, logoFLSH, ];
 
 function Footer() {
   return (

@@ -11,8 +11,8 @@ import {
   XMarkIcon,
   UserIcon,
   PlusCircleIcon,
-  ArrowLeftOnRectangleIcon,
-  ArrowRightOnRectangleIcon,
+  ArrowLeftCircleIcon,
+  ArrowRightCircleIcon,
 } from "@heroicons/react/24/outline";
 
 export default function Navbar() {
@@ -34,7 +34,22 @@ export default function Navbar() {
 
   const toggleDarkMode = () => setDarkMode(!darkMode);
 
-  const navItems = [{ label: "Accueil", path: "/" }];
+  // to add a new page
+  const navItems = [
+    {
+      label: "Accueil",
+      path: "/", //
+    },
+    {
+      label: "À propos",
+      path: "/About",
+    },
+    {
+      label: "Team",
+      path: "/Team",
+    },
+
+  ];
 
   if (currentUser) {
     // Tous les utilisateurs connectés peuvent créer une enquête
@@ -57,7 +72,7 @@ export default function Navbar() {
   const getLinkClass = (path) =>
     `flex items-center px-4 py-2 rounded-lg font-medium transition duration-200 text-lg md:text-base ${
       location.pathname === path
-        ? "text-indigo-700 dark:text-indigo-300"
+        ? "text-indigo-700 dark:text-indigo-300 bg-gray-200 dark:bg-gray-800 sm:font-semibold"
         : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
     }`;
 
@@ -104,7 +119,7 @@ export default function Navbar() {
               to="/login"
               className="btn-primary inline-flex md:hidden px-4 py-2"
             >
-              <ArrowRightOnRectangleIcon className="h-5 w-5 mr-1" />
+              <ArrowRightCircleIcon className="h-5 w-5 mr-1" />
               Connexion
             </Link>
           )}
@@ -154,7 +169,7 @@ export default function Navbar() {
                   onClick={handleLogout}
                   className="btn-primary flex items-center px-4 py-2 bg-red-600 hover:bg-red-700"
                 >
-                  <ArrowLeftOnRectangleIcon className="h-5 w-5 mr-2" />
+                  <ArrowLeftCircleIcon className="h-5 w-5 mr-2" />
                   Déconnexion
                 </button>
               ) : (
@@ -163,7 +178,7 @@ export default function Navbar() {
                   to="/login"
                   className="btn-primary flex items-center px-4 py-2"
                 >
-                  <ArrowRightOnRectangleIcon className="h-5 w-5 mr-2" />
+                  <ArrowRightCircleIcon className="h-5 w-5 mr-2" />
                   Connexion
                 </Link>
               )}
