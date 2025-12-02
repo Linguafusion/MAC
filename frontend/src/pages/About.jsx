@@ -1,140 +1,121 @@
 import React from "react";
-// Assurez-vous d'avoir votre image ici ou utilisez le lien
-// import pic from "../assets/votre-image.jpg"; 
+import { 
+  AcademicCapIcon, 
+  LightBulbIcon, 
+  ShieldCheckIcon, 
+  UserGroupIcon 
+} from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
-export const BookDetails = () => {
-  // Lien d'image temporaire pour l'exemple (remplacez par votre variable {pic})
-  const pic = "https://placehold.co/600x400/e0f2fe/1d4ed8?text=Illustration"; 
-
+export default function About() {
   return (
-    <div className="min-h-screen pt-12 pb-20 px-4 sm:px-6 lg:px-8 flex justify-center bg-gray-50">
-      <article
-        // CHANGEMENT ICI : Dégradé plus visible (Sky-200 vers Purple-200)
-        className="max-w-3xl w-full bg-gradient-to-b from-sky-200 to-purple-200 shadow-xl rounded-2xl overflow-hidden p-8 sm:p-12 opacity-0 -translate-y-2.5 animate-fade-in delay-200"
-        style={{ animationDuration: "0.8s", animationFillMode: "forwards" }}
-      >
-        {/* Titre Principal */}
-        {/* Bordure ajustée pour correspondre au fond bleu */}
-        <header className="text-center mb-10 border-b border-blue-300/50 pb-6">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-blue-800 mb-4 leading-tight">
-            La Méthode d'analyse combinée des représentations sociales
-          </h1>
-        </header>
+    // FORCE LE FOND BLEU CLAIR (bg-blue-50) MÊME EN MODE SOMBRE
+    <div className="min-h-screen bg-blue-50 text-gray-900 transition-colors duration-300">
+      
+      {/* 1. HERO SECTION */}
+      <div className="relative overflow-hidden pt-16 pb-24 text-center px-4 sm:px-6 lg:px-8">
+        {/* Force le texte en noir/gris même en mode sombre */}
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
+          À propos de <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">MAC Enquête</span>
+        </h1>
+        <p className="max-w-2xl mx-auto text-xl text-gray-600">
+          L'alliance de la rigueur scientifique et de la technologie numérique au service de l'analyse des représentations sociales.
+        </p>
+      </div>
 
-        {/* Introduction */}
-        <div className="space-y-8 text-gray-800 leading-relaxed">
+      {/* 2. NOTRE MISSION */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
-          {/* Paragraphe 1 */}
-          <p className="text-lg text-center font-medium">
-            Que pensent les gens du français, de l'anglais ou de leur langue maternelle ? Quelles valeurs associent-ils à ces langues ?
-          </p>
-          
-          {/* Image (Positionnée à gauche via flex-start ou retrait de mx-auto) */}
-          <div className="flex justify-start my-6">
-             <img
-              className="rounded-lg w-96 mb-5 shadow-md border border-white/50"
-              src={pic}
-              alt="office content 1"
-            />
+          {/* Texte */}
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold text-gray-900">
+              Une plateforme née de la recherche
+            </h2>
+            <div className="w-20 h-1.5 bg-blue-600 rounded-full"></div>
+            <p className="text-lg text-gray-700 leading-relaxed text-justify">
+              MAC Enquête n'est pas un simple outil de sondage. C'est la matérialisation numérique de la <strong>Méthode d'Analyse Combinée (MAC)</strong>, développée initialement par les chercheurs en sociolinguistique pour cartographier avec précision ce que les gens pensent réellement.
+            </p>
+            <p className="text-lg text-gray-700 leading-relaxed text-justify">
+              Porté par l'<strong>Université d'Agadir</strong>, ce projet vise à offrir aux chercheurs, étudiants et professionnels un outil puissant, intuitif et mathématiquement validé pour collecter et traiter des données complexes en quelques clics.
+            </p>
           </div>
 
-          {/* Paragraphe 2 */}
-          <p className="text-justify">
-            Développée par Bruno Maurer (Laboratoire Dipralang de Montpellier 3 et Université de Lausanne) pour étudier les représentations des langues, la Méthode d'analyse combinée (MAC) permet de répondre à ces questions de manière rigoureuse et innovante et peut être utilisée pour étudier les représentations sociales d’autres objets.
-          </p>
-
-          {/* Section 1 */}
-          <section>
-            <h2 className="text-xl font-bold text-blue-900 mb-3">Une approche qui va au-delà des apparences</h2>
-            <p className="text-justify">
-              Contrairement aux méthodes classiques qui se contentent de recueillir des opinions, la MAC dévoile la structure profonde des représentations. Elle distingue ce qui est vraiment important aux yeux des locuteurs de ce qui est secondaire ou marginal.
-            </p>
-          </section>
-
-          {/* Section 2: Comment ça marche (Fond semi-transparent pour lisibilité) */}
-          <section className="bg-white/60 p-6 rounded-xl border border-white/50 shadow-sm">
-            <h2 className="text-xl font-bold text-blue-900 mb-4 text-center">Comment ça marche ?</h2>
-            <p className="mb-4">La méthode se déroule en trois temps simples :</p>
-            <ol className="list-decimal pl-5 space-y-3">
-              <li><strong>Recueil des perceptions :</strong> les participants expriment librement ce qu'évoque pour eux une langue donnée.</li>
-              <li><strong>Questionnaire ciblé :</strong> ils évaluent ensuite une série de propositions en les notant.</li>
-              <li>
-                <strong>Analyse combinée :</strong> trois dimensions sont mesurées simultanément pour chaque élément :
-                <ul className="list-disc pl-5 mt-2 space-y-1 text-gray-700">
-                  <li>L'adhésion : à quel point cette idée caractérise la langue</li>
-                  <li>Le consensus : les membres du groupe sont-ils d'accord entre eux</li>
-                  <li>Les distances : quelles idées sont associées entre elles</li>
-                </ul>
-              </li>
-            </ol>
-          </section>
-
-          {/* Section 3: Résultats */}
-          <section>
-            <h2 className="text-xl font-bold text-blue-900 mb-3">Des résultats visuels et exploitables</h2>
-            <p className="mb-3">L'analyse produit des graphiques et schémas qui révèlent quatre zones distinctes dans la représentation :</p>
-            <ul className="grid sm:grid-cols-2 gap-4">
-              <li className="bg-white/70 p-3 rounded-lg border-l-4 border-blue-600 shadow-sm">
-                <strong>• La zone de centralité maximum :</strong> le cœur stable et partagé de la représentation
-              </li>
-              <li className="bg-white/70 p-3 rounded-lg border-l-4 border-blue-400 shadow-sm">
-                <strong>• La couronne centrale :</strong> les éléments moyennement consensuels, susceptibles d'évoluer
-              </li>
-              <li className="bg-white/70 p-3 rounded-lg border-l-4 border-blue-300 shadow-sm">
-                <strong>• La périphérie incertaine :</strong> les éléments sur lesquels le groupe est divisé
-              </li>
-              <li className="bg-white/70 p-3 rounded-lg border-l-4 border-gray-400 shadow-sm">
-                <strong>• La périphérie marginale :</strong> ce qui est fortement rejeté, définissant la représentation "en creux"
-              </li>
-            </ul>
-          </section>
-
-          {/* Section 4: Pourquoi utiliser */}
-          <section>
-            <h2 className="text-xl font-bold text-blue-900 mb-3">Pourquoi utiliser la MAC ?</h2>
-            <ul className="space-y-2">
-              <li className="flex items-start">
-                <span className="text-green-700 mr-2 font-bold">✓</span> Fiabilité : combine approches qualitative et quantitative
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-700 mr-2 font-bold">✓</span> Précision : identifie ce qui compte vraiment pour les locuteurs
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-700 mr-2 font-bold">✓</span> Comparabilité : permet d'étudier différents groupes ou situations
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-700 mr-2 font-bold">✓</span> Utilité pratique : aide à concevoir des politiques en lien avec les représentations
-              </li>
-            </ul>
-          </section>
-
-          {/* Section 5: Applications */}
-          <section>
-            <h2 className="text-xl font-bold text-blue-900 mb-3">Applications concrètes</h2>
-            <p className="text-justify mb-4">
-              La MAC a été testée avec succès dans de nombreux contextes francophones (Madagascar, Sénégal, etc.) pour comprendre des idéologies linguistiques en situation de multilinguisme.
-              Son utilisation peut s’étendre à d’autres objets que les langues. Un outil unique pour saisir la complexité des représentations et éclairer des décisions.
-            </p>
-            <p className="text-sm text-gray-600 italic bg-white/50 p-4 rounded-lg border border-purple-200/50">
-              Outillée mathématiquement par Pierre-Antoine Desrousseaux (IUT de Béziers) et mise en ligne par Nicolas Serra pour le premier site MAC construit (linguiste.iutbeziers.fr), la MAC est maintenant développée et mise à disposition de la communauté des chercheurs par l’Université d’Agadir.
-            </p>
-          </section>
-
-          {/* Footer / Références */}
-          <footer className="mt-8 pt-6 border-t border-purple-300/50 text-sm text-gray-700">
-            <p className="font-semibold mb-2">Références :</p>
-            <p>Maurer, Bruno (2013), Représentations sociales des langues en situation multilingue : la méthode d’analyse combinée, nouvel outil d’enquête, Paris, Archives contemporaines</p>
-            <a 
-              href="https://circula.recherche.usherbrooke.ca/numero-3/" 
-              className="text-blue-800 hover:underline mt-2 inline-block font-medium"
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
-              https://circula.recherche.usherbrooke.ca/numero-3/
-            </a>
-          </footer>
+          {/* Image */}
+          <div className="relative">
+            <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl opacity-20 blur-lg"></div>
+            <img 
+              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+              alt="Étudiants universitaires" 
+              className="relative rounded-2xl shadow-2xl border border-blue-100 w-full object-cover"
+            />
+          </div>
         </div>
-      </article>
+      </div>
+
+      {/* 3. NOS VALEURS */}
+      {/* Fond bleu clair continu */}
+      <div className="bg-blue-50 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Pourquoi choisir notre plateforme ?</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Card 1 */}
+            <div className="bg-white p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 shadow-lg border border-blue-100">
+              <div className="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-6 text-blue-600">
+                <AcademicCapIcon className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Rigueur Scientifique</h3>
+              <p className="text-gray-600">
+                Basée sur des algorithmes validés par la recherche universitaire pour garantir des résultats exploitables.
+              </p>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-white p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 shadow-lg border border-blue-100">
+              <div className="w-14 h-14 bg-purple-50 rounded-xl flex items-center justify-center mb-6 text-purple-600">
+                <LightBulbIcon className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Innovation UX</h3>
+              <p className="text-gray-600">
+                Une interface moderne qui rend la création d'enquêtes complexes simple et agréable pour tous.
+              </p>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-white p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 shadow-lg border border-blue-100">
+              <div className="w-14 h-14 bg-emerald-50 rounded-xl flex items-center justify-center mb-6 text-emerald-600">
+                <ShieldCheckIcon className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Données Sécurisées</h3>
+              <p className="text-gray-600">
+                Vos données et celles de vos participants sont protégées avec les standards de sécurité actuels.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 4. SECTION ÉQUIPE */}
+      <div className="py-24 px-4 sm:px-6 lg:px-8 text-center bg-blue-50">
+        <h2 className="text-3xl font-bold text-gray-900 mb-6">
+          Qui sommes-nous ?
+        </h2>
+        <p className="max-w-2xl mx-auto text-lg text-gray-600 mb-10">
+          Derrière cette plateforme se cache une équipe multidisciplinaire de développeurs, designers et chercheurs passionnés.
+        </p>
+        
+        <Link 
+          to="/team"
+          className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 transition-all duration-200 transform hover:scale-105"
+        >
+          <UserGroupIcon className="w-5 h-5 mr-2" />
+          Découvrir notre équipe
+        </Link>
+      </div>
+
     </div>
   );
-};
+}

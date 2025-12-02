@@ -89,7 +89,7 @@ const HomePage = () => {
         </h1>
         <p className="text-xl max-w-3xl mx-auto">
           Votre outil moderne et sécurisé pour la conception, la collecte et
-          l'analyse de données de recherche universitaire au Maroc.
+          l'analyse de données de recherche developpé a l'université Ibn Zohr Agadir au Maroc.
         </p>
       </header>
 

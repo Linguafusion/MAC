@@ -24,6 +24,7 @@ import Content from "./Components/Content";
 import { BookDetails } from "./pages/BookDetails";
 import About from "./pages/About";
 import Team from "./pages/Team";
+import Contactus from "./pages/Contactus";
 
 const AppWrapper = () => {
   const location = useLocation();
@@ -49,6 +50,8 @@ const AppWrapper = () => {
 
           <Route path="/about" element={<About />} />
            <Route path="/Team" element={<Team />} />
+          <Route path="/contactus" element={<Contactus />} />
+               
 
           <Route
             path="/users"

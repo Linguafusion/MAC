@@ -12,15 +12,13 @@ function Content() {
             La Méthode d'analyse combinée des représentations sociales{" "}
           </h2>
           <p class="mb-4">
-            Que pensent les gens du français, de l'anglais ou de leur langue
-            maternelle ? Quelles valeurs associent-ils à ces langues ?
             Développée par Bruno Maurer (Laboratoire Dipralang de Montpellier 3
             et Université de Lausanne) pour étudier les représentations des
             langues, la Méthode d'analyse combinée (MAC) permet de répondre à
             ces questions de manière rigoureuse et innovante et peut être
             utilisée pour étudier les représentations sociales d’autres objets..
           </p>
-          <Link to={"/book-details"}>Read More!</Link>
+          <Link to={"/book-details"}>Plus d'informations!</Link>
         </div>
         <div class="grid grid-cols-2 gap-4 mt-8">
           <img class="w-full rounded-lg" src={picFLSH} alt="office content 1" />
