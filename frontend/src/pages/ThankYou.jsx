@@ -41,7 +41,7 @@ export default function ThankYou() {
         
         <p className=" text-lg mb-8 leading-relaxed">
           Votre réponse a été enregistrée avec succès. <br/>
-          Nous apprécions votre temps.
+          Nous vous remercions pour le temps que vous avez consacré.
         </p>
 
         {/* Actions */}

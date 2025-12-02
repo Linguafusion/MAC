@@ -41,14 +41,22 @@ export default function Navbar() {
       path: "/", //
     },
     {
+      label: "Principes",
+      path: "/Book-details",
+    },
+    {
       label: "À propos",
       path: "/About",
     },
     {
-      label: "Team",
+      label: "Équipe",
       path: "/Team",
     },
-
+    {
+      label: "Contactez-nous",
+      path: "/Contactus",
+    },
+    
   ];
 
   if (currentUser) {
