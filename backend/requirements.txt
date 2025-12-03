@@ -1,22 +1,72 @@
-# --- 1. Framework Web & Base de Données (Core) ---
-fastapi[standard] 
-uvicorn[standard] 
-sqlalchemy
-psycopg2-binary # Driver PostgreSQL
-python-dotenv # Pour charger les variables d'environnement (ex: URL BDD, clé secrète)
-
-# --- 2. Sécurité et Authentification (F4) ---
-python-jose[cryptography] # Gestion des JWT
-passlib[argon2] # Hachage de mot de passe (Syntaxe optimale pour éviter les conflits)
-
-# --- 3. Analyse de Données et Statistiques (F6 à F9) ---
-numpy # Calcul numérique haute performance
-pandas # Manipulation de DataFrames
-scipy # Outils scientifiques (Statistiques avancées)
-
-# --- 4. Outils de Développement (Dépendances non requises en production) ---
-# Note: Ces outils sont souvent mieux gérés par des crochets [dev] dans un pyproject.toml ou installés séparément, 
-# mais les lister ici est courant en petits projets.
-black 
-isort 
-mypy
+annotated-doc==0.0.3
+annotated-types==0.7.0
+anyio==4.11.0
+argon2-cffi==25.1.0
+argon2-cffi-bindings==25.1.0
+black==25.9.0
+certifi==2025.10.5
+cffi==2.0.0
+click==8.3.0
+cryptography==46.0.3
+dnspython==2.8.0
+ecdsa==0.19.1
+email-validator==2.3.0
+et_xmlfile==2.0.0
+exceptiongroup==1.3.0
+fastapi==0.120.2
+fastapi-cli==0.0.14
+fastapi-cloud-cli==0.3.1
+greenlet==3.2.4
+h11==0.16.0
+httpcore==1.0.9
+httptools==0.7.1
+httpx==0.28.1
+idna==3.11
+isort==7.0.0
+Jinja2==3.1.6
+markdown-it-py==4.0.0
+MarkupSafe==3.0.3
+mdurl==0.1.2
+mypy==1.18.2
+mypy_extensions==1.1.0
+numpy==2.2.6
+openpyxl==3.1.5
+packaging==25.0
+pandas==2.3.3
+passlib==1.7.4
+pathspec==0.12.1
+platformdirs==4.5.0
+psycopg2-binary==2.9.11
+pyasn1==0.6.1
+pycparser==2.23
+pydantic==2.12.3
+pydantic_core==2.41.4
+Pygments==2.19.2
+python-dateutil==2.9.0.post0
+python-dotenv==1.2.1
+python-jose==3.5.0
+python-multipart==0.0.20
+pytokens==0.2.0
+pytz==2025.2
+PyYAML==6.0.3
+rich==14.2.0
+rich-toolkit==0.15.1
+rignore==0.7.2
+rsa==4.9.1
+scipy==1.15.3
+sentry-sdk==2.43.0
+shellingham==1.5.4
+six==1.17.0
+sniffio==1.3.1
+SQLAlchemy==2.0.44
+starlette==0.49.1
+tomli==2.3.0
+typer==0.20.0
+typing-inspection==0.4.2
+typing_extensions==4.15.0
+tzdata==2025.2
+urllib3==2.5.0
+uvicorn==0.38.0
+uvloop==0.22.1
+watchfiles==1.1.1
+websockets==15.0.1
