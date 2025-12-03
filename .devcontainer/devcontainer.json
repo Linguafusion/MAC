@@ -30,6 +30,9 @@
   ],
   
   // Commande à exécuter après la création du conteneur
-  "postCreateCommand": "python3.10 -m venv .venv && . .venv/bin/activate && pip install -r backend/requirements.txt && uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --reload && python3 backend/app/init_root.py"
+  "postCreateCommand": "python3.10 -m venv .venv && . .venv/bin/activate && pip install -r backend/requirements.txt && python3 backend/app/init_db.py && python3 backend/app/init_root.py",
+  
+  // Commandes à exécuter après que VS Code s'attache au conteneur
+  "postAttachCommand": ". .venv/bin/activate && uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --reload"
 
 }

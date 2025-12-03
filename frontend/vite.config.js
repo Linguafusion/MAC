@@ -1,7 +1,7 @@
 // frontend/vite.config.js
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import tailwindcss from '@tailwindcss/vite' 
+import tailwindcss from '@tailwindcss/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,7 +11,11 @@ export default defineConfig({
   ],
   server: {
     host: '0.0.0.0',
-    port: 3000, 
-    open: true
+    port: 3000,
+    open: true,
+    watch: {
+      usePolling: true,
+      interval: 100
+    }
   }
 });

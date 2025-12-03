@@ -8,19 +8,27 @@ import { useAuth } from "../hooks/useAuth";
  * si roles est undefined => juste connecté obligatoire
  */
 export default function RequireAuth({ roles, children }) {
-    const { currentUser } = useAuth();
-    const location = useLocation();
+  const { currentUser, isLoading } = useAuth(); // <-- ajouter isLoading ici
+  const location = useLocation();
 
-    // Pas connecté → on renvoie vers /login
-    if (!currentUser) {
-        return <Navigate to="/login" state={{ from: location }} replace />;
-    }
+  // Tant que l'auth est en cours, on attend
+  if (isLoading) {
+    return (
+      <div className="p-6 text-center text-gray-600">
+        Vérification de l&apos;authentification...
+      </div>
+    );
+  }
 
-    // Si une restriction de rôles est définie
-    if (roles && !roles.includes(currentUser.role)) {
-        // Accès refusé → tu peux rediriger vers "/" ou une page 403 dédiée
-        return <Navigate to="/" replace />;
-    }
+  // Pas connecté → on renvoie vers /login
+  if (!currentUser) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
 
-    return children;
+  // Si une restriction de rôles est définie
+  if (roles && !roles.includes(currentUser.role)) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
 }
