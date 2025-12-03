@@ -1,13 +1,8 @@
 // src/Components/Navbar.jsx
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-import { useAuth } from '../hooks/useAuth'; 
-import logo from "../assets/logomac.jpg"; 
-=======
 import { useAuth } from "../hooks/useAuth";
 import logo from "../assets/logomac.jpg";
->>>>>>> 6e35019a0558d03867adcbae9fb9da3f784f975c
 
 import {
   SunIcon,
@@ -21,12 +16,6 @@ import {
 } from "@heroicons/react/24/outline";
 
 export default function Navbar() {
-<<<<<<< HEAD
-    const [isOpen, setIsOpen] = useState(false);
-    const [darkMode, setDarkMode] = useState(true); 
-    const location = useLocation();
-    const navigate = useNavigate();
-=======
   const [isOpen, setIsOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const location = useLocation();
@@ -67,7 +56,6 @@ export default function Navbar() {
       label: "Contactez-nous",
       path: "/Contactus",
     },
->>>>>>> 6e35019a0558d03867adcbae9fb9da3f784f975c
     
   ];
 
@@ -79,32 +67,6 @@ export default function Navbar() {
       icon: PlusCircleIcon,
     });
 
-<<<<<<< HEAD
-    const handleLogout = () => {
-        logout();
-        navigate('/');
-    };
-
-    const toggleDarkMode = () => setDarkMode(!darkMode);
-
-    const navItems = [
-        { label: "Accueil", path: "/" },
-    ];
-    
-    if (currentUser) {
-        // Tous les utilisateurs connectés peuvent créer une enquête
-        navItems.push(
-            { label: "Gérer enquêtes", path: "/enquetes", icon: PlusCircleIcon },
-        );
-
-        // Seuls ROOT et ADMIN peuvent gérer les utilisateurs
-        if (currentUser.role === "ADMIN" || currentUser.role === "ROOT") {
-            navItems.push(
-                { label: "Gérer utilisateurs", path: "/users", icon: UserIcon },
-            );
-        }
-    }
-=======
     // Seuls ROOT et ADMIN peuvent gérer les utilisateurs
     if (currentUser.role === "ADMIN" || currentUser.role === "ROOT") {
       navItems.push({
@@ -121,7 +83,6 @@ export default function Navbar() {
         ? "text-indigo-700 dark:text-indigo-300 bg-gray-200 dark:bg-gray-800 sm:font-semibold"
         : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
     }`;
->>>>>>> 6e35019a0558d03867adcbae9fb9da3f784f975c
 
   if (isLoading) return null;
 
@@ -208,36 +169,6 @@ export default function Navbar() {
               </li>
             ))}
 
-<<<<<<< HEAD
-                        {/* Bouton Connexion / Déconnexion (Visible en Desktop) */}
-                        <li className="hidden md:block">
-                            {currentUser ? (
-                                // BOUTON DÉCONNEXION
-                                <button
-                                    onClick={handleLogout}
-                                    className="btn-primary flex items-center px-4 py-2 bg-red-600 hover:bg-red-700"
-                                >
-                                    <ArrowLeftOnRectangleIcon className="h-5 w-5 mr-2" />
-                                    Déconnexion
-                                </button>
-                            ) : (
-                                // BOUTON CONNEXION
-                                <Link
-                                    to="/login"
-                                    className="btn-primary flex items-center px-4 py-2"
-                                >
-                                    <ArrowRightOnRectangleIcon className="h-5 w-5 mr-2" />
-                                    Connexion
-                                </Link>
-                            )}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    );
-}
-=======
             {/* Bouton Connexion / Déconnexion (Visible en Desktop) */}
             <li className="hidden md:block">
               {currentUser ? (
@@ -266,4 +197,3 @@ export default function Navbar() {
     </nav>
   );
 }
->>>>>>> 6e35019a0558d03867adcbae9fb9da3f784f975c
