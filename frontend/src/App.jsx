@@ -14,6 +14,10 @@ import PublicSurvey from "./pages/PublicSurvey";
 import SurveyEdit from "./pages/SurveyEdit";
 import SurveyResponses from "./pages/SurveyResponses";
 import ThankYou from "./pages/ThankYou";
+import SurveyStats from "./pages/SurveyStats";
+import SurveyGraphs from "./pages/SurveyGraphs";
+import SurveyGraphs3DECharts from "./pages/SurveyGraphs3DECharts";
+// import SurveyGraphs3D from "./pages/SurveyGraphs3D";
 
 const App = () => {
   return (
@@ -90,6 +94,31 @@ const App = () => {
             />
             <Route path="/public/:token" element={<PublicSurvey />} />
             <Route path="/merci" element={<ThankYou />} />
+            <Route
+              path="/enquetes/:id/stats"
+              element={
+                <RequireAuth>
+                  <SurveyStats />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/enquetes/:id/graphs"
+              element={
+                <RequireAuth>
+                  <SurveyGraphs />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/enquetes/:id/graphs3d"
+              element={
+                <RequireAuth>
+                  {/* <SurveyGraphs3D /> */}
+                  <SurveyGraphs3DECharts />
+                </RequireAuth>
+              }
+            />
           </Routes>
         </main>
       </div>
