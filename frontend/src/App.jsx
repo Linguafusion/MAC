@@ -12,7 +12,7 @@ import Navbar from "./Components/Navbar";
 import UsersList from "./pages/UsersList";
 import UserCreate from "./pages/UserCreate";
 import UserEdit from "./pages/UserEdit";
-import RequireAuth from "./Components/RequireAuth"; // 👈 importer le garde
+import RequireAuth from "./Components/RequireAuth";
 import SurveyList from "./pages/SurveyList";
 import SurveyCreate from "./pages/SurveyCreate";
 import PublicSurvey from "./pages/PublicSurvey";
@@ -26,6 +26,7 @@ import About from "./pages/About";
 import Team from "./pages/Team";
 import Contactus from "./pages/Contactus";
 import SurveyGraphs from "./pages/SurveyGraphs";
+import SurveyStats from "./pages/SurveyStats";
 import SurveyGraphs3DECharts from "./pages/SurveyGraphs3DECharts";
 
 const AppWrapper = () => {
@@ -115,9 +116,15 @@ const AppWrapper = () => {
               </RequireAuth>
             }
           />
-
-          <Route path="/public/:token" element={<PublicSurvey />} />
-          <Route
+                      <Route
+              path="/enquetes/:id/stats"
+              element={
+                <RequireAuth>
+                  <SurveyStats />
+                </RequireAuth>
+              }
+            />
+            <Route
               path="/enquetes/:id/graphs"
               element={
                 <RequireAuth>
@@ -134,6 +141,8 @@ const AppWrapper = () => {
                 </RequireAuth>
               }
             />
+
+          <Route path="/public/:token" element={<PublicSurvey />} />
           <Route path="/merci" element={<ThankYou />} />
         </Routes>
       </main>
