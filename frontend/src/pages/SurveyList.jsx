@@ -88,6 +88,8 @@ const remove = async (id) => {
 
                   {/* Consulter réponses (créateur uniquement) */}
                   <Link to={`/enquetes/${e.id}/responses`} className="btn-secondary">Réponses</Link>
+                  <Link to={`/enquetes/${e.id}/stats`} className="btn-secondary">Analyse</Link>
+
                 </td>
               </tr>
             ))}

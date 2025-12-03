@@ -21,6 +21,7 @@ services:
     # Variables d'environnement pour connecter le backend à la DB
     environment:
       - DATABASE_URL=postgresql://mac_root:Tipo1978@db:5432/mac_db
+    container_name: mac-dev-workspace
 
   # Service pour la base de données PostgreSQL
   db:

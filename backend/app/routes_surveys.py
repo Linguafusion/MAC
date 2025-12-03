@@ -1,10 +1,11 @@
 # backend/app/routes_surveys.py
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 from .database import get_db
 from . import schemas, crud, models
 from .security import get_current_user
-from typing import List
+from typing import List, Dict
+from . import stats_likert
 
 router = APIRouter(prefix="/enquetes", tags=["Enquetes"])
 
@@ -96,3 +97,40 @@ def list_responses(
     if not (current_user.role.name in ("ROOT", "ADMIN") or enquete.owner_id == current_user.id):
         raise HTTPException(403, "Non autorisé")
     return crud.get_enquete_responses(db, enquete_id)
+
+@router.get("/{enquete_id}/stats")
+def get_stats(
+    enquete_id: int,
+    request: Request,  # <-- pour lire les query params
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    """
+    Retourne les stats de la partie obligatoire (Likert) pour une enquête donnée,
+    éventuellement filtrées par les questions OPTIONNELLES via query params filters[...].
+    """
+    enquete = crud.get_enquete_with_questions(db, enquete_id)
+    if not enquete:
+        raise HTTPException(404, "Enquête non trouvée")
+
+    if not (
+        current_user.role.name in ("ROOT", "ADMIN")
+        or enquete.owner_id == current_user.id
+    ):
+        raise HTTPException(403, "Non autorisé")
+
+    # extraire tous les filters[...] des query params
+    raw_filters: Dict[str, str] = {}
+    for key, value in request.query_params.multi_items():
+        # on attend des clés du type "filters[123]" ou "filters[145_min]"
+        if key.startswith("filters[") and key.endswith("]"):
+            inner = key[len("filters[") : -1]  # ex: "123" ou "145_min"
+            raw_filters[inner] = value
+
+    stats = stats_likert.compute_likert_stats(
+        enquete,
+        cutoff=1.4,
+        max_pairs=10,
+        raw_filters=raw_filters or None,
+    )
+    return stats
