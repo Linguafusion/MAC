@@ -1,8 +1,12 @@
 .venv
 .github
+.env
 
 # Snyk Security Extension - AI Rules (auto-generated)
 .github\instructions\snyk_rules.instructions.md
 /node_modules/
 __pycache__/
 *.pyc
+
+# Snyk Security Extension - AI Rules (auto-generated)
+.github/instructions/snyk_rules.instructions.md

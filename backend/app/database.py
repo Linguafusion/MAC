@@ -1,13 +1,16 @@
 # backend/app/database.py
 
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from typing import Generator
 from sqlalchemy.orm import Session # Importer Session ici est facultatif mais bonne pratique
+from dotenv import load_dotenv
+load_dotenv()
 
 # L'URL de la base de données doit correspondre à votre docker-compose.yml
 # Utilisez l'URL que vous avez fournie :
-SQLALCHEMY_DATABASE_URL = "postgresql://mac_root:Tipo1978@db:5432/mac_db"
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
 
 # Création du moteur
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
