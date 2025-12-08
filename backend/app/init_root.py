@@ -2,6 +2,9 @@
 
 import os
 import sys
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # ==================================================================
 # AJOUT DU CHEMIN DU BACKEND AU PYTHONPATH
@@ -19,8 +22,11 @@ from app.security import get_password_hash
 def init_root():
     db = SessionLocal()
 
-    ROOT_EMAIL = "root@mac.ma"
-    ROOT_PASSWORD = "Tipo1978"
+    ROOT_EMAIL = os.getenv("ROOT_EMAIL")
+    ROOT_PASSWORD = os.getenv("ROOT_PASSWORD")
+
+    if not ROOT_EMAIL or not ROOT_PASSWORD:
+        raise ValueError("ROOT_EMAIL ou ROOT_PASSWORD non défini ! Vérifie ton fichier .env")
 
     user = db.query(User).filter(User.email == ROOT_EMAIL).first()
 
