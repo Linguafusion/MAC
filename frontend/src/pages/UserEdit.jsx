@@ -1,6 +1,6 @@
 // frontend/src/pages/UserEdit.jsx
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api";
 import { useNavigate, useParams, Link } from "react-router-dom";
 
 export default function UserEdit() {
@@ -23,7 +23,7 @@ export default function UserEdit() {
   useEffect(() => {
     const loadMe = async () => {
       try {
-        const res = await axios.get("/users/me/");
+        const res = await api.get("/users/me/");
         setCurrentRole(res.data.role); // "ROOT" ou "ADMIN"
       } catch (err) {
         console.error("Erreur /users/me/", err);
@@ -36,7 +36,7 @@ export default function UserEdit() {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await axios.get(`/users/${id}`);
+        const res = await api.get(`/users/${id}`);
         const u = res.data;
 
         setEmail(u.email);
@@ -115,7 +115,7 @@ export default function UserEdit() {
     }
 
     try {
-      await axios.put(`/users/${id}`, payload, {
+      await api.put(`/users/${id}`, payload, {
         headers: { "Content-Type": "application/json" },
       });
       navigate("/users");
