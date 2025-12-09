@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
 
 export default function UserCreate() {
@@ -16,7 +16,7 @@ export default function UserCreate() {
   useEffect(() => {
     const loadMe = async () => {
       try {
-        const res = await axios.get("/users/me/");
+        const res = await api.get("/users/me/");
         setCurrentRole(res.data.role); // "ROOT" ou "ADMIN"
       } catch (err) {
         console.error("Erreur /users/me/", err);
@@ -70,7 +70,7 @@ export default function UserCreate() {
         is_active: isActive,
       };
 
-      await axios.post("/users/", payload, {
+      await api.post("/users/", payload, {
         headers: { "Content-Type": "application/json" },
       });
       navigate("/users");

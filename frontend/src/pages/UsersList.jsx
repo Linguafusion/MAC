@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import axios from 'axios';
+import api from "../services/api";
 
 export default function UsersList() {
     const [users, setUsers] = useState([]);
     const { currentUser } = useAuth();
 
     const load = async () => {
-        const res = await axios.get("/users/");
+        const res = await api.get("/users/");
         setUsers(res.data);
     };
 
@@ -73,7 +73,7 @@ export default function UsersList() {
                                         <button
                                             className="px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-md text-sm font-semibold transition"
                                             onClick={async () => {
-                                                await axios.delete(`/users/${u.id}`);
+                                                await api.delete(`/users/${u.id}`);
                                                 load();
                                             }}
                                         >
@@ -94,7 +94,7 @@ export default function UsersList() {
                                         <button
                                             className="px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-md text-sm font-semibold transition"
                                             onClick={async () => {
-                                                await axios.delete(`/users/${u.id}`);
+                                                await api.delete(`/users/${u.id}`);
                                                 load();
                                             }}
                                         >
