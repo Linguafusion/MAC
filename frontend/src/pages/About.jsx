@@ -107,12 +107,12 @@ export default function About() {
           Derrière cette plateforme se cache une équipe multidisciplinaire de développeurs, designers et chercheurs passionnés.
         </p>
         
-        <Link 
+        <Link
           to="/team"
-          className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 transition-all duration-200 transform hover:scale-105"
+          className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white dark:text-white bg-indigo-600 hover:bg-indigo-700 transition-all duration-200 transform hover:scale-105"
         >
-          <UserGroupIcon className="w-5 h-5 mr-2" />
-          Découvrir notre équipe
+          <UserGroupIcon className="w-5 h-5 mr-2 text-white dark:text-white" />
+          <span className="text-white dark:text-white">Découvrir notre équipe</span>
         </Link>
       </div>
 
