@@ -25,7 +25,7 @@ origins = [
     # C'est l'URL de votre Frontend React en développement
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "unwilling-darbie-mac-org-1eef6594.koyeb.app/",
+    "poor-glad-mac-org-15270138.koyeb.app/",
     # Si vous ajoutez des domaines de production plus tard, ils vont ici
     # "https://mon-domaine-production.com",
 ]
