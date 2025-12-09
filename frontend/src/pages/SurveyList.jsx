@@ -90,11 +90,12 @@ export default function SurveyList() {
               Gérez vos formulaires, analysez les réponses et partagez vos liens.
             </p>
           </div>
-          <Link 
-            to="/enquetes/create" 
-            className="mt-4 md:mt-0 inline-flex items-center justify-center px-6 py-3 text-sm font-bold text-white transition-all duration-200 bg-indigo-600 rounded-xl shadow-md hover:bg-indigo-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 dark:focus:ring-offset-gray-900 active:scale-95"
+          <Link
+            to="/enquetes/create"
+            className="mt-4 md:mt-0 inline-flex items-center justify-center px-6 py-3 text-sm font-bold text-white dark:text-white transition-all duration-200 bg-indigo-600 rounded-xl shadow-md hover:bg-indigo-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 dark:focus:ring-offset-gray-900 active:scale-95"
           >
-            <span className="mr-2 text-lg">+</span> Créer une enquête
+            <span className="mr-2 text-lg text-white dark:text-white">+</span>
+            <span className="text-white dark:text-white">Créer une enquête</span>
           </Link>
         </div>
 
@@ -112,13 +113,13 @@ export default function SurveyList() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
+              <table className="table-auto w-auto text-left border-collapse">
                 <thead>
                   <tr className="bg-gray-50 dark:bg-gray-900/50 border-b border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 uppercase text-xs tracking-wider font-semibold">
-                    <th className="p-5">Titre de l'enquête</th>
+                    <th className="p-5 w-2/5">Titre de l'enquête</th>
                     <th className="p-5">Description</th>
-                    <th className="p-5 text-center">Taille</th>
-                    <th className="p-5 text-right">Actions</th>
+                    <th className="p-5 text-center whitespace-nowrap">Taille</th>
+                    <th className="p-5 text-right whitespace-nowrap">Actions</th>
                   </tr>
                 </thead>
 
@@ -128,7 +129,7 @@ export default function SurveyList() {
                       
                       {/* Title */}
                       <td className="p-5 align-middle">
-                        <div className="font-bold text-gray-800 dark:text-white text-base md:text-lg">{e.titre}</div>
+                        <div className="font-bold text-gray-800 dark:text-white text-base md:text-lg whitespace-normal max-w-full">{e.titre}</div>
                       </td>
 
                       {/* Description */}
@@ -137,14 +138,14 @@ export default function SurveyList() {
                       </td>
 
                       {/* Size */}
-                      <td className="p-5 align-middle text-center">
+                      <td className="p-5 align-middle text-center whitespace-nowrap">
                         <span className="inline-flex items-center justify-center px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-100 dark:bg-indigo-500/10 dark:text-indigo-300 dark:border-indigo-500/20">
                           {e.taille_liste} Q
                         </span>
                       </td>
 
                       {/* Actions */}
-                      <td className="p-5 align-middle">
+                      <td className="p-5 align-middle whitespace-nowrap">
                         <div className="flex items-center justify-end gap-2 flex-wrap xl:flex-nowrap">
                           
                           {/* Share Button */}
@@ -156,7 +157,7 @@ export default function SurveyList() {
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                             </svg>
-                            <span className="hidden xl:inline">Partager</span>
+                            {/* <span className="hidden xl:inline">Partager</span> */}
                           </button>
 
                           {/* Edit Button */}
@@ -168,8 +169,18 @@ export default function SurveyList() {
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>
-                            <span className="hidden xl:inline">Éditer</span>
+                            {/* <span className="hidden xl:inline">Éditer</span> */}
                           </Link>
+                          <button 
+                            onClick={() => remove(e.id)} 
+                            title="Supprimer"
+                            className="flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg text-red-600 bg-red-50 hover:bg-red-100 dark:text-red-400 dark:bg-red-400/10 dark:hover:bg-red-400/20 transition-all"
+                          >
+                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            {/* <span className="hidden xl:inline">Supprimer</span> */}
+                          </button>
 
                            {/* View Public Link */}
                            <Link 
@@ -200,24 +211,16 @@ export default function SurveyList() {
                             className="flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg text-purple-600 bg-purple-50 hover:bg-purple-100 dark:text-purple-400 dark:bg-purple-400/10 dark:hover:bg-purple-400/20 transition-all"
                           >
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v14a1 1 0 001 1h3a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 011 1v11a1 1 0 001 1h3a1 1 0 001-1V3" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 12v7M7 16v3M17 8v11" />
                             </svg>
                             <span className="hidden xl:inline">Analyse</span>
                           </Link>
 
                           {/* Delete Button - With separator */}
-                          <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-1 hidden xl:block"></div>
+                          {/* <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-1 hidden xl:block"></div> */}
 
-                          <button 
-                            onClick={() => remove(e.id)} 
-                            title="Supprimer"
-                            className="flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg text-red-600 bg-red-50 hover:bg-red-100 dark:text-red-400 dark:bg-red-400/10 dark:hover:bg-red-400/20 transition-all"
-                          >
-                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                            <span className="hidden xl:inline">Supprimer</span>
-                          </button>
+                          
                           
                         </div>
                       </td>
