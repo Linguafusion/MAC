@@ -56,7 +56,10 @@ export default function Navbar() {
       label: "Contactez-nous",
       path: "/Contactus",
     },
-    
+    {
+      label: "Droit d'utilisation",
+      path: "/Laws",
+    },
   ];
 
   if (currentUser) {
