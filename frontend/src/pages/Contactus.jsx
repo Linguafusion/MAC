@@ -50,7 +50,7 @@ export default function Contact() {
               </div>
             </div>
             <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Notre Laboratoire</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Laboratoire  de Recherche Société, Langage, Art et Médias LARSLAM</h3>
               <p className="text-gray-600 leading-relaxed">
                 Université Ibn Zohr<br />
                 FACULTÉ DES LETTRES ET DES SCIENCES HUMAINES<br />

@@ -27,7 +27,7 @@ const teamMembers = [
   },
   {
     id: 3,
-    name: "Giovanni Agresti",
+    name: "Agresti Giovanni",
     role: "Professeur à l’université, ancien directeur de l’AUF Afrique du Nord",
     image: pic3,
     description: "Sociolinguiste et chercheur italien, Giovanni Agresti se spécialise dans la diversité linguistique, les droits linguistiques et la francophonie. Il est fondateur du réseau POCLANDE et coordonne des projets visant à promouvoir le plurilinguisme et le développement social des communautés linguistiques. Ses travaux combinent recherche académique et engagement pour l’intercompréhension entre langues et la valorisation des langues minoritaires.",
@@ -36,28 +36,28 @@ const teamMembers = [
   {
    
     id: 4,
-    name: "Pierre-Antoine Desrousseaux.", 
-    role: "Professeur universitaire de mathématiques, membre de l’équipe", 
+    name: "Desrousseaux Pierre-Antoine.", 
+    role: "Mathématicien, membre de l’équipe", 
     image: pic4,
     description: "Professeur agrégé et docteur en mathématiques. Enseignant en statistiques à l'IUT de Béziers. Auteur des formules de calcul utilisées par la MAC.",
     
   },
-  {
+ {
     id: 5,
     name: "Mustapha",
     role: "Ingénieur informaticien",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
+    image:"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80", 
     description: "Ingénieur informaticien spécialisé dans la conception, le développement et l’optimisation de solutions numériques. J’assure la gestion technique des systèmes informatiques, le développement d’applications et la résolution de problèmes complexes pour garantir performance, sécurité et innovation.",
-    linkedin: ""
-  },
-  {
+    
+},
+{
     id: 6,
     name: "Driss",
     role: "Ingénieur informaticien",
     image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
     description: "Ingénieur informaticien, je conçois et améliore des systèmes et applications informatiques adaptés aux besoins des utilisateurs. J’interviens dans le développement, la maintenance et l’optimisation de solutions numériques afin d’assurer leur efficacité, leur sécurité et leur fiabilité.",
     linkedin: ""
-  },
+},
   {
     id: 7,
     name: "Chakhrati Samar",
@@ -80,7 +80,7 @@ const teamMembers = [
     role: "Membre de l'équipe",
     image: pic7,
     description: "Étudiant curieux et motivé, je développe parallèlement des compétences dans le digital afin de créer des ponts entre les langues, la communication et l’innovation. Organisé et réfléchi, j’allie rigueur et créativité dans mes projets.",
-    linkedin: ""
+    linkedin: "https://www.linkedin.com/in/souhail-nou-34a6b0311/"
   },
 ];
 

@@ -25,6 +25,10 @@ import { BookDetails } from "./pages/BookDetails";
 import About from "./pages/About";
 import Team from "./pages/Team";
 import Contactus from "./pages/Contactus";
+import SurveyGraphs from "./pages/SurveyGraphs";
+import SurveyStats from "./pages/SurveyStats";
+import SurveyGraphs3DECharts from "./pages/SurveyGraphs3DECharts";
+import Laws from "./pages/Laws";
 
 const AppWrapper = () => {
   const location = useLocation();
@@ -51,6 +55,7 @@ const AppWrapper = () => {
           <Route path="/about" element={<About />} />
            <Route path="/Team" element={<Team />} />
           <Route path="/contactus" element={<Contactus />} />
+          <Route path="/Laws" element={<Laws />} />
                
 
           <Route
@@ -113,6 +118,31 @@ const AppWrapper = () => {
               </RequireAuth>
             }
           />
+                      <Route
+              path="/enquetes/:id/stats"
+              element={
+                <RequireAuth>
+                  <SurveyStats />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/enquetes/:id/graphs"
+              element={
+                <RequireAuth>
+                  <SurveyGraphs />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/enquetes/:id/graphs3d"
+              element={
+                <RequireAuth>
+                  {/* <SurveyGraphs3D /> */}
+                  <SurveyGraphs3DECharts />
+                </RequireAuth>
+              }
+            />
 
           <Route path="/public/:token" element={<PublicSurvey />} />
           <Route path="/merci" element={<ThankYou />} />

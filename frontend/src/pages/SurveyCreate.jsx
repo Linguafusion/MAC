@@ -97,7 +97,6 @@ export default function SurveyCreate() {
   const [optionalQs, setOptionalQs] = useState([
     { texte: "", type_question: "text", is_required: false, choices: [] },
   ]);
-
   // Partie obligatoire : par défaut 10 questions
   const [mandatoryQs, setMandatoryQs] = useState(
     Array.from({ length: 10 }, (_, i) => ({ texte: `Question ${i + 1}` }))
