@@ -2,14 +2,17 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Copier backend requirements et installer
+# Copier et installer les dépendances
 COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copier le code backend
 COPY backend/ ./backend
 
-# Exposer le port Railway
+# Copier le build React si tu veux servir le frontend
+COPY frontend/build ./backend/frontend_build
+
+# Exposer le port (Railway injecte PORT)
 EXPOSE 8000
 
 # Lancer FastAPI
