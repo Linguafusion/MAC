@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY backend/ ./backend
 
 # Copier le build React si tu veux servir le frontend
-COPY frontend/build ./backend/frontend_build
+COPY frontend/dist ./backend/frontend_build
 
 # Exposer le port (Railway injecte PORT)
 EXPOSE 8000
