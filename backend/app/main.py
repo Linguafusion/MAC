@@ -20,7 +20,11 @@ models.Base.metadata.create_all(bind=engine)
 
 # Instanciation de l'application FastAPI (CORRECTION: app=FastAPI())
 app = FastAPI() 
-
+if os.getenv("ENV") == "production":  # ou juste pour tout environnement
+    try:
+        init_root()
+    except Exception as e:
+        print("⚠️ ROOT init failed:", e)
 # 🛑 CONFIGURATION CORS
 origins = [
     # C'est l'URL de votre Frontend React en développement
@@ -85,11 +89,7 @@ def read_users_me(current_user: schemas.User = Depends(security.get_current_user
 # --- ROUTES USERS ---
 app.include_router(users_router)
 app.include_router(surveys_router)
-if os.getenv("ENV") == "production":  # ou juste pour tout environnement
-    try:
-        init_root()
-    except Exception as e:
-        print("⚠️ ROOT init failed:", e)
+
 
 
 
