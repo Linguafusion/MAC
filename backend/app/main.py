@@ -10,6 +10,7 @@ from .config import ACCESS_TOKEN_EXPIRE_MINUTES # Import nécessaire
 from fastapi.middleware.cors import CORSMiddleware
 from .routes_users import router as users_router
 from .routes_surveys import router as surveys_router
+from fastapi.staticfiles import StaticFiles
 
 
 # --- INITIALISATION ---
@@ -83,4 +84,8 @@ def read_users_me(current_user: schemas.User = Depends(security.get_current_user
 # --- ROUTES USERS ---
 app.include_router(users_router)
 app.include_router(surveys_router)
+
+# --- FRONTEND REACT ---
+# Toujours monter le frontend **après** les routes API
+app.mount("/", StaticFiles(directory="./frontend_build", html=True), name="frontend")
 
