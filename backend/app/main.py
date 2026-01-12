@@ -4,7 +4,7 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session # Import de Session nécessaire
 from datetime import timedelta 
-from . import crud, schemas, models, security
+from . import crud, schemas, models, security,init_root
 from .database import engine, get_db
 from .config import ACCESS_TOKEN_EXPIRE_MINUTES # Import nécessaire
 from fastapi.middleware.cors import CORSMiddleware
@@ -12,7 +12,6 @@ from .routes_users import router as users_router
 from .routes_surveys import router as surveys_router
 from fastapi.staticfiles import StaticFiles
 import os
-from app.init_root import init_root
 
 # --- INITIALISATION ---
 
@@ -91,6 +90,7 @@ if os.getenv("ENV") == "production":  # ou juste pour tout environnement
         init_root()
     except Exception as e:
         print("⚠️ ROOT init failed:", e)
+
 
 
 
