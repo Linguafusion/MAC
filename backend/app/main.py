@@ -29,7 +29,7 @@ origins = [
     "https://poor-glad-mac-org-15270138.koyeb.app",
     # Si vous ajoutez des domaines de production plus tard, ils vont ici
     # "https://mon-domaine-production.com",
-    https://react-frontend-production-9fb3.up.railway.app,
+    "https://react-frontend-production-9fb3.up.railway.app",
 ]
 
 app.add_middleware(
@@ -85,6 +85,7 @@ def read_users_me(current_user: schemas.User = Depends(security.get_current_user
 # --- ROUTES USERS ---
 app.include_router(users_router)
 app.include_router(surveys_router)
+
 
 
 
