@@ -85,7 +85,4 @@ def read_users_me(current_user: schemas.User = Depends(security.get_current_user
 app.include_router(users_router)
 app.include_router(surveys_router)
 
-# --- FRONTEND REACT ---
-# Toujours monter le frontend **après** les routes API
-app.mount("/", StaticFiles(directory="./frontend_build", html=True), name="frontend")
 
