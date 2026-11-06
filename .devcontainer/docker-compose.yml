@@ -20,7 +20,7 @@ services:
     
     # Variables d'environnement pour connecter le backend à la DB
     environment:
-      - DATABASE_URL=postgresql://mac_root:Tipo1978@db:5432/mac_db
+      - DATABASE_URL=postgresql://${POSTGRES_USER:?définir dans .env}:${POSTGRES_PASSWORD:?définir dans .env}@db:5432/${POSTGRES_DB:?définir dans .env}
     container_name: mac-dev-workspace
 
   # Service pour la base de données PostgreSQL
@@ -34,9 +34,9 @@ services:
     
     # Variables pour la création de la base de données
     environment:
-      - POSTGRES_USER=mac_root
-      - POSTGRES_PASSWORD=Tipo1978
-      - POSTGRES_DB=mac_db
+      - POSTGRES_USER=${POSTGRES_USER:?définir dans .env}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?définir dans .env}
+      - POSTGRES_DB=${POSTGRES_DB:?définir dans .env}
     ports:
       # Expose le port 5432 au local si besoin, mais la communication
       # service-à-service se fait par le nom 'db'

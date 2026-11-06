@@ -25,6 +25,7 @@ import { BookDetails } from "./pages/BookDetails";
 import About from "./pages/About";
 import Team from "./pages/Team";
 import Contactus from "./pages/Contactus";
+import Principes from "./pages/Principes";
 import SurveyGraphs from "./pages/SurveyGraphs";
 import SurveyStats from "./pages/SurveyStats";
 import SurveyGraphs3DECharts from "./pages/SurveyGraphs3DECharts";
@@ -50,9 +51,10 @@ const AppWrapper = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/book-details" element={<BookDetails />} />
+          <Route path="/principes" element={<Principes />} />
 
           <Route path="/about" element={<About />} />
-           <Route path="/Team" element={<Team />} />
+          <Route path="/team" element={<Team />} />
           <Route path="/contactus" element={<Contactus />} />
                
 
