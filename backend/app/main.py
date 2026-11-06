@@ -4,7 +4,8 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session # Import de Session nécessaire
 from datetime import timedelta 
-from . import crud, schemas, models, security,init_root
+from . import crud, schemas, models, security
+from .init_root import init_root
 from .database import engine, get_db
 from .config import ACCESS_TOKEN_EXPIRE_MINUTES # Import nécessaire
 from fastapi.middleware.cors import CORSMiddleware
