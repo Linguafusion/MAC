@@ -17,6 +17,7 @@ export default function PublicSurvey() {
   const [enquete, setEnquete] = useState(null);
   const [answers, setAnswers] = useState({});
   const [message, setMessage] = useState("");
+  const [rankHistory, setRankHistory] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,6 +59,26 @@ export default function PublicSurvey() {
   const perValueWordMap = { 2: "DEUX", 3: "TROIS", 4: "QUATRE" };
   const perValueWord = perValue ? perValueWordMap[perValue] : null;
 
+  // Classement MAC : 5 étapes successives (+2, -2, +1, -1, 0).
+  // Actif seulement si le nombre d'items obligatoires vaut 10, 15 ou 20.
+  const RANK_STEPS = [2, -2, 1, -1, 0];
+  const RANK_LABELS = {
+    2: { title: "les plus importants", text: "Tout à fait d'accord" },
+    "-2": { title: "les moins importants", text: "Pas du tout d'accord" },
+    1: { title: "les plus importants parmi les restants", text: "D'accord" },
+    "-1": { title: "les moins importants parmi les restants", text: "Pas d'accord" },
+    0: { title: "les propositions restantes", text: "Neutre" },
+  };
+  const rankingEnabled = perValue !== null;
+  const rankingIndices = enquete.questions
+    .map((q, i) => ({ q, i }))
+    .filter(({ q }) => q.part === "MANDATORY" && q.type_question === "likert")
+    .map(({ i }) => i);
+  const countFor = (value) =>
+    rankingIndices.filter((i) => answers[i] === value).length;
+  const currentRankValue =
+    rankingEnabled ? RANK_STEPS.find((v) => countFor(v) < perValue) ?? null : null;
+
   // Helpers
   const handleTextChange = (qIndex, value) => {
     setAnswers((prev) => ({ ...prev, [qIndex]: value }));
@@ -65,6 +86,25 @@ export default function PublicSurvey() {
 
   const handleRadioChange = (qIndex, choiceIdOrValue) => {
     setAnswers((prev) => ({ ...prev, [qIndex]: choiceIdOrValue }));
+  };
+
+  // Assigne la valeur de l'étape courante à un item (classement MAC)
+  const assignRank = (qIndex) => {
+    if (currentRankValue === null || answers[qIndex] !== undefined) return;
+    setAnswers((prev) => ({ ...prev, [qIndex]: currentRankValue }));
+    setRankHistory((h) => [...h, qIndex]);
+  };
+
+  // Annule la dernière affectation
+  const undoRank = () => {
+    if (rankHistory.length === 0) return;
+    const last = rankHistory[rankHistory.length - 1];
+    setAnswers((prev) => {
+      const next = { ...prev };
+      delete next[last];
+      return next;
+    });
+    setRankHistory((h) => h.slice(0, -1));
   };
 
   const handleCheckboxChange = (qIndex, choiceId, checked) => {
@@ -184,8 +224,10 @@ export default function PublicSurvey() {
             </h4>
             <div className="text-indigo-50 text-base space-y-3 font-medium">
               <p>
-                Veuillez choisir, pour chaque item, l’une des cinq options
-                proposées en cochant la case correspondante.
+                Classez les propositions en cinq étapes successives : d’abord
+                celles qui vous semblent les plus importantes, puis les moins
+                importantes, et ainsi de suite jusqu’aux propositions
+                médianes.
               </p>
               <div className="bg-white/10 p-4 rounded-xl border border-white/20 backdrop-blur-sm">
                 Au total, chaque colonne (de <em>"Pas du tout d’accord"</em> à{" "}
@@ -220,6 +262,75 @@ export default function PublicSurvey() {
 
   // Flag local pour afficher la notice une seule fois
   let likertNoticeRendered = false;
+  let rankingRendered = false;
+
+  // Bloc de classement MAC (remplace les items Likert obligatoires)
+  const renderRanking = () => (
+    <Fragment key="ranking-block">
+      <LikertNotice />
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        {currentRankValue !== null ? (
+          <div className="mb-4 p-4 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-700">
+            <p className="font-semibold text-indigo-900 dark:text-indigo-200">
+              Étape {RANK_STEPS.indexOf(currentRankValue) + 1} sur 5 :
+              choisissez {perValueWord} ({perValue}){" "}
+              {RANK_LABELS[currentRankValue].title} (« {RANK_LABELS[currentRankValue].text} »).
+            </p>
+            <p className="text-sm text-indigo-700 dark:text-indigo-300 mt-1">
+              Sélectionnés : {countFor(currentRankValue)} / {perValue}
+            </p>
+          </div>
+        ) : (
+          <div className="mb-4 p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 text-green-800 dark:text-green-300 font-medium">
+            Toutes les propositions sont classées. Vous pouvez envoyer vos réponses.
+          </div>
+        )}
+
+        <ul className="space-y-2">
+          {rankingIndices.map((i) => {
+            const q = enquete.questions[i];
+            const v = answers[i];
+            const assigned = v !== undefined;
+            const choice = LIKERT_CHOICES.find((c) => c.value === v);
+            return (
+              <li key={q.id}>
+                <button
+                  type="button"
+                  onClick={() => assignRank(i)}
+                  disabled={assigned || currentRankValue === null}
+                  className={`w-full flex items-center justify-between gap-4 text-left p-3 rounded-lg border transition-all ${
+                    assigned
+                      ? "bg-indigo-50 border-indigo-200 dark:bg-indigo-900/20 dark:border-indigo-700 cursor-default"
+                      : currentRankValue === null
+                      ? "border-gray-100 dark:border-gray-700 text-gray-500 cursor-not-allowed"
+                      : "border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer"
+                  }`}
+                >
+                  <span className="text-gray-800 dark:text-gray-100">{q.texte}</span>
+                  {assigned && (
+                    <span className="shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-600 text-white">
+                      {choice?.label}
+                    </span>
+                  )}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+
+        <div className="mt-4 flex justify-end">
+          <button
+            type="button"
+            onClick={undoRank}
+            disabled={rankHistory.length === 0}
+            className="px-4 py-2 rounded-lg text-sm font-medium bg-gray-200 text-gray-800 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+          >
+            Annuler la dernière sélection
+          </button>
+        </div>
+      </div>
+    </Fragment>
+  );
 
   return (
     <div className="w-full text-gray-900 dark:text-gray-100 font-sans py-10 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
@@ -238,6 +349,17 @@ export default function PublicSurvey() {
         <div className="space-y-6">
           {enquete.questions.map((q, index) => {
             const currentAnswer = answers[index];
+
+            if (
+              rankingEnabled &&
+              q.part === "MANDATORY" &&
+              q.type_question === "likert"
+            ) {
+              if (rankingRendered) return null;
+              rankingRendered = true;
+              return renderRanking();
+            }
+
             const isFirstMandatoryLikert =
               q.part === "MANDATORY" &&
               q.type_question === "likert" &&

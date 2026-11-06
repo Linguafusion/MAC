@@ -223,6 +223,7 @@ def compute_likert_stats(
             "scores": [],
             "stddevs": [],
             "consensus": [],
+            "consensus_classes": [],
             "distances": [],
             "polarisations": [],
             "n_responses": 0,
@@ -233,6 +234,7 @@ def compute_likert_stats(
     scores = compute_scores(matrix)
     stds = compute_stddevs(matrix, scores)
     consensus = compute_consensus(stds)
+    consensus_classes = [classify_consensus(c) for c in consensus]
 
     items = [{"id": q.id, "texte": q.texte} for q in questions_likert]
 
@@ -253,6 +255,7 @@ def compute_likert_stats(
         "scores": scores,
         "stddevs": stds,
         "consensus": consensus,
+        "consensus_classes": consensus_classes,
         "distances": distance_matrix,
         "polarisations": polarisations,
         "crowns": crowns,
@@ -260,6 +263,12 @@ def compute_likert_stats(
         "k_items": len(questions_likert),
         "filters": optional_filters,
     }
+
+CONSENSUS_THRESHOLD = 0.07  # seuil du guide MAC séparant les deux classes de consensus
+
+def classify_consensus(c: float, seuil: float = CONSENSUS_THRESHOLD) -> int:
+    """1 = consensus retenu (c >= seuil), 2 = consensus faible (c < seuil)."""
+    return 1 if c >= seuil else 2
 
 def classify_adhesion(score: float) -> int | None:
     if 1 <= score < 2:
