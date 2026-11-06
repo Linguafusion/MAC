@@ -42,19 +42,19 @@ export default function Navbar() {
     },
     {
       label: "Principes",
-      path: "/Book-details",
+      path: "/principes",
     },
     {
       label: "À propos",
-      path: "/About",
+      path: "/about",
     },
     {
       label: "Équipe",
-      path: "/Team",
+      path: "/team",
     },
     {
       label: "Contactez-nous",
-      path: "/Contactus",
+      path: "/contactus",
     },
     
   ];

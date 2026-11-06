@@ -10,3 +10,7 @@ __pycache__/
 
 # Snyk Security Extension - AI Rules (auto-generated)
 .github/instructions/snyk_rules.instructions.md
+
+# Données locales (fichiers Excel et verrous Office)
+backend/data/*.xlsx
+backend/data/~$*
