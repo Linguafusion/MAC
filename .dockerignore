@@ -14,6 +14,8 @@ backend/data/
 frontend/node_modules/
 frontend/dist/
 backend/frontend_build/
+# Scripts locaux (jeu de test) : inutiles en production
+backend/scripts/
 
 # Dépôt et outils
 .git/
