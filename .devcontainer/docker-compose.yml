@@ -21,6 +21,7 @@ services:
     # Variables d'environnement pour connecter le backend à la DB
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER:?définir dans .env}:${POSTGRES_PASSWORD:?définir dans .env}@db:5432/${POSTGRES_DB:?définir dans .env}
+      - SECRET_KEY=${SECRET_KEY:?définir dans .env}
     container_name: mac-dev-workspace
 
   # Service pour la base de données PostgreSQL

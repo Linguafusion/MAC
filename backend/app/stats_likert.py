@@ -208,7 +208,7 @@ def filter_responses_by_raw_filters(
 def compute_likert_stats(
     enquete: models.Enquete,
     cutoff: float | None = 1.4,
-    max_pairs: int | None = 10,
+    max_pairs: int | None = None,  # None = toutes les paires sous le seuil (le guide construit le graphe avec toutes)
     raw_filters: Dict[str, str] | None = None,
 ) -> dict:
     # 1) filtrer les responses à partir des questions OPTIONAL
@@ -226,6 +226,7 @@ def compute_likert_stats(
             "consensus_classes": [],
             "distances": [],
             "polarisations": [],
+            "crowns": [],
             "n_responses": 0,
             "k_items": len(questions_likert),
             "filters": build_optional_filters(enquete),
@@ -271,7 +272,8 @@ def classify_consensus(c: float, seuil: float = CONSENSUS_THRESHOLD) -> int:
     return 1 if c >= seuil else 2
 
 def classify_adhesion(score: float) -> int | None:
-    if 1 <= score < 2:
+    # Une moyenne de exactement +2 (tous les répondants ont choisi +2) appartient à la classe 1
+    if 1 <= score <= 2:
         return 1
     if 0 <= score < 1:
         return 2

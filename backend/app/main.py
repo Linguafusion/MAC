@@ -35,6 +35,8 @@ origins = [
     # "https://mon-domaine-production.com",
     "https://react-frontend-production-9fb3.up.railway.app",
 ]
+# Origines supplémentaires (ex. frontend de test sur Koyeb), séparées par des virgules
+origins += [o.strip() for o in os.getenv("CORS_ORIGINS", "").split(",") if o.strip()]
 
 app.add_middleware(
     CORSMiddleware,
