@@ -37,7 +37,10 @@ from app import crud, models, schemas, stats_likert  # noqa: E402
 from app.database import SessionLocal, engine  # noqa: E402
 
 TEST_EMAIL = "enqueteur.test@example.com"
-TEST_PASSWORD = os.getenv("SEED_PASSWORD", "TestOnly-2026-local")
+# Mot de passe du compte de test : jamais écrit dans le dépôt, à fournir dans l'environnement
+TEST_PASSWORD = os.getenv("SEED_PASSWORD")
+if not TEST_PASSWORD:
+    sys.exit("SEED_PASSWORD non défini. Choisissez un mot de passe de test et exportez-le avant de lancer le script.")
 TITRE = "MAC test local (données fictives)"
 ITEMS = [f"Proposition de test {i:02d}" for i in range(1, 11)]
 # Distribution exigée pour 10 items : 2 fois chaque valeur de -2 à 2
@@ -81,6 +84,7 @@ def get_or_create_enquete(db, owner):
     )
     enquete_in = schemas.EnqueteCreate(
         titre=TITRE,
+        taille_liste=len(ITEMS),
         description="Enquête fictive pour tester la passation et la saisie papier. Aucune donnée réelle.",
         questions=questions,
     )

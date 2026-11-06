@@ -130,7 +130,7 @@ def get_stats(
     stats = stats_likert.compute_likert_stats(
         enquete,
         cutoff=1.4,
-        max_pairs=10,
+        max_pairs=None,  # toutes les paires sous le seuil 1,40 (graphe du guide)
         raw_filters=raw_filters or None,
     )
     return stats

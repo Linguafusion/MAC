@@ -29,7 +29,7 @@ export default function PublicSurvey() {
         const res = await api.get(`/enquetes/public/${token}`);
         setEnquete(res.data);
       } catch (err) {
-        setMessage("Ce lien d'enquête est invalide ou a expiré: ", err);
+        setMessage("Ce lien d'enquête est invalide ou a expiré.");
       }
     };
     load();

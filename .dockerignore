@@ -1,0 +1,23 @@
+# Données personnelles et secrets : ne jamais les mettre dans une image
+.env
+.env.*
+!.env.example
+backend/data/
+**/*.xlsx
+**/*.db
+**/~$*
+
+# Environnements et caches locaux
+.venv/
+**/__pycache__/
+**/*.pyc
+frontend/node_modules/
+frontend/dist/
+backend/frontend_build/
+
+# Dépôt et outils
+.git/
+.github/
+.vscode/
+.devcontainer/
+*.log
