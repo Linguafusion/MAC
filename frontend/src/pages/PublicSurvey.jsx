@@ -1,7 +1,7 @@
 // frontend/src/pages/PublicSurvey.jsx
 import React, { useEffect, useState, Fragment } from "react";
 import api from "../services/api";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 // Valeurs métier Likert : -2, -1, 0, 1, 2
 const LIKERT_CHOICES = [
@@ -19,6 +19,9 @@ export default function PublicSurvey() {
   const [message, setMessage] = useState("");
   const [rankHistory, setRankHistory] = useState([]);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  // Mode saisie papier (ouvert depuis la liste des enquêtes par un enquêteur)
+  const modePapier = searchParams.get("mode") === "papier";
 
   useEffect(() => {
     const load = async () => {
@@ -187,7 +190,8 @@ export default function PublicSurvey() {
       await api.post(`/enquetes/public/${token}/submit`, {
         answers: answerPayload,
       });
-      navigate("/merci");
+      // En saisie papier, on revient à la liste pour enchaîner avec le sujet suivant
+      navigate(modePapier ? "/enquetes" : "/merci");
     } catch (err) {
       setMessage(err.response?.data?.detail || err.message);
     }
@@ -345,6 +349,14 @@ export default function PublicSurvey() {
             {enquete.description}
           </p>
         </div>
+
+        {modePapier && (
+          <div className="mb-6 p-4 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 dark:bg-amber-900/20 dark:border-amber-700 dark:text-amber-200 text-sm">
+            <strong>Mode saisie papier.</strong> Reportez ici les choix de la
+            feuille papier du sujet, puis envoyez. Chaque envoi crée une
+            réponse distincte, traitée comme une réponse en ligne.
+          </div>
+        )}
 
         <div className="space-y-6">
           {enquete.questions.map((q, index) => {
