@@ -14,14 +14,12 @@ export default function SurveyList() {
   const [urlToCopy, setUrlToCopy] = useState("");
 
   // Saisie papier : ouvre le formulaire public en mode papier pour reporter
-  // les réponses d'une feuille papier. Crée le lien de partage si besoin.
+  // les réponses d'une feuille papier. Crée toujours un lien de partage valide :
+  // public_token est rempli par défaut à la création, mais seul un ShareLink est accepté.
   const saisiePapier = async (e) => {
     try {
-      let token = e.public_token;
-      if (!token) {
-        const res = await api.post(`/enquetes/${e.id}/share`);
-        token = res.data.token;
-      }
+      const res = await api.post(`/enquetes/${e.id}/share`);
+      const token = res.data.token;
       navigate(`/public/${token}?mode=papier`);
     } catch (err) {
       toast.error("Impossible d'ouvrir la saisie papier pour cette enquête.");
