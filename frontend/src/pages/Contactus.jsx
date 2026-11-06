@@ -69,9 +69,14 @@ export default function Contact() {
             <div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Email</h3>
               <p className="text-gray-600 mb-1">Pour les demandes générales :</p>
-              <a href="mailto:contact@mac-enquete.ma" className="text-blue-600 font-semibold hover:underline">
-                a.elmadhi@uiz.ac.ma  Elmadhi.adil@gmail.com
-              </a>
+              <div className="flex flex-col gap-1">
+                <a href="mailto:a.elmadhi@uiz.ac.ma" className="text-blue-600 font-semibold hover:underline">
+                  a.elmadhi@uiz.ac.ma
+                </a>
+                <a href="mailto:Elmadhi.adil@gmail.com" className="text-blue-600 font-semibold hover:underline">
+                  Elmadhi.adil@gmail.com
+                </a>
+              </div>
             </div>
           </div>
 

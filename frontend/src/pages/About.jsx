@@ -91,7 +91,7 @@ export default function About() {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Données Sécurisées</h3>
               <p className="text-gray-600">
-                Vos données et celles de vos participants sont protégées avec les standards de sécurité actuels.
+                Les mots de passe sont hachés avec Argon2, les sessions utilisent des jetons JWT, et l'accès aux enquêtes est contrôlé par rôle (ROOT, ADMIN, CRÉATEUR).
               </p>
             </div>
           </div>
