@@ -37,7 +37,7 @@ export default function SurveyStats() {
   }, [id]);
 
   if (loading)
-    return <div className="p-6 text-center text-gray-600">Chargement...</div>;
+    return <div className="p-6 text-center text-gray-600 dark:text-slate-400">Chargement...</div>;
   if (!enquete || !stats)
     return (
       <div className="p-6 text-center text-red-600">
@@ -67,7 +67,7 @@ export default function SurveyStats() {
       <h1 className="text-2xl font-bold mb-2">
         Statistiques : {enquete.titre}
       </h1>
-      <p className="mb-2 text-gray-700">{enquete.description}</p>
+      <p className="mb-2 text-gray-700 dark:text-slate-300">{enquete.description}</p>
       <p className="mb-4 text-sm text-gray-500">
         Nombre de réponses prises en compte : {n_responses}
       </p>
@@ -77,15 +77,15 @@ export default function SurveyStats() {
       </Link>
 
       {items.length === 0 ? (
-        <div className="mt-4 text-gray-600">
+        <div className="mt-4 text-gray-600 dark:text-slate-400">
           Aucune question obligatoire Likert pour cette enquête.
         </div>
       ) : (
         <>
           {/* Tableau Item / Score / Consensus */}
-          <div className="relative overflow-x-auto rounded-lg border border-gray-200 bg-white shadow-sm mb-8">
+          <div className="relative overflow-x-auto rounded-lg border border-gray-200 bg-white dark:bg-slate-800 shadow-sm mb-8">
             <table className="w-full text-sm text-left">
-              <thead className="bg-gray-100 text-gray-700">
+              <thead className="bg-gray-100 text-gray-700 dark:text-slate-300">
                 <tr>
                   <th className="px-4 py-2 border-b">Item</th>
                   <th className="px-4 py-2 border-b">Score</th>
@@ -96,11 +96,11 @@ export default function SurveyStats() {
                 {items.map((item, idx) => (
                   <tr
                     key={item.id}
-                    className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}
+                    className={idx % 2 === 0 ? "bg-white dark:bg-slate-800" : "bg-gray-50 dark:bg-slate-900"}
                   >
                     <td className="px-4 py-2 border-b align-top">
                       <div className="font-medium">Question {idx + 1}</div>
-                      <div className="text-xs text-gray-600">{item.texte}</div>
+                      <div className="text-xs text-gray-600 dark:text-slate-400">{item.texte}</div>
                     </td>
                     <td className="px-4 py-2 border-b align-top">
                       {formatNumber(scores[idx])}
@@ -127,7 +127,7 @@ export default function SurveyStats() {
 
               return (
                 <div key={item.id} className="flex items-center gap-3">
-                  <div className="w-32 text-sm text-gray-700">Q{idx + 1}</div>
+                  <div className="w-32 text-sm text-gray-700 dark:text-slate-300">Q{idx + 1}</div>
 
                   <div className="flex-1">
                     <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
@@ -139,7 +139,7 @@ export default function SurveyStats() {
                     </div>
                   </div>
 
-                  <div className="w-16 text-xs text-gray-700 text-right">
+                  <div className="w-16 text-xs text-gray-700 dark:text-slate-300 text-right">
                     {formatNumber(score)}
                   </div>
 
@@ -164,13 +164,13 @@ export default function SurveyStats() {
               <h2 className="text-xl font-semibold mb-2">
                 Polarisations (items les plus proches)
               </h2>
-              <p className="text-sm text-gray-600 mb-3">
+              <p className="text-sm text-gray-600 dark:text-slate-400 mb-3">
                 Couples d&apos;items présentant les plus petites distances
                 moyennes (proximité de représentation).
               </p>
-              <div className="relative overflow-x-auto rounded-lg border border-gray-200 bg-white shadow-sm">
+              <div className="relative overflow-x-auto rounded-lg border border-gray-200 bg-white dark:bg-slate-800 shadow-sm">
                 <table className="w-full text-sm text-left">
-                  <thead className="bg-gray-100 text-gray-700">
+                  <thead className="bg-gray-100 text-gray-700 dark:text-slate-300">
                     <tr>
                       <th className="px-4 py-2 border-b">Item A</th>
                       <th className="px-4 py-2 border-b">Item B</th>
@@ -184,13 +184,13 @@ export default function SurveyStats() {
                       return (
                         <tr
                           key={`${p.item_a_id}-${p.item_b_id}-${idx}`}
-                          className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}
+                          className={idx % 2 === 0 ? "bg-white dark:bg-slate-800" : "bg-gray-50 dark:bg-slate-900"}
                         >
                           <td className="px-4 py-2 border-b align-top">
                             <div className="font-medium">
                               Q{p.item_a_index + 1} (id {p.item_a_id})
                             </div>
-                            <div className="text-xs text-gray-600">
+                            <div className="text-xs text-gray-600 dark:text-slate-400">
                               {itemA?.texte}
                             </div>
                           </td>
@@ -198,7 +198,7 @@ export default function SurveyStats() {
                             <div className="font-medium">
                               Q{p.item_b_index + 1} (id {p.item_b_id})
                             </div>
-                            <div className="text-xs text-gray-600">
+                            <div className="text-xs text-gray-600 dark:text-slate-400">
                               {itemB?.texte}
                             </div>
                           </td>

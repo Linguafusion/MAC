@@ -202,9 +202,9 @@ export default function SurveyGraphs() {
   if (!pendingStats) {
     return (
       <div className="max-w-6xl mx-auto p-6 space-y-10 relative">
-        <div className="absolute inset-0 bg-white/70 flex flex-col items-center justify-center z-20">
+        <div className="absolute inset-0 bg-white dark:bg-slate-800/70 flex flex-col items-center justify-center z-20">
           <div className="h-10 w-10 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin mb-3" />
-          <div className="text-gray-700 text-sm">
+          <div className="text-gray-700 dark:text-slate-300 text-sm">
             Mise à jour des graphiques...
           </div>
         </div>
@@ -215,9 +215,9 @@ export default function SurveyGraphs() {
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-10 relative">
       {loading && (
-        <div className="absolute inset-0 bg-white/70 flex flex-col items-center justify-center z-20">
+        <div className="absolute inset-0 bg-white dark:bg-slate-800/70 flex flex-col items-center justify-center z-20">
           <div className="h-10 w-10 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin mb-3" />
-          <div className="text-gray-700 text-sm">
+          <div className="text-gray-700 dark:text-slate-300 text-sm">
             Mise à jour des graphiques...
           </div>
         </div>
@@ -228,7 +228,7 @@ export default function SurveyGraphs() {
             <div className="mb-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
               {optionalFilters.map((q) => (
                 <div key={q.id}>
-                  <label className="block mb-1 text-gray-700">{q.texte}</label>
+                  <label className="block mb-1 text-gray-700 dark:text-slate-300">{q.texte}</label>
 
                   {q.type === "text" ? (
                     <select
@@ -306,7 +306,7 @@ export default function SurveyGraphs() {
             <h1 className="text-2xl font-bold mb-2">
               Graphiques avancés : {enquete.titre}
             </h1>
-            <p className="mb-2 text-gray-700">{enquete.description}</p>
+            <p className="mb-2 text-gray-700 dark:text-slate-300">{enquete.description}</p>
             <p className="mb-4 text-sm text-gray-500">
               Nombre de réponses prises en compte : {n_responses}
             </p>
@@ -384,12 +384,12 @@ export default function SurveyGraphs() {
             <h2 className="text-xl font-semibold mb-2">
               Scores des items – Adhésion
             </h2>
-            <p className="text-sm text-gray-600 mb-3">
+            <p className="text-sm text-gray-600 dark:text-slate-400 mb-3">
               Chaque point représente un item placé sur l&apos;axe horizontal en
               fonction de son score (saillance).
             </p>
 
-            <div className="border rounded-lg bg-white shadow-sm p-4 overflow-x-auto">
+            <div className="border rounded-lg bg-white dark:bg-slate-800 shadow-sm p-4 overflow-x-auto">
               <div
                 className="relative mx-auto"
                 style={{
@@ -511,13 +511,13 @@ export default function SurveyGraphs() {
             <h2 className="text-xl font-semibold mb-2">
               Adhésion et consensus
             </h2>
-            <p className="text-sm text-gray-600 mb-3">
+            <p className="text-sm text-gray-600 dark:text-slate-400 mb-3">
               Chaque cercle est centré sur le score de l&apos;item. Le rayon
               représente le consensus : plus le cercle est grand, plus
               l&apos;accord des répondants est fort.
             </p>
 
-            <div className="border rounded-lg bg-white shadow-sm p-4 overflow-x-auto">
+            <div className="border rounded-lg bg-white dark:bg-slate-800 shadow-sm p-4 overflow-x-auto">
               <div
                 className="relative mx-auto"
                 style={{
@@ -677,13 +677,13 @@ export default function SurveyGraphs() {
             <h2 className="text-xl font-semibold mb-2">
               Saillance – Consensus – Polarisations
             </h2>
-            <p className="text-sm text-gray-600 mb-3">
+            <p className="text-sm text-gray-600 dark:text-slate-400 mb-3">
               Même représentation que ci-dessus, avec en plus les segments verts
               entre les couples d&apos;items les plus proches (polarisations) et
               leurs distances.
             </p>
 
-            <div className="border rounded-lg bg-white shadow-sm p-4 overflow-x-auto">
+            <div className="border rounded-lg bg-white dark:bg-slate-800 shadow-sm p-4 overflow-x-auto">
               <div
                 className="relative mx-auto"
                 style={{
@@ -922,13 +922,13 @@ export default function SurveyGraphs() {
               <h2 className="text-xl font-semibold mb-2">
                 Focalisation autour de l&apos;Item {items.length}
               </h2>
-              <p className="text-sm text-gray-600 mb-3">
+              <p className="text-sm text-gray-600 dark:text-slate-400 mb-3">
                 L&apos;item focal est au centre. Les autres items sont placés
                 sur l&apos;axe des scores et répartis sur des cercles
                 concentriques en fonction de leur distance à l&apos;item focal.
               </p>
 
-              <div className="border rounded-lg bg-white shadow-sm p-4 overflow-x-auto">
+              <div className="border rounded-lg bg-white dark:bg-slate-800 shadow-sm p-4 overflow-x-auto">
                 <div
                   className="relative mx-auto"
                   style={{
@@ -1136,13 +1136,13 @@ export default function SurveyGraphs() {
               <h2 className="text-xl font-semibold mb-2">
                 Schéma en couronnes de la structure de la représentation sociale
               </h2>
-              <p className="text-sm text-gray-600 mb-3">
+              <p className="text-sm text-gray-600 dark:text-slate-400 mb-3">
                 Les items sont répartis en zones de centralité et de périphérie
                 à partir de leurs scores d’adhésion et de leurs distances
                 moyennes.
               </p>
 
-              <div className="border rounded-lg bg-white shadow-sm p-4 overflow-x-auto">
+              <div className="border rounded-lg bg-white dark:bg-slate-800 shadow-sm p-4 overflow-x-auto">
                 <div
                   className="relative mx-auto"
                   style={{

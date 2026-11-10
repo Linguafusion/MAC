@@ -79,7 +79,7 @@
 //   }, [id]);
 
 //   if (loading)
-//     return <div className="p-6 text-center text-gray-600">Chargement...</div>;
+//     return <div className="p-6 text-center text-gray-600 dark:text-slate-400">Chargement...</div>;
 
 //   if (!enquete || !stats)
 //     return (
@@ -329,7 +329,7 @@
 //         <h1 className="text-2xl font-bold mb-2">
 //           Graphiques Plotly (2D & 3D) : {enquete.titre}
 //         </h1>
-//         <p className="mb-2 text-gray-700">{enquete.description}</p>
+//         <p className="mb-2 text-gray-700 dark:text-slate-300">{enquete.description}</p>
 //         <p className="mb-4 text-sm text-gray-500">
 //           Nombre de réponses prises en compte : {n_responses}
 //         </p>
@@ -344,7 +344,7 @@
 //         <h2 className="text-xl font-semibold mb-2">
 //           Graphe 1 – Scores des items
 //         </h2>
-//         <div className="border rounded-lg bg-white shadow-sm p-4">
+//         <div className="border rounded-lg bg-white dark:bg-slate-800 shadow-sm p-4">
 //           <Plot
 //             data={[traceScores]}
 //             layout={layoutScores}
@@ -359,7 +359,7 @@
 //         <h2 className="text-xl font-semibold mb-2">
 //           Graphe 2 – Adhésion et consensus (bubbles 2D)
 //         </h2>
-//         <div className="border rounded-lg bg-white shadow-sm p-4">
+//         <div className="border rounded-lg bg-white dark:bg-slate-800 shadow-sm p-4">
 //           <Plot
 //             data={[traceAdhCons]}
 //             layout={layoutAdhCons}
@@ -374,7 +374,7 @@
 //         <h2 className="text-xl font-semibold mb-2">
 //           Graphe 3 – Saillance / consensus / polarisations
 //         </h2>
-//         <div className="border rounded-lg bg-white shadow-sm p-4">
+//         <div className="border rounded-lg bg-white dark:bg-slate-800 shadow-sm p-4">
 //           <Plot
 //             data={[traceSaillCons, ...polTraces]}
 //             layout={layoutSaillCons}
@@ -389,7 +389,7 @@
 //         <h2 className="text-xl font-semibold mb-2">
 //           Graphe 4 – Saillance / consensus / distance (3D)
 //         </h2>
-//         <div className="border rounded-lg bg-white shadow-sm p-4">
+//         <div className="border rounded-lg bg-white dark:bg-slate-800 shadow-sm p-4">
 //           <Plot
 //             data={[trace3D]}
 //             layout={layout3D}

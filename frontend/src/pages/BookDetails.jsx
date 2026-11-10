@@ -16,7 +16,7 @@ export const BookDetails = () => {
         </header>
 
         {/* Introduction */}
-        <div className="space-y-8 text-gray-700 leading-relaxed">
+        <div className="space-y-8 text-gray-700 dark:text-slate-300 leading-relaxed">
           <p className="text-justify">
             Développée par Bruno Maurer (Laboratoire Dipralang de Montpellier 3
             et Université de Lausanne) pour étudier les représentations des
@@ -52,7 +52,7 @@ export const BookDetails = () => {
           </section>
 
           {/* Section 2: Comment ça marche (Fond blanc pur pour contraste avec le dégradé ciel) */}
-          <section className="bg-white/60 p-6 rounded-xl border border-blue-100 shadow-sm">
+          <section className="bg-white dark:bg-slate-800/60 p-6 rounded-xl border border-blue-100 shadow-sm">
             <h2 className="text-xl font-bold text-blue-800 mb-4 text-center">
               Comment ça marche ?
             </h2>
@@ -71,7 +71,7 @@ export const BookDetails = () => {
               <li>
                 <strong>Analyse combinée :</strong> trois dimensions sont
                 mesurées simultanément pour chaque élément :
-                <ul className="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                <ul className="list-disc pl-5 mt-2 space-y-1 text-gray-600 dark:text-slate-400">
                   <li>
                     L'adhésion : à quel point cette idée caractérise la langue
                   </li>
@@ -97,19 +97,19 @@ export const BookDetails = () => {
               zones distinctes dans la représentation :
             </p>
             <ul className="grid sm:grid-cols-2 gap-4">
-              <li className="bg-white p-3 rounded-lg border-l-4 border-blue-500 shadow-sm">
+              <li className="bg-white dark:bg-slate-800 p-3 rounded-lg border-l-4 border-blue-500 shadow-sm">
                 <strong>• La zone de centralité maximum :</strong> le cœur
                 stable et partagé de la représentation
               </li>
-              <li className="bg-white p-3 rounded-lg border-l-4 border-blue-400 shadow-sm">
+              <li className="bg-white dark:bg-slate-800 p-3 rounded-lg border-l-4 border-blue-400 shadow-sm">
                 <strong>• La couronne centrale :</strong> les éléments
                 moyennement consensuels, susceptibles d'évoluer
               </li>
-              <li className="bg-white p-3 rounded-lg border-l-4 border-blue-300 shadow-sm">
+              <li className="bg-white dark:bg-slate-800 p-3 rounded-lg border-l-4 border-blue-300 shadow-sm">
                 <strong>• La périphérie incertaine :</strong> les éléments sur
                 lesquels le groupe est divisé
               </li>
-              <li className="bg-white p-3 rounded-lg border-l-4 border-gray-300 shadow-sm">
+              <li className="bg-white dark:bg-slate-800 p-3 rounded-lg border-l-4 border-gray-300 shadow-sm">
                 <strong>• La périphérie marginale :</strong> ce qui est
                 fortement rejeté, définissant la représentation "en creux"
               </li>
@@ -156,7 +156,7 @@ export const BookDetails = () => {
               outil unique pour saisir la complexité des représentations et
               éclairer des décisions.
             </p>
-            <p className="text-base text-justify text-black italic bg-white p-4 rounded-lg border border-gray-100">
+            <p className="text-base text-justify text-black italic bg-white dark:bg-slate-800 p-4 rounded-lg border border-gray-100">
               Outillée mathématiquement par Pierre-Antoine Desrousseaux (IUT de
               Béziers) qui a conçus tous les calculs qui sont ici utilisés, et
               mise en ligne par Nicolas Serra pour le premier site MAC construit
@@ -167,7 +167,7 @@ export const BookDetails = () => {
           </section>
 
           {/* Footer / Références */}
-          <footer className="mt-8 pt-6 border-t border-blue-100 text-sm text-gray-600">
+          <footer className="mt-8 pt-6 border-t border-blue-100 text-sm text-gray-600 dark:text-slate-400">
             <p className="font-semibold mb-2">Références :</p>
             <p>
               <span className="italic">
