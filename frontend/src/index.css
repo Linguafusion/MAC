@@ -4,6 +4,10 @@
 @import "tailwindcss";
 @tailwind utilities;
 
+/* Le mode sombre suit le bouton de thème (classe "dark" sur <html>),
+   et non la préférence système : évite un fond clair avec des textes clairs. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 
 /* 2. Styles globaux (Ancien @layer base) */
 /* Utilisation de la fonction theme() pour éviter le conflit @apply sur les sélecteurs globaux */
