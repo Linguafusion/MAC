@@ -1,11 +1,11 @@
 # backend/app/routes_surveys.py
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from sqlalchemy.orm import Session
 from .database import get_db
 from . import schemas, crud, models
 from .security import get_current_user
 from typing import List, Dict
-from . import stats_likert
+from . import stats_likert, questionnaire_papier
 
 router = APIRouter(prefix="/enquetes", tags=["Enquetes"])
 
@@ -84,6 +84,28 @@ def public_submit(token: str, response_in: schemas.ResponseIn, db: Session = Dep
         raise HTTPException(404, "Lien invalide")
     resp = crud.submit_response(db, enquete, response_in)
     return resp
+
+@router.get("/{enquete_id}/questionnaire-papier.docx")
+def get_questionnaire_papier(
+    enquete_id: int,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    """Questionnaire papier (Word) reprenant le protocole MAC en quatre temps."""
+    enquete = crud.get_enquete_with_questions(db, enquete_id)
+    if not enquete:
+        raise HTTPException(404, "Enquête non trouvée")
+    if not (current_user.role.name in ("ROOT", "ADMIN") or enquete.owner_id == current_user.id):
+        raise HTTPException(403, "Non autorisé")
+    try:
+        contenu = questionnaire_papier.generer_docx(enquete)
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+    return Response(
+        content=contenu,
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        headers={"Content-Disposition": f'attachment; filename="questionnaire_papier_{enquete_id}.docx"'},
+    )
 
 @router.get("/{enquete_id}/responses", response_model=List[schemas.ResponseDetailOut])
 def list_responses(

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import api from "../services/api";
+import { libelleValeur } from "../services/protocoleMac";
 
 // --- Helper Functions ---
 
@@ -17,16 +18,7 @@ const getLikertStyle = (value) => {
   }
 };
 
-const getLikertLabel = (value) => {
-  switch (value) {
-    case -2: return "Pas du tout d'accord";
-    case -1: return "Pas d'accord";
-    case 0:  return "Neutre";
-    case 1:  return "D'accord";
-    case 2:  return "Tout à fait d'accord";
-    default: return "N/A";
-  }
-};
+const getLikertLabel = (value) => libelleValeur(value);
 
 // --- Answer Display Component ---
 const AnswerDisplay = ({ group }) => {

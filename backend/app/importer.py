@@ -20,10 +20,9 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from . import models
+from .protocole_mac import TAILLES_VALIDES, VALEURS
 
-TAILLES_VALIDES = (10, 15, 20)
 TAILLE_MAX_OCTETS = 50 * 1024 * 1024
-VALEURS = (-2, -1, 0, 1, 2)
 
 
 def lire_fichier(nom: str, contenu: bytes) -> pd.DataFrame:

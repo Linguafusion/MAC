@@ -15,6 +15,7 @@ import UserEdit from "./pages/UserEdit";
 import RequireAuth from "./Components/RequireAuth";
 import SurveyList from "./pages/SurveyList";
 import SurveyImport from "./pages/SurveyImport";
+import QuestionnairePapier from "./pages/QuestionnairePapier";
 import SurveyCreate from "./pages/SurveyCreate";
 import PublicSurvey from "./pages/PublicSurvey";
 import SurveyEdit from "./pages/SurveyEdit";
@@ -45,7 +46,9 @@ const AppWrapper = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
+      <div className="print:hidden">
+        <Navbar />
+      </div>
 
       <main className="flex-1 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <Routes>
@@ -121,6 +124,15 @@ const AppWrapper = () => {
           />
 
           <Route
+            path="/enquetes/:id/papier"
+            element={
+              <RequireAuth roles={["ROOT", "ADMIN", "CREATOR"]}>
+                <QuestionnairePapier />
+              </RequireAuth>
+            }
+          />
+
+          <Route
             path="/enquetes/:id/responses"
             element={
               <RequireAuth>
@@ -161,7 +173,9 @@ const AppWrapper = () => {
 
       {shouldShowContent && <Content />}
 
-      <Footer />
+      <div className="print:hidden">
+        <Footer />
+      </div>
     </div>
   );
 };

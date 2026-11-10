@@ -1,7 +1,7 @@
 # backend/app/crud.py
 
 from sqlalchemy.orm import Session # <<< CORRECTION: Import de Session
-from . import models, schemas, security 
+from . import models, schemas, security, protocole_mac
 import uuid
 from fastapi import HTTPException
 from enum import Enum
@@ -50,13 +50,7 @@ def delete_user(db: Session, db_user: models.User):
 
 # --- CRUD Enquete (F1) ---
 
-LIKERT_CHOICES = [
-    ("Pas du tout d'accord", -2),
-    ("Pas d'accord", -1),
-    ("Neutre", 0),
-    ("D'accord", 1),
-    ("Tout à fait d'accord", 2),
-]
+LIKERT_CHOICES = [(protocole_mac.libelle_valeur(v), v) for v in protocole_mac.VALEURS]
 
 def create_enquete_full(db: Session, enquete_in: schemas.EnqueteCreate, owner_id: int):
     # Validate mandatory part counts
@@ -163,7 +157,7 @@ def submit_response(db: Session, enquete: models.Enquete, response_in: schemas.R
     mandatory_questions = [q for q in enquete.questions if q.part == models.QuestionPart.MANDATORY]
     if mandatory_questions:
         qcount = len(mandatory_questions)
-        if qcount not in (10, 15, 20):
+        if qcount not in protocole_mac.TAILLES_VALIDES:
             raise HTTPException(status_code=400, detail="Questionnaire obligatoire mal configuré.")
 
         mand_q_ids = {q.id for q in mandatory_questions}
@@ -176,20 +170,13 @@ def submit_response(db: Session, enquete: models.Enquete, response_in: schemas.R
             # Ici on attend value pour les Likert
             if a.value is None:
                 raise HTTPException(status_code=400, detail="Chaque question obligatoire doit avoir une valeur.")
-            if a.value not in (-2, -1, 0, 1, 2):
-                raise HTTPException(status_code=400, detail="Valeur Likert invalide.")
             chosen_values.append(a.value)
 
-        # Vérifier la distribution
-        from collections import Counter
-        cnt = Counter(chosen_values)
-        expected = {10: 2, 15: 3, 20: 4}[qcount]
-        for val in (-2, -1, 0, 1, 2):
-            if cnt.get(val, 0) != expected:
-                raise HTTPException(
-                    status_code=400,
-                    detail=f"Distribution invalide : chaque valeur doit apparaitre {expected} fois."
-                )
+        # Protocole en quatre temps : chaque valeur exactement N/5 fois
+        try:
+            protocole_mac.verifier_distribution(chosen_values)
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e))
 
     # Persistance de la réponse
     resp = models.Response(enquete_id=enquete.id)

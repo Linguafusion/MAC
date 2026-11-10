@@ -228,8 +228,20 @@ export default function SurveyList() {
                             <span className="hidden xl:inline">Répondre</span>
                           </button>
 
+                          {/* Questionnaire papier (PDF / Word) */}
+                          <Link
+                            to={`/enquetes/${e.id}/papier`}
+                            title="Questionnaire papier (PDF / Word)"
+                            className="flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg text-amber-700 bg-amber-50 hover:bg-amber-100 dark:text-amber-400 dark:bg-amber-400/10 dark:hover:bg-amber-400/20 transition-all"
+                          >
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                            </svg>
+                            <span className="hidden xl:inline">Papier</span>
+                          </Link>
+
                           {/* Responses Link */}
-                          <Link 
+                          <Link
                             to={`/enquetes/${e.id}/responses`} 
                             title="Réponses"
                             className="flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg text-purple-600 bg-purple-50 hover:bg-purple-100 dark:text-purple-400 dark:bg-purple-400/10 dark:hover:bg-purple-400/20 transition-all"
