@@ -7,11 +7,14 @@ import {
   LIBELLE_MEDIANE,
   NOMBRE_EN_LETTRES,
   VALEUR_MEDIANE,
+  libelleValeur,
   nombreParEtape,
 } from "../services/protocoleMac";
 
 // Valeurs proposées pour une question Likert complémentaire (hors protocole MAC)
 const VALEURS_LIBRES = [-2, -1, 0, 1, 2];
+// Notes du protocole, dans l'ordre d'affichage de la saisie papier
+const NOTES_MAC = [2, -2, 1, -1, 0];
 
 const formaterErreur = (err) => {
   const detail = err?.response?.data?.detail;
@@ -32,12 +35,14 @@ export default function PublicSurvey() {
   const [temps, setTemps] = useState(0);
   // Propositions cochées pendant le temps en cours (indices dans enquete.questions)
   const [selection, setSelection] = useState([]);
-  // Valeur attribuée à chaque proposition, une fois son temps validé (indice -> valeur)
+  // Valeur attribuée à chaque proposition (indice -> valeur)
   const [classement, setClassement] = useState({});
-  // Réponses aux questions complémentaires (texte, oui/non, choix)
+  // Réponses aux questions d'identification (texte, oui/non, choix)
   const [reponsesLibres, setReponsesLibres] = useState({});
-  // Identification (questions complémentaires) remplie avant le classement
+  // Identification remplie avant le classement ou la saisie des notes
   const [identificationOk, setIdentificationOk] = useState(false);
+  // Rappel affiché quand le nombre de propositions cochées n'est pas le nombre exact
+  const [rappel, setRappel] = useState("");
 
   useEffect(() => {
     const load = async () => {
@@ -82,8 +87,14 @@ export default function PublicSurvey() {
   const toutClasse = restantes.length === 0;
   const enRecapitulatif = nbPropositions === 0 || temps >= ETAPES_MAC.length;
   const etapeCourante = !enRecapitulatif ? ETAPES_MAC[temps] : null;
-  // Identification d'abord, puis le classement (procédure MAC, étape 2)
-  const enIdentification = protocoleOk && nbPropositions > 0 && indicesLibres.length > 0 && !identificationOk;
+  // Identification d'abord (question d'identification des personnes enquêtées)
+  const enIdentification =
+    protocoleOk && nbPropositions > 0 && indicesLibres.length > 0 && !identificationOk;
+  // Mode papier : l'enquêteur saisit la note de chaque proposition
+  const saisieNotes = modePapier && nbPropositions > 0;
+  const compteValeur = (v) => indicesMac.filter((i) => classement[i] === v).length;
+  const quotasPapierOk =
+    saisieNotes && toutClasse && NOTES_MAC.every((v) => compteValeur(v) === k);
 
   const libresObligatoiresOk = indicesLibres.every((i) => {
     const q = questions[i];
@@ -94,21 +105,40 @@ export default function PublicSurvey() {
   });
 
   const peutEnvoyer =
-    protocoleOk && enRecapitulatif && toutClasse && libresObligatoiresOk && !envoi;
+    protocoleOk &&
+    (saisieNotes ? quotasPapierOk : enRecapitulatif && toutClasse) &&
+    libresObligatoiresOk &&
+    !envoi;
 
   // --- Temps du protocole -------------------------------------------------
 
   // Cocher ou décocher une proposition ; impossible d'en cocher plus que le nombre exact
   const basculerProposition = (i) => {
-    setSelection((prev) => {
-      if (prev.includes(i)) return prev.filter((x) => x !== i);
-      if (prev.length >= k) return prev;
-      return [...prev, i];
-    });
+    if (!selection.includes(i) && selection.length >= k) {
+      setRappel(
+        `Vous ne pouvez cocher que ${NOMBRE_EN_LETTRES[k]} propositions. Décochez-en une pour en choisir une autre.`
+      );
+      return;
+    }
+    setRappel("");
+    setSelection((prev) => (prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i]));
+  };
+
+  // Rappel quand le nombre de propositions cochées n'est pas le nombre exact
+  const messageRappel = (n) => {
+    const mot = NOMBRE_EN_LETTRES[k];
+    if (n === 0) return `Aucune proposition n'est cochée. Il faut en cocher exactement ${mot}.`;
+    if (n === 1) return `Vous n'en avez coché qu'une. Il faut en cocher exactement ${mot}.`;
+    return `Vous en avez coché ${n}. Il faut en cocher exactement ${mot}.`;
   };
 
   const validerTemps = () => {
-    if (!etapeCourante || selection.length !== k) return;
+    if (!etapeCourante) return;
+    if (selection.length !== k) {
+      setRappel(messageRappel(selection.length));
+      return;
+    }
+    setRappel("");
     const dernierTemps = temps === ETAPES_MAC.length - 1;
     setClassement((prev) => {
       const suivant = { ...prev };
@@ -133,11 +163,12 @@ export default function PublicSurvey() {
     setClassement({});
     setSelection([]);
     setTemps(0);
+    setRappel("");
     setMessage("");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // --- Questions complémentaires -----------------------------------------
+  // --- Questions d'identification -----------------------------------------
 
   const modifierLibre = (i, valeur) => {
     setReponsesLibres((prev) => ({ ...prev, [i]: valeur }));
@@ -158,7 +189,9 @@ export default function PublicSurvey() {
   const envoyer = async () => {
     if (!peutEnvoyer) {
       setMessage(
-        "Veuillez terminer les quatre temps et répondre aux questions obligatoires avant d'envoyer."
+        saisieNotes
+          ? "Chaque note doit être attribuée exactement le nombre de fois demandé avant l'envoi."
+          : "Veuillez terminer les quatre temps et répondre aux questions obligatoires avant d'envoyer."
       );
       return;
     }
@@ -232,16 +265,17 @@ export default function PublicSurvey() {
   const renderConsigne = () => (
     <div className="mb-8 rounded-2xl bg-linear-to-r from-violet-600 via-indigo-600 to-blue-600 p-6 shadow-xl text-white">
       <h4 className="text-xl font-bold mb-2 text-white tracking-wide drop-shadow-sm">
-        Classement en quatre temps
+        Voici {nbPropositions} propositions sur « {enquete.titre} ».
       </h4>
       <div className="text-indigo-50 text-base space-y-3 font-medium">
+        <p className="font-semibold">Lis-les plusieurs fois, attentivement.</p>
         <p>
-          Lisez les propositions, puis, à chaque temps, cochez le nombre exact de propositions
-          demandé parmi celles qui n'ont pas encore été choisies. Un temps validé ne peut plus
-          être modifié : pour corriger, utilisez « Recommencer ».
+          Puis, à chaque temps, coche le nombre exact de propositions demandé parmi celles qui
+          n'ont pas encore été choisies. Un temps validé ne peut plus être modifié : pour
+          corriger, utilise « Recommencer ».
         </p>
         <div className="bg-white/10 p-4 rounded-xl border border-white/20 backdrop-blur-sm">
-          À chaque temps, vous choisissez
+          À chaque temps, tu choisis
           <strong className="text-white mx-1.5 text-lg underline decoration-pink-400 decoration-2 underline-offset-2">
             {NOMBRE_EN_LETTRES[k]} ({k})
           </strong>
@@ -264,7 +298,7 @@ export default function PublicSurvey() {
             {etapeCourante.libelle}
           </h3>
           <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-            Cochez exactement <strong>{NOMBRE_EN_LETTRES[k]} propositions</strong> parmi les{" "}
+            Coche exactement <strong>{NOMBRE_EN_LETTRES[k]} propositions</strong> parmi les{" "}
             {restantes.length} encore disponibles.
           </p>
         </header>
@@ -278,13 +312,13 @@ export default function PublicSurvey() {
                 <button
                   type="button"
                   onClick={() => basculerProposition(i)}
-                  disabled={bloquee}
                   aria-pressed={coche}
+                  aria-disabled={bloquee}
                   className={`w-full text-left flex items-start gap-3 p-4 rounded-lg border transition-all ${
                     coche
                       ? "bg-indigo-50 border-indigo-300 dark:bg-indigo-900/30 dark:border-indigo-600"
                       : bloquee
-                      ? "opacity-50 cursor-not-allowed border-gray-100 dark:border-gray-700"
+                      ? "opacity-50 border-gray-100 dark:border-gray-700"
                       : "border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-700/50"
                   }`}
                 >
@@ -303,6 +337,15 @@ export default function PublicSurvey() {
             );
           })}
         </ul>
+
+        {rappel && (
+          <p
+            role="alert"
+            className="mx-6 mb-4 p-3 rounded-lg text-sm font-medium bg-amber-50 text-amber-900 border border-amber-200 dark:bg-amber-900/20 dark:text-amber-200 dark:border-amber-700"
+          >
+            {rappel}
+          </p>
+        )}
 
         <footer className="px-6 pb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <span
@@ -325,11 +368,11 @@ export default function PublicSurvey() {
             <button
               type="button"
               onClick={validerTemps}
-              disabled={!complet}
+              aria-disabled={!complet}
               className={`px-6 py-2.5 rounded-lg font-semibold text-sm transition-colors ${
                 complet
                   ? "bg-indigo-600 text-white hover:bg-indigo-500"
-                  : "bg-gray-300 text-gray-500 dark:bg-gray-700 dark:text-gray-500 cursor-not-allowed"
+                  : "bg-gray-300 text-gray-500 dark:bg-gray-700 dark:text-gray-500"
               }`}
             >
               Valider ce temps
@@ -339,6 +382,66 @@ export default function PublicSurvey() {
       </section>
     );
   };
+
+  // Saisie papier : l'enquêteur reporte la note de chaque proposition, comme sur la feuille
+  const renderSaisieNotes = () => (
+    <section className="space-y-4">
+      <div>
+        <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Saisie des notes</h3>
+        <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+          Pour chaque proposition, choisis la note reportée sur la feuille papier. Chaque note doit
+          être attribuée exactement {NOMBRE_EN_LETTRES[k]} fois ({k}).
+        </p>
+      </div>
+
+      <div className="flex flex-wrap gap-2 text-xs">
+        {[...ETAPES_MAC, { valeur: VALEUR_MEDIANE, signe: "0", libelle: LIBELLE_MEDIANE }].map((g) => {
+          const n = compteValeur(g.valeur);
+          return (
+            <span
+              key={g.valeur}
+              className={`rounded-full px-2.5 py-1 font-medium ${
+                n === k
+                  ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
+                  : "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300"
+              }`}
+            >
+              {g.signe} : {n}/{k}
+            </span>
+          );
+        })}
+      </div>
+
+      <ul className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 space-y-3">
+        {indicesMac.map((i) => (
+          <li
+            key={questions[i].id}
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 rounded-lg border border-gray-100 dark:border-gray-700"
+          >
+            <span className="text-gray-800 dark:text-gray-100">{questions[i].texte}</span>
+            <select
+              aria-label={questions[i].texte}
+              value={classement[i] ?? ""}
+              onChange={(e) => {
+                const valeur = Number(e.target.value);
+                setClassement((prev) => ({ ...prev, [i]: valeur }));
+              }}
+              className="shrink-0 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
+            >
+              <option value="" disabled>
+                Choisir…
+              </option>
+              {NOTES_MAC.map((v) => (
+                <option key={v} value={v} disabled={classement[i] !== v && compteValeur(v) >= k}>
+                  {v > 0 ? `+${v}` : v === 0 ? "0" : `−${Math.abs(v)}`} · {libelleValeur(v)}
+                </option>
+              ))}
+            </select>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
 
   const renderRecapitulatif = () => (
     <section className="space-y-4">
@@ -481,9 +584,13 @@ export default function PublicSurvey() {
   const renderIdentification = () => (
     <section className="space-y-4">
       <div>
-        <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Identification</h3>
+        <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
+          Question d'identification des personnes enquêtées
+        </h3>
         <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-          Ces informations sont demandées avant le classement. Elles servent aux tris de l'analyse.
+          {modePapier
+            ? "Saisis d'abord les variables d'identification de la personne enquêtée. Elles servent aux tris de l'analyse."
+            : "Ces informations sont demandées avant le classement. Elles servent aux tris de l'analyse."}
         </p>
       </div>
       {indicesLibres.map((i) => renderQuestionLibre(i))}
@@ -498,7 +605,7 @@ export default function PublicSurvey() {
               : "bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-500 cursor-not-allowed"
           }`}
         >
-          Commencer le classement
+          {modePapier ? "Passer à la saisie des notes" : "Commencer le classement"}
         </button>
       </div>
     </section>
@@ -520,9 +627,9 @@ export default function PublicSurvey() {
 
         {modePapier && (
           <div className="mb-6 p-4 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 dark:bg-amber-900/20 dark:border-amber-700 dark:text-amber-200 text-sm">
-            <strong>Mode saisie papier.</strong> Reportez ici, temps par temps, les choix de la
-            feuille papier du sujet, puis envoyez. Chaque envoi crée une réponse distincte,
-            traitée comme une réponse en ligne.
+            <strong>Mode saisie papier.</strong> Saisis l'identification puis la note de chaque
+            proposition, telle que reportée sur la feuille papier du sujet. Chaque envoi crée une
+            réponse distincte, traitée comme une réponse en ligne.
           </div>
         )}
 
@@ -534,16 +641,18 @@ export default function PublicSurvey() {
 
         {protocoleOk && enIdentification && renderIdentification()}
 
-        {protocoleOk && nbPropositions > 0 && !enIdentification && renderParcours()}
+        {protocoleOk && nbPropositions > 0 && !enIdentification && !saisieNotes && renderParcours()}
 
-        {protocoleOk && !enRecapitulatif && !enIdentification && (
+        {protocoleOk && !enRecapitulatif && !enIdentification && !saisieNotes && (
           <>
             {renderConsigne()}
             {renderEtape()}
           </>
         )}
 
-        {protocoleOk && enRecapitulatif && (
+        {protocoleOk && saisieNotes && !enIdentification && renderSaisieNotes()}
+
+        {protocoleOk && enRecapitulatif && !saisieNotes && (
           <div className="space-y-8">
             {nbPropositions > 0 && renderRecapitulatif()}
 
@@ -559,7 +668,7 @@ export default function PublicSurvey() {
         )}
 
         {/* Envoi */}
-        {protocoleOk && enRecapitulatif && (
+        {protocoleOk && (enRecapitulatif || saisieNotes) && !enIdentification && (
           <div className="mt-10 pb-20 text-center">
             {message && (
               <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-300 rounded-lg">
@@ -574,7 +683,7 @@ export default function PublicSurvey() {
                   onClick={recommencer}
                   className="text-sm font-medium text-gray-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400 underline underline-offset-2"
                 >
-                  Recommencer le classement
+                  {saisieNotes ? "Effacer les notes" : "Recommencer le classement"}
                 </button>
               </div>
             )}
@@ -591,7 +700,9 @@ export default function PublicSurvey() {
               {envoi ? "Envoi en cours…" : "Envoyer mes réponses"}
             </button>
             <p className="mt-4 text-xs text-gray-400 dark:text-gray-600">
-              L'envoi n'est possible qu'une fois les quatre temps validés.
+              {saisieNotes
+                ? "L'envoi n'est possible que lorsque chaque note est attribuée le nombre de fois demandé."
+                : "L'envoi n'est possible qu'une fois les quatre temps validés."}
             </p>
           </div>
         )}

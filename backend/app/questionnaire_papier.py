@@ -111,11 +111,15 @@ def generer_docx(enquete) -> bytes:
 
     # Identification avant le questionnaire, comme dans la passation en ligne
     if libres:
-        doc.add_heading("Identification", level=2)
+        doc.add_heading("Question d'identification des personnes enquêtées", level=2)
         for question in libres:
             _ligne_question_libre(doc, question)
 
     doc.add_heading("Consigne", level=2)
+    doc.add_paragraph(
+        f"Voici {len(propositions)} propositions sur « {enquete.titre} ». "
+        f"Lis-les plusieurs fois, attentivement."
+    )
     doc.add_paragraph(
         f"Lisez l'ensemble des propositions. Vous allez les classer en quatre temps. "
         f"À chaque temps, cochez exactement {mot} propositions ({k}), parmi celles qui "

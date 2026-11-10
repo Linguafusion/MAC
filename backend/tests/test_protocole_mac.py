@@ -108,11 +108,14 @@ class QuestionnairePapierWord(unittest.TestCase):
         ]
         document = Document(io.BytesIO(questionnaire_papier.generer_docx(_enquete(10, libres))))
         texte = "\n".join(p.text for p in document.paragraphs)
-        self.assertIn("Identification", texte)
+        titre = "Question d'identification des personnes enquêtées"
+        self.assertIn(titre, texte)
         self.assertIn("Pays :", texte)
         self.assertIn("Femme", texte)
         # L'identification doit précéder la consigne du classement
-        self.assertLess(texte.index("Identification"), texte.index("Consigne"))
+        self.assertLess(texte.index(titre), texte.index("Consigne"))
+        # Introduction de la feuille, comme dans la passation en ligne
+        self.assertIn("Lis-les plusieurs fois, attentivement.", texte)
 
     def test_taille_invalide_refusee(self):
         with self.assertRaises(ValueError):
