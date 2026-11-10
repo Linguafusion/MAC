@@ -104,6 +104,13 @@ export default function SurveyList() {
               Gérez vos formulaires, analysez les réponses et partagez vos liens.
             </p>
           </div>
+          <div className="mt-4 md:mt-0 flex flex-wrap gap-3">
+          <Link
+            to="/enquetes/import"
+            className="inline-flex items-center justify-center px-6 py-3 text-sm font-bold text-indigo-700 dark:text-indigo-200 transition-all duration-200 bg-indigo-50 dark:bg-indigo-900/40 rounded-xl shadow-md hover:bg-indigo-100 dark:hover:bg-indigo-900/60 active:scale-95"
+          >
+            <span>Importer une enquête papier</span>
+          </Link>
           <Link
             to="/enquetes/create"
             className="mt-4 md:mt-0 inline-flex items-center justify-center px-6 py-3 text-sm font-bold text-white dark:text-white transition-all duration-200 bg-indigo-600 rounded-xl shadow-md hover:bg-indigo-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 dark:focus:ring-offset-gray-900 active:scale-95"
@@ -111,6 +118,7 @@ export default function SurveyList() {
             <span className="mr-2 text-lg text-white dark:text-white">+</span>
             <span className="text-white dark:text-white">Créer une enquête</span>
           </Link>
+          </div>
         </div>
 
         {/* Table Container - Keeps a solid background for readability */}

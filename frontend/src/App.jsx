@@ -14,6 +14,7 @@ import UserCreate from "./pages/UserCreate";
 import UserEdit from "./pages/UserEdit";
 import RequireAuth from "./Components/RequireAuth";
 import SurveyList from "./pages/SurveyList";
+import SurveyImport from "./pages/SurveyImport";
 import SurveyCreate from "./pages/SurveyCreate";
 import PublicSurvey from "./pages/PublicSurvey";
 import SurveyEdit from "./pages/SurveyEdit";
@@ -88,6 +89,15 @@ const AppWrapper = () => {
             element={
               <RequireAuth>
                 <SurveyCreate />
+              </RequireAuth>
+            }
+          />
+
+          <Route
+            path="/enquetes/import"
+            element={
+              <RequireAuth roles={["ROOT", "ADMIN", "CREATOR"]}>
+                <SurveyImport />
               </RequireAuth>
             }
           />

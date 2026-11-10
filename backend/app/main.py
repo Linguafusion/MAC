@@ -11,6 +11,7 @@ from .config import ACCESS_TOKEN_EXPIRE_MINUTES # Import nécessaire
 from fastapi.middleware.cors import CORSMiddleware
 from .routes_users import router as users_router
 from .routes_surveys import router as surveys_router
+from .routes_import import router as import_router
 from fastapi.staticfiles import StaticFiles
 import os
 
@@ -58,17 +59,7 @@ def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 # Route pour la connexion (récupération du token)
 @app.post("/token", response_model=schemas.Token)
 def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    user = crud.get_user_by_email(db, email=form_data.username) 
-    # --- DÉBOGAGE AJOUTÉ ---
-    print(f"DEBUG: Tentative de connexion pour l'email: {form_data.username}")
-    if user:
-        is_valid = security.verify_password(form_data.password, user.hashed_password)
-        print(f"DEBUG: Mot de passe haché en base: {user.hashed_password[:30]}...")
-        print(f"DEBUG: Résultat de la vérification (verify_password): {is_valid}")
-    else:
-        print("DEBUG: Utilisateur non trouvé.")
-        is_valid = False
-    # --- FIN DÉBOGAGE ---
+    user = crud.get_user_by_email(db, email=form_data.username)
     if not user or not security.verify_password(form_data.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -91,6 +82,7 @@ def read_users_me(current_user: schemas.User = Depends(security.get_current_user
 # --- ROUTES USERS ---
 app.include_router(users_router)
 app.include_router(surveys_router)
+app.include_router(import_router)
 
 
 
