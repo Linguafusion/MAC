@@ -97,9 +97,9 @@ export default function SurveyCreate() {
   const [optionalQs, setOptionalQs] = useState([
     { texte: "", type_question: "text", is_required: false, choices: [] },
   ]);
-  // Partie obligatoire : par défaut 10 questions
+  // Partie obligatoire : par défaut 10 propositions
   const [mandatoryQs, setMandatoryQs] = useState(
-    Array.from({ length: 10 }, (_, i) => ({ texte: `Question ${i + 1}` }))
+    Array.from({ length: 10 }, (_, i) => ({ texte: `Proposition ${i + 1}` }))
   );
   const [mandatoryCount, setMandatoryCount] = useState(10);
   const [error, setError] = useState("");
@@ -118,11 +118,11 @@ export default function SurveyCreate() {
   const removeOptional = (i) =>
     setOptionalQs((prev) => prev.filter((_, idx) => idx !== i));
 
-  // Changement 10 / 15 / 20 questions obligatoires
+  // Changement 10 / 15 / 20 propositions obligatoires
   const handleMandatoryCount = (n) => {
     setMandatoryCount(n);
     setMandatoryQs(
-      Array.from({ length: n }, (_, i) => ({ texte: `Question ${i + 1}` }))
+      Array.from({ length: n }, (_, i) => ({ texte: `Proposition ${i + 1}` }))
     );
   };
 

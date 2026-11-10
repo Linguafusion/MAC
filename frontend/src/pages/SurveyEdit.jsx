@@ -141,7 +141,7 @@ export default function SurveyEdit() {
   const removeOptional = (i) =>
     setOptionalQuestions((prev) => prev.filter((_, idx) => idx !== i));
 
-  // Changement 10/15/20 questions obligatoires
+  // Changement 10/15/20 propositions obligatoires
   const handleMandatoryCount = (n) => {
     setMandatoryCount(n);
     setMandatoryQuestions((prev) => {
@@ -149,7 +149,7 @@ export default function SurveyEdit() {
       if (arr.length < n) {
         return arr.concat(
           Array.from({ length: n - arr.length }, (_, i) => ({
-            texte: `Question ${arr.length + i + 1}`,
+            texte: `Proposition ${arr.length + i + 1}`,
             is_required: true,
           }))
         );
