@@ -136,7 +136,7 @@ export default function Principes() {
             <li className="flex gap-3">
               <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-indigo-500" />
               Le répondant classe les propositions en quatre temps : d'abord les plus importantes pour lui (+2),
-              puis les moins importantes (−2), puis assez importantes (+1) et assez peu importantes (−1). Les
+              puis les moins importantes (−2), puis les plus importantes encore (+1) et les moins importantes à nouveau (−1). Les
               propositions restantes reçoivent la médiane 0. Chaque temps impose un nombre exact de choix, et chaque
               valeur est attribuée exactement deux fois pour 10 propositions, trois pour 15, quatre pour 20.
             </li>

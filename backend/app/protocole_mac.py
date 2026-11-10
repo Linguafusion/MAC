@@ -12,8 +12,8 @@ et doit rester identique.
 Déroulement pour N propositions (N = 10, 15 ou 20, k = N / 5) :
   Temps 1 (+2) : choisir k « Les plus importantes pour moi » ;
   Temps 2 (−2) : parmi les restantes, choisir k « Les moins importantes pour moi » ;
-  Temps 3 (+1) : parmi les restantes, choisir k « Assez importantes pour moi » ;
-  Temps 4 (−1) : parmi les restantes, choisir k « Assez peu importantes pour moi » ;
+  Temps 3 (+1) : parmi les restantes, choisir k « Les plus importantes encore pour moi » ;
+  Temps 4 (−1) : parmi les restantes, choisir k « Les moins importantes à nouveau pour moi » ;
   Les k propositions restantes reçoivent automatiquement la médiane 0.
 Chaque valeur −2 … +2 apparaît donc exactement k fois.
 """
@@ -26,8 +26,8 @@ VALEURS = (-2, -1, 0, 1, 2)
 ETAPES = (
     {"valeur": 2, "libelle": "Les plus importantes pour moi"},
     {"valeur": -2, "libelle": "Les moins importantes pour moi"},
-    {"valeur": 1, "libelle": "Assez importantes pour moi"},
-    {"valeur": -1, "libelle": "Assez peu importantes pour moi"},
+    {"valeur": 1, "libelle": "Les plus importantes encore pour moi"},
+    {"valeur": -1, "libelle": "Les moins importantes à nouveau pour moi"},
 )
 
 VALEUR_MEDIANE = 0
@@ -36,8 +36,8 @@ LIBELLE_MEDIANE = "Médiane (0) : non retenues"
 LIBELLES_VALEUR = {
     2: "Les plus importantes pour moi",
     -2: "Les moins importantes pour moi",
-    1: "Assez importantes pour moi",
-    -1: "Assez peu importantes pour moi",
+    1: "Les plus importantes encore pour moi",
+    -1: "Les moins importantes à nouveau pour moi",
     0: LIBELLE_MEDIANE,
 }
 

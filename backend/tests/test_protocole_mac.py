@@ -96,7 +96,7 @@ class QuestionnairePapierWord(unittest.TestCase):
             self.assertEqual(len(document.tables[0].rows), taille + 1)
             self.assertIn(mot, "\n".join(p.text for p in document.paragraphs))
 
-    def test_questions_libres_en_fin_de_document(self):
+    def test_identification_avant_le_questionnaire(self):
         libres = [
             _question("Pays", part="OPTIONAL", type_question="text"),
             _question(
@@ -108,9 +108,11 @@ class QuestionnairePapierWord(unittest.TestCase):
         ]
         document = Document(io.BytesIO(questionnaire_papier.generer_docx(_enquete(10, libres))))
         texte = "\n".join(p.text for p in document.paragraphs)
-        self.assertIn("Informations complémentaires", texte)
+        self.assertIn("Identification", texte)
         self.assertIn("Pays :", texte)
         self.assertIn("Femme", texte)
+        # L'identification doit précéder la consigne du classement
+        self.assertLess(texte.index("Identification"), texte.index("Consigne"))
 
     def test_taille_invalide_refusee(self):
         with self.assertRaises(ValueError):

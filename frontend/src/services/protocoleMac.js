@@ -6,8 +6,8 @@
 export const ETAPES_MAC = [
   { valeur: 2, libelle: "Les plus importantes pour moi", signe: "+2" },
   { valeur: -2, libelle: "Les moins importantes pour moi", signe: "−2" },
-  { valeur: 1, libelle: "Assez importantes pour moi", signe: "+1" },
-  { valeur: -1, libelle: "Assez peu importantes pour moi", signe: "−1" },
+  { valeur: 1, libelle: "Les plus importantes encore pour moi", signe: "+1" },
+  { valeur: -1, libelle: "Les moins importantes à nouveau pour moi", signe: "−1" },
 ];
 
 // Les propositions non choisies pendant les quatre temps reçoivent automatiquement 0
@@ -17,8 +17,8 @@ export const LIBELLE_MEDIANE = "Médiane (0) : non retenues";
 export const LIBELLES_VALEUR = {
   2: "Les plus importantes pour moi",
   "-2": "Les moins importantes pour moi",
-  1: "Assez importantes pour moi",
-  "-1": "Assez peu importantes pour moi",
+  1: "Les plus importantes encore pour moi",
+  "-1": "Les moins importantes à nouveau pour moi",
   0: LIBELLE_MEDIANE,
 };
 

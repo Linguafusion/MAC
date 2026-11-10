@@ -109,6 +109,12 @@ def generer_docx(enquete) -> bytes:
         doc.add_paragraph(enquete.description)
     doc.add_paragraph("N° de sujet : ______________        Date : ______________        Enquêteur : ______________")
 
+    # Identification avant le questionnaire, comme dans la passation en ligne
+    if libres:
+        doc.add_heading("Identification", level=2)
+        for question in libres:
+            _ligne_question_libre(doc, question)
+
     doc.add_heading("Consigne", level=2)
     doc.add_paragraph(
         f"Lisez l'ensemble des propositions. Vous allez les classer en quatre temps. "
@@ -162,11 +168,6 @@ def generer_docx(enquete) -> bytes:
         f"Reportez dans « Valeur finale » : +2 pour le temps 1, −2 pour le temps 2, "
         f"+1 pour le temps 3, −1 pour le temps 4, 0 pour une proposition jamais cochée."
     )
-
-    if libres:
-        doc.add_heading("Informations complémentaires", level=2)
-        for question in libres:
-            _ligne_question_libre(doc, question)
 
     tampon = io.BytesIO()
     doc.save(tampon)

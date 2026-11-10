@@ -1,6 +1,6 @@
 // frontend/src/pages/QuestionnairePapier.jsx
 // Questionnaire papier imprimable (pour les terrains sans connexion ni ordinateur).
-// Même structure que la passation en ligne : quatre temps, même libellés.
+// Même structure que la passation en ligne : identification, puis quatre temps, mêmes libellés.
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import api from "../services/api";
@@ -134,6 +134,45 @@ export default function QuestionnairePapier() {
             </p>
           </header>
 
+          {libres.length > 0 && (
+            <section className="mt-6">
+              <h2 className="text-lg font-semibold">Identification</h2>
+              <p className="mt-1 text-sm text-gray-700">
+                Ces informations sont recueillies avant le classement.
+              </p>
+              {libres.map((q) => (
+                <div key={q.id} className="mt-4 text-sm break-inside-avoid">
+                  {q.type_question === "text" && (
+                    <p>{q.texte} : ______________________________________________</p>
+                  )}
+                  {q.type_question !== "text" && (
+                    <>
+                      <p className="font-medium">
+                        {q.texte}
+                        {q.type_question === "multi_choice" && " (plusieurs réponses possibles)"}
+                      </p>
+                      {(q.choices || []).length > 0 ? (
+                        (q.choices || []).map((c) => (
+                          <p key={c.id} className="ml-4">
+                            {CASE} {c.label}
+                          </p>
+                        ))
+                      ) : q.type_question === "boolean" ? (
+                        <p className="ml-4">
+                          {CASE} Oui &nbsp;&nbsp;&nbsp; {CASE} Non
+                        </p>
+                      ) : (
+                        <p className="ml-4">
+                          {VALEURS_LIBRES.map((v) => `${CASE} ${signe(v)}`).join("   ")}
+                        </p>
+                      )}
+                    </>
+                  )}
+                </div>
+              ))}
+            </section>
+          )}
+
           <section className="mt-6">
             <h2 className="text-lg font-semibold">Consigne</h2>
             <p className="mt-2 text-sm">
@@ -167,7 +206,10 @@ export default function QuestionnairePapier() {
                   <th className="border border-gray-400 px-2 py-2 w-12">N°</th>
                   <th className="border border-gray-400 px-3 py-2 text-left">Proposition</th>
                   {ETAPES_MAC.map((etape, i) => (
-                    <th key={etape.valeur} className="border border-gray-400 px-2 py-2 min-w-[9rem] text-center">
+                    <th
+                      key={etape.valeur}
+                      className="border border-gray-400 px-2 py-2 min-w-[9rem] text-center"
+                    >
                       <div className="font-semibold">
                         Temps {i + 1} · {etape.signe}
                       </div>
@@ -184,7 +226,10 @@ export default function QuestionnairePapier() {
                     <td className="border border-gray-400 px-2 py-2 text-center">{index + 1}</td>
                     <td className="border border-gray-400 px-3 py-2">{q.texte}</td>
                     {ETAPES_MAC.map((etape) => (
-                      <td key={etape.valeur} className="border border-gray-400 px-2 py-2 text-center text-lg">
+                      <td
+                        key={etape.valeur}
+                        className="border border-gray-400 px-2 py-2 text-center text-lg"
+                      >
                         {CASE}
                       </td>
                     ))}
@@ -200,44 +245,6 @@ export default function QuestionnairePapier() {
             Valeur finale » : +2 pour le temps 1, −2 pour le temps 2, +1 pour le temps 3, −1 pour le
             temps 4, 0 pour une proposition jamais cochée.
           </p>
-
-          {libres.length > 0 && (
-            <section className="mt-8">
-              <h2 className="text-lg font-semibold">Informations complémentaires</h2>
-              {libres.map((q) => (
-                <div key={q.id} className="mt-4 text-sm break-inside-avoid">
-                  {q.type_question === "text" && (
-                    <p>
-                      {q.texte} : ______________________________________________
-                    </p>
-                  )}
-                  {q.type_question !== "text" && (
-                    <>
-                      <p className="font-medium">
-                        {q.texte}
-                        {q.type_question === "multi_choice" && " (plusieurs réponses possibles)"}
-                      </p>
-                      {(q.choices || []).length > 0 ? (
-                        (q.choices || []).map((c) => (
-                          <p key={c.id} className="ml-4">
-                            {CASE} {c.label}
-                          </p>
-                        ))
-                      ) : q.type_question === "boolean" ? (
-                        <p className="ml-4">
-                          {CASE} Oui &nbsp;&nbsp;&nbsp; {CASE} Non
-                        </p>
-                      ) : (
-                        <p className="ml-4">
-                          {VALEURS_LIBRES.map((v) => `${CASE} ${signe(v)}`).join("   ")}
-                        </p>
-                      )}
-                    </>
-                  )}
-                </div>
-              ))}
-            </section>
-          )}
         </article>
       )}
     </div>

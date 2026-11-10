@@ -36,6 +36,8 @@ export default function PublicSurvey() {
   const [classement, setClassement] = useState({});
   // Réponses aux questions complémentaires (texte, oui/non, choix)
   const [reponsesLibres, setReponsesLibres] = useState({});
+  // Identification (questions complémentaires) remplie avant le classement
+  const [identificationOk, setIdentificationOk] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -80,6 +82,8 @@ export default function PublicSurvey() {
   const toutClasse = restantes.length === 0;
   const enRecapitulatif = nbPropositions === 0 || temps >= ETAPES_MAC.length;
   const etapeCourante = !enRecapitulatif ? ETAPES_MAC[temps] : null;
+  // Identification d'abord, puis le classement (procédure MAC, étape 2)
+  const enIdentification = protocoleOk && nbPropositions > 0 && indicesLibres.length > 0 && !identificationOk;
 
   const libresObligatoiresOk = indicesLibres.every((i) => {
     const q = questions[i];
@@ -468,6 +472,38 @@ export default function PublicSurvey() {
     );
   };
 
+  const commencerClassement = () => {
+    if (!libresObligatoiresOk) return;
+    setIdentificationOk(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const renderIdentification = () => (
+    <section className="space-y-4">
+      <div>
+        <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Identification</h3>
+        <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+          Ces informations sont demandées avant le classement. Elles servent aux tris de l'analyse.
+        </p>
+      </div>
+      {indicesLibres.map((i) => renderQuestionLibre(i))}
+      <div className="pt-2 text-center">
+        <button
+          type="button"
+          onClick={commencerClassement}
+          disabled={!libresObligatoiresOk}
+          className={`w-full md:w-auto px-10 py-3 rounded-xl text-base font-bold shadow transition-all ${
+            libresObligatoiresOk
+              ? "bg-linear-to-r from-indigo-600 to-blue-600 text-white hover:shadow-lg"
+              : "bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-500 cursor-not-allowed"
+          }`}
+        >
+          Commencer le classement
+        </button>
+      </div>
+    </section>
+  );
+
   return (
     <div className="w-full text-gray-900 dark:text-gray-100 font-sans py-10 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
       <div className="max-w-3xl mx-auto">
@@ -496,9 +532,11 @@ export default function PublicSurvey() {
           </div>
         )}
 
-        {protocoleOk && nbPropositions > 0 && renderParcours()}
+        {protocoleOk && enIdentification && renderIdentification()}
 
-        {protocoleOk && !enRecapitulatif && (
+        {protocoleOk && nbPropositions > 0 && !enIdentification && renderParcours()}
+
+        {protocoleOk && !enRecapitulatif && !enIdentification && (
           <>
             {renderConsigne()}
             {renderEtape()}
@@ -509,7 +547,7 @@ export default function PublicSurvey() {
           <div className="space-y-8">
             {nbPropositions > 0 && renderRecapitulatif()}
 
-            {indicesLibres.length > 0 && (
+            {nbPropositions === 0 && indicesLibres.length > 0 && (
               <section className="space-y-4">
                 <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
                   Informations complémentaires
