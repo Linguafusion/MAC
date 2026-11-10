@@ -3,8 +3,8 @@ import pic1 from '../assets/Elmadhipic.jpeg';
 import pic2 from '../assets/Brunopic.jpeg';
 import pic3 from '../assets/Giovannipic.jpg';
 import pic4 from '../assets/Desrousseauxpic.jpeg'; 
-import pic5 from '../assets/Samarpic.jpeg';            
-import pic6 from '../assets/Lakhdarpic.jpeg';       
+            
+       
 import pic7 from '../assets/Souhailpic.jpeg';        
 
 // Données de l'équipe
@@ -41,38 +41,6 @@ const teamMembers = [
     image: pic4,
     description: "Professeur agrégé et docteur en mathématiques. Enseignant en statistiques à l'IUT de Béziers. Auteur des formules de calcul utilisées par la MAC.",
     
-  },
-  {
-    id: 5,
-    name: "Mustapha",
-    role: "Ingénieur informaticien",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
-    description: "Ingénieur informaticien spécialisé dans la conception, le développement et l’optimisation de solutions numériques. J’assure la gestion technique des systèmes informatiques, le développement d’applications et la résolution de problèmes complexes pour garantir performance, sécurité et innovation.",
-    linkedin: ""
-  },
-  {
-    id: 6,
-    name: "Driss",
-    role: "Ingénieur informaticien",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
-    description: "Ingénieur informaticien, je conçois et améliore des systèmes et applications informatiques adaptés aux besoins des utilisateurs. J’interviens dans le développement, la maintenance et l’optimisation de solutions numériques afin d’assurer leur efficacité, leur sécurité et leur fiabilité.",
-    linkedin: ""
-  },
-  {
-    id: 7,
-    name: "Chakhrati Samar",
-    role: "Docteur en technologie éducative, membre de l'équipe",
-    image: pic5,
-    description: "Samar Chakhrati est chercheuse en langue et communication, spécialisée dans l’intégration du numérique au service du développement des compétences langagières et psychosociales des étudiants.",
-    linkedin: ""
-  },
-  {
-    id: 8,
-    name: "Lakhdar Mohammed",
-    role: "Membre de l'équipe",
-    image: pic6,
-    description: "Étudiant en 4ᵉ année de médecine et artiste amateur, je développe parallèlement des compétences dans le digital afin de créer des ponts entre la santé, la technologie et l’innovation.",
-    linkedin: "https://www.linkedin.com/in/mohamed-lakdhar-theflame888/"
   },
   {
     id: 9,
@@ -148,6 +116,14 @@ function Team() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Remerciements */}
+        <div className="mt-16 max-w-3xl mx-auto text-center border-t border-gray-200 pt-8">
+          <p className="text-gray-600 leading-relaxed">
+            Nous remercions chaleureusement les personnes qui ont contribué à ce projet :
+            Chakhrati Samar, Lakhdar Mohammed, Mustapha et Driss.
+          </p>
         </div>
       </div>
     </div>

@@ -37,7 +37,7 @@ export default function About() {
               MAC Enquête n'est pas un simple outil de sondage. C'est la matérialisation numérique de la <strong>Méthode d'Analyse Combinée (MAC)</strong>, développée initialement par les chercheurs en sociolinguistique pour cartographier avec précision ce que les gens pensent réellement.
             </p>
             <p className="text-lg text-gray-700 leading-relaxed text-justify">
-              Porté par l'<strong>Université d'Agadir</strong>, ce projet vise à offrir aux chercheurs, étudiants et professionnels un outil puissant, intuitif et mathématiquement validé pour collecter et traiter des données complexes en quelques clics.
+              Porté par l'<strong>Université d'Agadir</strong>, ce projet vise à offrir aux chercheurs, étudiants et professionnels un outil puissant et intuitif, fondé sur la méthode MAC, pour collecter et traiter des données complexes en quelques clics.
             </p>
           </div>
 
