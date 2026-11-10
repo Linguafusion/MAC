@@ -4,6 +4,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import logoUIZ from "../assets/LogoUIZ.png";
+import logoLARSLAM from "../assets/LogoLARSLAM.png";
+import logoAUF from "../assets/LogoAUF.png";
 
 import {
   PlusCircleIcon,
@@ -109,15 +111,33 @@ const HomePage = () => {
 
   return (
     <div className="pb-20">
+      {/* En-tête institutionnel : Université Ibn Zohr, LaRSLAM, AUF */}
+      <section className="px-4 pt-6 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 rounded-3xl border border-indigo-100 bg-white px-6 py-6 shadow-md dark:border-gray-700 dark:bg-gray-800 sm:flex-row sm:justify-between sm:px-10">
+          <div className="flex items-center gap-5">
+            <img src={logoUIZ} alt="Université Ibn Zohr Agadir" className="h-24 w-auto sm:h-28" />
+            <div className="text-center sm:text-left">
+              <p className="text-xs font-semibold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
+                Université Ibn Zohr · Agadir
+              </p>
+              <p className="text-xl font-bold text-gray-900 dark:text-white">Laboratoire LaRSLAM</p>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                Plateforme MAC · Méthode d'analyse combinée
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-8">
+            <img src={logoLARSLAM} alt="LaRSLAM" className="h-16 w-auto" />
+            <img src={logoAUF} alt="Agence universitaire de la Francophonie" className="h-16 w-auto" />
+          </div>
+        </div>
+      </section>
+
       {/* Hero */}
       <section className="relative overflow-hidden px-4 pt-12 sm:px-6 lg:px-8">
         <div className="pointer-events-none absolute -top-32 left-1/2 h-96 w-[60rem] -translate-x-1/2 rounded-full bg-indigo-200/40 blur-3xl dark:bg-indigo-900/30" />
         <div className="relative mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
           <div className="opacity-0 translate-y-4 animate-fade-in" style={{ animationDuration: "0.8s", animationFillMode: "forwards" }}>
-            <span className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-white px-4 py-1 text-sm font-medium text-indigo-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-indigo-300">
-              <img src={logoUIZ} alt="" className="h-5 w-auto" />
-              Université Ibn Zohr · Agadir
-            </span>
             <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
               Plateforme d'enquêtes <span className="bg-gradient-to-r from-indigo-600 to-cyan-500 bg-clip-text text-transparent">MAC</span>
             </h1>
