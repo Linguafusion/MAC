@@ -111,7 +111,7 @@ def generer_docx(enquete) -> bytes:
 
     # Identification avant le questionnaire, comme dans la passation en ligne
     if libres:
-        doc.add_heading("Question d'identification des personnes enquêtées", level=2)
+        doc.add_heading("Questions d'identification des personnes enquêtées", level=2)
         for question in libres:
             _ligne_question_libre(doc, question)
 
@@ -121,14 +121,14 @@ def generer_docx(enquete) -> bytes:
         f"Lis-les plusieurs fois, attentivement."
     )
     doc.add_paragraph(
-        f"Lisez l'ensemble des propositions. Vous allez les classer en quatre temps. "
-        f"À chaque temps, cochez exactement {mot} propositions ({k}), parmi celles qui "
+        f"Lis l'ensemble des propositions. Tu vas les classer en quatre temps. "
+        f"À chaque temps, coche exactement {mot} propositions ({k}), parmi celles qui "
         f"n'ont pas encore été cochées."
     )
     for numero, etape in enumerate(protocole_mac.ETAPES, start=1):
         paragraphe = doc.add_paragraph()
         paragraphe.add_run(f"Temps {numero} — « {etape['libelle']} » ({_signe(etape['valeur'])}) : ").bold = True
-        paragraphe.add_run(f"cochez {mot} propositions.")
+        paragraphe.add_run(f"coche {mot} propositions.")
     doc.add_paragraph(
         f"Les {k} propositions qui ne sont cochées à aucun temps reçoivent automatiquement "
         f"la médiane 0 (« ni les plus, ni les moins importantes »)."

@@ -108,7 +108,7 @@ class QuestionnairePapierWord(unittest.TestCase):
         ]
         document = Document(io.BytesIO(questionnaire_papier.generer_docx(_enquete(10, libres))))
         texte = "\n".join(p.text for p in document.paragraphs)
-        titre = "Question d'identification des personnes enquêtées"
+        titre = "Questions d'identification des personnes enquêtées"
         self.assertIn(titre, texte)
         self.assertIn("Pays :", texte)
         self.assertIn("Femme", texte)

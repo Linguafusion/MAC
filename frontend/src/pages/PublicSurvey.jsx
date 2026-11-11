@@ -116,7 +116,7 @@ export default function PublicSurvey() {
   const basculerProposition = (i) => {
     if (!selection.includes(i) && selection.length >= k) {
       setRappel(
-        `Vous ne pouvez cocher que ${NOMBRE_EN_LETTRES[k]} propositions. Décochez-en une pour en choisir une autre.`
+        `Tu ne peux cocher que ${NOMBRE_EN_LETTRES[k]} propositions. Décoche-en une pour en choisir une autre.`
       );
       return;
     }
@@ -128,8 +128,8 @@ export default function PublicSurvey() {
   const messageRappel = (n) => {
     const mot = NOMBRE_EN_LETTRES[k];
     if (n === 0) return `Aucune proposition n'est cochée. Il faut en cocher exactement ${mot}.`;
-    if (n === 1) return `Vous n'en avez coché qu'une. Il faut en cocher exactement ${mot}.`;
-    return `Vous en avez coché ${n}. Il faut en cocher exactement ${mot}.`;
+    if (n === 1) return `Tu n'en as coché qu'une. Il faut en cocher exactement ${mot}.`;
+    return `Tu en as coché ${n}. Il faut en cocher exactement ${mot}.`;
   };
 
   const validerTemps = () => {
@@ -448,7 +448,7 @@ export default function PublicSurvey() {
       <div>
         <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Récapitulatif de vos choix</h3>
         <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-          Vérifiez votre classement. Pour le modifier, utilisez « Recommencer ».
+          Vérifie ton classement. Pour le modifier, utilise « Recommencer ».
         </p>
       </div>
       <div className="grid gap-4 md:grid-cols-2">
@@ -501,7 +501,7 @@ export default function PublicSurvey() {
           {q.type_question === "text" && (
             <textarea
               className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-y min-h-[100px]"
-              placeholder="Votre réponse ici..."
+              placeholder="Ta réponse ici..."
               value={ans || ""}
               onChange={(e) => modifierLibre(index, e.target.value)}
             />
@@ -585,7 +585,7 @@ export default function PublicSurvey() {
     <section className="space-y-4">
       <div>
         <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
-          Question d'identification des personnes enquêtées
+          Questions d'identification des personnes enquêtées
         </h3>
         <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
           {modePapier

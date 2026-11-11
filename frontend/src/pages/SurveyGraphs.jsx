@@ -675,7 +675,7 @@ export default function SurveyGraphs() {
           {/* GRAPHE 3 : Saillance–Consensus–Polarisations */}
           <section>
             <h2 className="text-xl font-semibold mb-2">
-              Saillance – Consensus – Polarisations
+              Mise en évidence des rapprochements entre certains items
             </h2>
             <p className="text-sm text-gray-600 dark:text-slate-400 mb-3">
               Même représentation que ci-dessus, avec en plus les segments verts
@@ -920,7 +920,7 @@ export default function SurveyGraphs() {
           {focalIndex >= 0 && (
             <section>
               <h2 className="text-xl font-semibold mb-2">
-                Focalisation autour de l&apos;Item {items.length}
+                Polarisation : distances par rapport à un item
               </h2>
               <p className="text-sm text-gray-600 dark:text-slate-400 mb-3">
                 L&apos;item focal est au centre. Les autres items sont placés

@@ -136,7 +136,7 @@ export default function QuestionnairePapier() {
 
           {libres.length > 0 && (
             <section className="mt-6">
-              <h2 className="text-lg font-semibold">Question d'identification des personnes enquêtées</h2>
+              <h2 className="text-lg font-semibold">Questions d'identification des personnes enquêtées</h2>
               <p className="mt-1 text-sm text-gray-700">
                 Ces informations sont recueillies avant le classement.
               </p>
@@ -177,8 +177,8 @@ export default function QuestionnairePapier() {
             <h2 className="text-lg font-semibold">Consigne</h2>
             <p className="mt-2 text-sm">
               Voici {propositions.length} propositions sur « {enquete.titre} ». Lis-les plusieurs fois,
-              attentivement. Vous allez les classer en quatre temps. À chaque
-              temps, cochez exactement{" "}
+              attentivement. Tu vas les classer en quatre temps. À chaque
+              temps, coche exactement{" "}
               <strong>
                 {NOMBRE_EN_LETTRES[k]} propositions ({k})
               </strong>
@@ -190,7 +190,7 @@ export default function QuestionnairePapier() {
                   <strong>
                     Temps {i + 1} — « {etape.libelle} » ({etape.signe})
                   </strong>{" "}
-                  : cochez {NOMBRE_EN_LETTRES[k]} propositions.
+                  : coche {NOMBRE_EN_LETTRES[k]} propositions.
                 </li>
               ))}
             </ol>
