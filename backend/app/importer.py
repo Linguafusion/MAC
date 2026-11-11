@@ -63,9 +63,13 @@ def analyser(df: pd.DataFrame):
 
     n = len(colonnes_items)
     if n not in TAILLES_VALIDES:
+        apercu = ", ".join(colonnes_items[:12]) + (" …" if n > 12 else "")
         raise HTTPException(
             400,
-            f"Le fichier contient {n} propositions. Il doit en contenir 10, 15 ou 20.",
+            f"Le fichier compte {n} colonnes de propositions, il en faut 10, 15 ou 20. "
+            "Les colonnes d'identification doivent commencer par « info_ » (ex. info_sexe) ; "
+            "la colonne « id_sujet » est ignorée. "
+            f"Colonnes comptées comme propositions : {apercu or 'aucune'}.",
         )
     if len(set(colonnes_items)) != n:
         raise HTTPException(400, "Deux propositions portent le même nom de colonne.")

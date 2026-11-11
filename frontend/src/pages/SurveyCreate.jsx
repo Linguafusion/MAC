@@ -181,7 +181,15 @@ export default function SurveyCreate() {
       await api.post("/enquetes/", payload);
       navigate("/enquetes");
     } catch (err) {
-      setError(err.response?.data?.detail || err.message);
+      const detail = err.response?.data?.detail;
+      // Erreurs de validation (422) : liste d'objets, à afficher en texte lisible
+      setError(
+        Array.isArray(detail)
+          ? detail
+              .map((d) => `${(d.loc || []).slice(1).join(" › ")} : ${d.msg}`)
+              .join(" ; ")
+          : detail || err.message
+      );
     }
   };
 

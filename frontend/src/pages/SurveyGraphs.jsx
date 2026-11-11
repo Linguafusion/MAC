@@ -443,32 +443,35 @@ export default function SurveyGraphs() {
                       />
 
                       {/* Ticks -2..2 */}
-                      {[-2, -1, 0, 1, 2].map((v) => {
+                      {Array.from({ length: 41 }, (_, i) => (i - 20) / 10).map((v) => {
                         const x = normScoreToX(
                           v,
                           width,
                           paddingLeft,
                           paddingRight
                         );
+                        const majeur = Math.round(v * 10) % 5 === 0;
                         return (
                           <g key={v}>
                             <line
                               x1={x}
                               y1={axisY - 5}
                               x2={x}
-                              y2={axisY + 5}
+                              y2={axisY + (majeur ? 8 : 4)}
                               stroke="#888"
                               strokeWidth="1"
                             />
-                            <text
-                              x={x}
-                              y={axisY + 18}
-                              fontSize="12"
-                              textAnchor="middle"
-                              fill="#ccc"
-                            >
-                              {v}
-                            </text>
+                            {majeur && (
+                              <text
+                                x={x}
+                                y={axisY + 18}
+                                fontSize="12"
+                                textAnchor="middle"
+                                fill="#ccc"
+                              >
+                                {v}
+                              </text>
+                            )}
                           </g>
                         );
                       })}
@@ -495,7 +498,12 @@ export default function SurveyGraphs() {
                         );
                         return (
                           <g key={item.id}>
-                            <circle cx={x} cy={axisY} r={4} fill="#3b82f6" />
+                            <circle cx={x} cy={axisY} r={10} fill="#3b82f6" fillOpacity={0.85}>
+                              <title>{`Proposition ${idx + 1} : ${item.texte} (score ${s.toFixed(2)})`}</title>
+                            </circle>
+                            <text x={x} y={axisY + 4} fontSize="10" textAnchor="middle" fill="#ffffff">
+                              {idx + 1}
+                            </text>
                           </g>
                         );
                       })}
@@ -573,32 +581,35 @@ export default function SurveyGraphs() {
                       />
 
                       {/* Ticks -2..2 */}
-                      {[-2, -1, 0, 1, 2].map((v) => {
+                      {Array.from({ length: 41 }, (_, i) => (i - 20) / 10).map((v) => {
                         const x = normScoreToX(
                           v,
                           width,
                           paddingLeft,
                           paddingRight
                         );
+                        const majeur = Math.round(v * 10) % 5 === 0;
                         return (
                           <g key={v}>
                             <line
                               x1={x}
                               y1={axisY - 5}
                               x2={x}
-                              y2={axisY + 5}
+                              y2={axisY + (majeur ? 8 : 4)}
                               stroke="#888"
                               strokeWidth="1"
                             />
-                            <text
-                              x={x}
-                              y={axisY + 22}
-                              fontSize="12"
-                              textAnchor="middle"
-                              fill="#ccc"
-                            >
-                              {v}
-                            </text>
+                            {majeur && (
+                              <text
+                                x={x}
+                                y={axisY + 22}
+                                fontSize="12"
+                                textAnchor="middle"
+                                fill="#ccc"
+                              >
+                                {v}
+                              </text>
+                            )}
                           </g>
                         );
                       })}
@@ -651,7 +662,9 @@ export default function SurveyGraphs() {
                               fillOpacity={0.35}
                               stroke={n.color}
                               strokeWidth="1"
-                            />
+                            >
+                              <title>{`${n.item.texte} : adhésion ${scores[n.idx].toFixed(2)}, consensus ${consensus[n.idx].toFixed(2)}`}</title>
+                            </circle>
                             <circle cx={n.x} cy={n.y} r={2} fill="#0000ff" />
                             <text
                               x={n.x}

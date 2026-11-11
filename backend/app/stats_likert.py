@@ -392,7 +392,7 @@ def select_polarisations(
   Sélectionne les paires d'items les plus proches (polarisations).
   - distances : matrice k x k
   - items : liste [{id, texte}] dans le même ordre que les colonnes
-  - cutoff : distance de coupure (si donnée, on garde uniquement d <= cutoff)
+  - cutoff : distance de coupure (si donnée, on garde uniquement d < cutoff, « inférieures à 1,40 »)
   - max_pairs : nombre max de paires à retourner (les plus petites distances)
 
   Retourne une liste de dicts:
@@ -409,7 +409,7 @@ def select_polarisations(
 
   for a, b in combinations(range(k), 2):
       d = distances[a][b]
-      if cutoff is not None and d > cutoff:
+      if cutoff is not None and d >= cutoff:
           continue
       pairs.append((a, b, d))
 

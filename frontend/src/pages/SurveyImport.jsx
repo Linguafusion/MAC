@@ -63,6 +63,22 @@ export default function SurveyImport() {
             Chaque ligne du fichier correspond à un questionnaire complet. Les lignes incomplètes ou
             non conformes sont écartées et listées ci-dessous.
           </p>
+          <div className="mt-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 p-4 text-sm text-slate-700 dark:text-slate-300">
+            <p className="font-semibold mb-2">Mode d'emploi du fichier</p>
+            <ul className="list-disc list-inside space-y-1">
+              <li>Une ligne d'en-têtes, puis une ligne par personne enquêtée.</li>
+              <li>Une colonne par proposition : 10, 15 ou 20 colonnes au total, valeurs entières de −2 à +2.</li>
+              <li>
+                Chaque valeur −2 à +2 doit apparaître exactement 2, 3 ou 4 fois par ligne (selon 10, 15 ou 20
+                propositions).
+              </li>
+              <li>
+                Les colonnes d'identification doivent commencer par <code>info_</code> (ex. <code>info_sexe</code>,{" "}
+                <code>info_age</code>). La colonne facultative <code>id_sujet</code> est ignorée.
+              </li>
+              <li>Fichier CSV ou Excel avec une seule feuille de calcul.</li>
+            </ul>
+          </div>
           <a
             href="/modele_enquete_mac.csv"
             download
