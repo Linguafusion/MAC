@@ -95,7 +95,7 @@ const ActionCard = ({ to, label, icon: Icon, className = "", onClick }) => (
     className={`group flex flex-col items-start gap-3 rounded-2xl p-6 text-white shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-2xl ${className}`}
   >
     <Icon className="h-9 w-9 text-white/90" />
-    <span className="text-lg font-semibold">{label}</span>
+    <span className="text-lg font-semibold text-white">{label}</span>
     <span className="mt-auto inline-flex items-center text-sm text-white/80 group-hover:text-white">
       Accéder <ArrowRightIcon className="ml-1 h-4 w-4 transition group-hover:translate-x-1" />
     </span>
