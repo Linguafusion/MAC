@@ -183,10 +183,19 @@ export default function SurveyCreate() {
     } catch (err) {
       const detail = err.response?.data?.detail;
       // Erreurs de validation (422) : liste d'objets, à afficher en texte lisible
+      const traduire = (m) =>
+        ({
+          "Field required": "champ obligatoire",
+          "Input should be a valid integer": "doit être un nombre entier",
+          "Input should be a valid string": "doit être un texte",
+        })[m] || m;
       setError(
         Array.isArray(detail)
           ? detail
-              .map((d) => `${(d.loc || []).slice(1).join(" › ")} : ${d.msg}`)
+              .map((d) => {
+                const chemin = (d.loc || []).filter((p) => p !== "body").join(" › ");
+                return chemin ? `${chemin} : ${traduire(d.msg)}` : traduire(d.msg);
+              })
               .join(" ; ")
           : detail || err.message
       );

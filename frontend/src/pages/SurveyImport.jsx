@@ -67,7 +67,10 @@ export default function SurveyImport() {
             <p className="font-semibold mb-2">Mode d'emploi du fichier</p>
             <ul className="list-disc list-inside space-y-1">
               <li>Une ligne d'en-têtes, puis une ligne par personne enquêtée.</li>
-              <li>Une colonne par proposition : 10, 15 ou 20 colonnes au total, valeurs entières de −2 à +2.</li>
+              <li>
+                Une colonne par proposition : 10, 15 ou 20 colonnes de propositions (hors <code>id_sujet</code> et
+                colonnes <code>info_</code>), valeurs entières de −2 à +2.
+              </li>
               <li>
                 Chaque valeur −2 à +2 doit apparaître exactement 2, 3 ou 4 fois par ligne (selon 10, 15 ou 20
                 propositions).
@@ -76,7 +79,7 @@ export default function SurveyImport() {
                 Les colonnes d'identification doivent commencer par <code>info_</code> (ex. <code>info_sexe</code>,{" "}
                 <code>info_age</code>). La colonne facultative <code>id_sujet</code> est ignorée.
               </li>
-              <li>Fichier CSV ou Excel avec une seule feuille de calcul.</li>
+              <li>Fichier CSV, ou Excel : seule la première feuille est lue.</li>
             </ul>
           </div>
           <a

@@ -13,6 +13,7 @@ Seules les lignes complètes et conformes sont importées. Les autres sont
 listées par numéro de ligne Excel, avec le motif du rejet, sans leur contenu.
 """
 import io
+import math
 from collections import Counter
 
 import pandas as pd
@@ -34,7 +35,8 @@ def lire_fichier(nom: str, contenu: bytes) -> pd.DataFrame:
         except UnicodeDecodeError:
             texte = contenu.decode("latin-1")
         sep = ";" if texte.count(";") >= texte.count(",") else ","
-        return pd.read_csv(io.StringIO(texte), sep=sep, dtype=str, keep_default_na=False)
+        # skip_blank_lines=False : la numérotation des lignes reste celle du fichier
+        return pd.read_csv(io.StringIO(texte), sep=sep, dtype=str, keep_default_na=False, skip_blank_lines=False)
     if minuscule.endswith((".xlsx", ".xls")):
         return pd.read_excel(io.BytesIO(contenu), sheet_name=0, dtype=str, keep_default_na=False)
     raise HTTPException(400, "Format non pris en charge : utilisez un fichier .csv, .xlsx ou .xls.")
@@ -49,7 +51,8 @@ def _entier(texte: str):
         f = float(t)
     except ValueError:
         return None
-    if f != int(f):
+    # « nan », « inf » et les nombres non entiers ne sont pas des notes
+    if not math.isfinite(f) or f != int(f):
         return None
     return int(f)
 
@@ -78,6 +81,8 @@ def analyser(df: pd.DataFrame):
     valides, rejets = [], []
     for index, ligne in df.iterrows():
         numero_excel = index + 2  # la ligne 1 contient les en-têtes
+        if all(str(ligne[c]).strip() == "" for c in df.columns):
+            continue  # ligne entièrement vide : ni sujet, ni rejet
         valeurs_brutes = [ligne[c] for c in colonnes_items]
 
         if any(str(v).strip() == "" for v in valeurs_brutes):
