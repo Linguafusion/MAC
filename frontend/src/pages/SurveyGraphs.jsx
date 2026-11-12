@@ -498,11 +498,21 @@ export default function SurveyGraphs() {
                         );
                         return (
                           <g key={item.id}>
-                            <circle cx={x} cy={axisY} r={10} fill="#3b82f6" fillOpacity={0.85}>
+                            <circle cx={x} cy={axisY} r={14} fill="#3b82f6" fillOpacity={0.85}>
                               <title>{`Proposition ${idx + 1} : ${item.texte} (score ${s.toFixed(2)})`}</title>
                             </circle>
-                            <text x={x} y={axisY + 4} fontSize="10" textAnchor="middle" fill="#ffffff">
+                            <text x={x} y={axisY + 4} fontSize="11" textAnchor="middle" fill="#ffffff">
                               {idx + 1}
+                            </text>
+                            {/* Mot de l'item au-dessus du cercle, hauteur alternée pour limiter les chevauchements */}
+                            <text
+                              x={x}
+                              y={axisY - 24 - (idx % 2 === 0 ? 0 : 16)}
+                              fontSize="11"
+                              textAnchor="middle"
+                              fill="#374151"
+                            >
+                              {item.texte}
                             </text>
                           </g>
                         );
@@ -673,7 +683,7 @@ export default function SurveyGraphs() {
                               textAnchor="middle"
                               fill="#000000"
                             >
-                              {`Item ${n.idx + 1}`}
+                              {n.item.texte}
                             </text>
                           </g>
                         ));
