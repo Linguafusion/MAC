@@ -461,17 +461,15 @@ export default function SurveyGraphs() {
                               stroke="#888"
                               strokeWidth="1"
                             />
-                            {majeur && (
-                              <text
-                                x={x}
-                                y={axisY + 18}
-                                fontSize="12"
-                                textAnchor="middle"
-                                fill="#ccc"
-                              >
-                                {v}
-                              </text>
-                            )}
+                            <text
+                              x={x}
+                              y={axisY + 18}
+                              fontSize={majeur ? "12" : "9"}
+                              textAnchor="middle"
+                              fill={majeur ? "#ccc" : "#999"}
+                            >
+                              {v.toFixed(1)}
+                            </text>
                           </g>
                         );
                       })}
@@ -609,17 +607,15 @@ export default function SurveyGraphs() {
                               stroke="#888"
                               strokeWidth="1"
                             />
-                            {majeur && (
-                              <text
-                                x={x}
-                                y={axisY + 22}
-                                fontSize="12"
-                                textAnchor="middle"
-                                fill="#ccc"
-                              >
-                                {v}
-                              </text>
-                            )}
+                            <text
+                              x={x}
+                              y={axisY + 22}
+                              fontSize={majeur ? "12" : "9"}
+                              textAnchor="middle"
+                              fill={majeur ? "#ccc" : "#999"}
+                            >
+                              {v.toFixed(1)}
+                            </text>
                           </g>
                         );
                       })}
@@ -768,7 +764,7 @@ export default function SurveyGraphs() {
                       />
 
                       {/* Ticks -2..2 */}
-                      {[-2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2].map((v) => {
+                      {Array.from({ length: 41 }, (_, i) => (i - 20) / 10).map((v) => {
                         const x = normScoreToX(
                           v,
                           width,
@@ -788,7 +784,7 @@ export default function SurveyGraphs() {
                             <text
                               x={x}
                               y={height - paddingBottom + 14}
-                              fontSize="11"
+                              fontSize="10"
                               textAnchor="middle"
                               fill="#16a34a"
                             >
@@ -806,8 +802,7 @@ export default function SurveyGraphs() {
                         textAnchor="middle"
                         fill="#ff0000"
                       >
-                        REPRÉSENTATION SAILLANCE–CONSENSUS–POLARISATION ENTRE
-                        DEUX ITEMS
+                        Mise en évidence des rapprochements entre certains items
                       </text>
 
                       {/* Légende bas */}
@@ -946,9 +941,10 @@ export default function SurveyGraphs() {
                 Polarisation : distances par rapport à un item
               </h2>
               <p className="text-sm text-gray-600 dark:text-slate-400 mb-3">
-                L&apos;item focal est au centre. Les autres items sont placés
-                sur l&apos;axe des scores et répartis sur des cercles
-                concentriques en fonction de leur distance à l&apos;item focal.
+                L&apos;item focal est placé à son score sur l&apos;axe horizontal,
+                au milieu du graphe. Les autres items sont placés à leur score sur
+                le même axe ; leur hauteur est décalée pour éviter les chevauchements.
+                La taille des cercles représente le consensus.
               </p>
 
               <div className="border rounded-lg bg-white dark:bg-slate-800 shadow-sm p-4 overflow-x-auto">
@@ -1019,8 +1015,7 @@ export default function SurveyGraphs() {
                           textAnchor="middle"
                           fill="#ef4444"
                         >
-                          REPRÉSENTATION SAILLANCE–CONSENSUS–DISTANCES PAR
-                          RAPPORT À L&apos;ITEM {items.length}
+                          Polarisation : distances par rapport à un item
                         </text>
 
                         {/* Item focal */}

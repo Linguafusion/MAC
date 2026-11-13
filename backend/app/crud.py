@@ -164,6 +164,9 @@ def submit_response(db: Session, enquete: models.Enquete, response_in: schemas.R
         provided_mandatory = [a for a in response_in.answers if a.question_id in mand_q_ids]
         if len(provided_mandatory) != qcount:
             raise HTTPException(status_code=400, detail="Vous devez répondre à toutes les questions obligatoires.")
+        # Chaque proposition doit recevoir une réponse et une seule (pas de doublon)
+        if len({a.question_id for a in provided_mandatory}) != qcount:
+            raise HTTPException(status_code=400, detail="Chaque proposition doit recevoir une seule réponse.")
 
         chosen_values = []
         for a in provided_mandatory:
