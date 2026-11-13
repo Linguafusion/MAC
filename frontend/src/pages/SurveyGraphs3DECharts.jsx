@@ -1,11 +1,21 @@
 /* eslint-disable no-unused-vars */
 // frontend/src/pages/SurveyGraphs3DECharts.jsx
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
 import ReactECharts from "echarts-for-react";
 import * as echarts from "echarts";
 import "echarts-gl";
 import api from "../services/api";
+
+// Vérifie que le navigateur peut afficher de la 3D (WebGL)
+function webglDisponible() {
+  try {
+    const canvas = document.createElement("canvas");
+    return !!(canvas.getContext("webgl") || canvas.getContext("experimental-webgl"));
+  } catch {
+    return false;
+  }
+}
 
 const SCORE_MIN = -2;
 const SCORE_MAX = 2;
@@ -39,6 +49,11 @@ export default function SurveyGraphs3DECharts() {
     };
     load();
   }, [id]);
+
+  // Ordinateur sans WebGL : bascule automatiquement vers la carte 2D interactive
+  if (!webglDisponible()) {
+    return <Navigate to={`/enquetes/${id}/graphs`} replace state={{ sans3d: true }} />;
+  }
 
   if (loading)
     return <div className="p-6 text-center text-gray-600">Chargement...</div>;

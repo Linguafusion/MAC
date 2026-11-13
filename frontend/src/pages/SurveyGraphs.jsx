@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 // frontend/src/pages/SurveyGraphs.jsx
 import React, { useEffect, useState, useRef } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import api from "../services/api";
 
 const SCORE_MIN = -2;
@@ -21,6 +21,9 @@ export default function SurveyGraphs() {
   const [message, setMessage] = useState("");
   const [selectedFilters, setSelectedFilters] = useState({});
   const [appliedFilters, setAppliedFilters] = useState({});
+  // Item focal choisi pour le graphe 4 (null = dernier item par défaut)
+  const [focalChoisi, setFocalChoisi] = useState(null);
+  const location = useLocation();
 
   // Refs pour chaque graphe (section)
   const graph1Ref = useRef(null);
@@ -143,8 +146,10 @@ export default function SurveyGraphs() {
     return result;
   };
 
-  // Item focal par défaut pour le graphe 4 : dernier item
-  const focalItemId = items.length > 0 ? items[items.length - 1].id : null;
+  // Item focal du graphe 4 : choisi par le chercheur, par défaut le dernier item
+  const focalItemId =
+    items.find((it) => it.id === focalChoisi)?.id ??
+    (items.length > 0 ? items[items.length - 1].id : null);
   const focalIndex = focalItemId
     ? items.findIndex((it) => it.id === focalItemId)
     : -1;
@@ -302,6 +307,12 @@ export default function SurveyGraphs() {
             </div>
           )}
 
+          {location.state?.sans3d && (
+            <div className="mb-4 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-800 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-200">
+              Votre ordinateur ne permet pas l&apos;affichage 3D : la carte 2D interactive est proposée à la place.
+            </div>
+          )}
+
           <div>
             <h1 className="text-2xl font-bold mb-2">
               Graphiques avancés : {enquete.titre}
@@ -354,7 +365,7 @@ export default function SurveyGraphs() {
                   onClick={() =>
                     exportGraph(
                       graph4Ref,
-                      `focalisation-item-${items.length}-${id}`
+                      `focalisation-item-${focalIndex + 1}-${id}`
                     )
                   }
                 >
@@ -813,7 +824,7 @@ export default function SurveyGraphs() {
                         textAnchor="start"
                         fill="#16a34a"
                       >
-                        Représentation du français à Tananarive
+                        {enquete?.titre || ""}
                       </text>
                       <text
                         x={width - paddingRight}
@@ -947,6 +958,24 @@ export default function SurveyGraphs() {
                 La taille des cercles représente le consensus.
               </p>
 
+              <div className="mb-3 flex flex-wrap items-center gap-2 text-sm">
+                <label htmlFor="choix-item-focal" className="text-gray-700 dark:text-slate-300">
+                  Item focal :
+                </label>
+                <select
+                  id="choix-item-focal"
+                  className="input"
+                  value={focalItemId ?? ""}
+                  onChange={(e) => setFocalChoisi(Number(e.target.value))}
+                >
+                  {items.map((it, idx) => (
+                    <option key={it.id} value={it.id}>
+                      Item {idx + 1} : {it.texte}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <div className="border rounded-lg bg-white dark:bg-slate-800 shadow-sm p-4 overflow-x-auto">
                 <div
                   className="relative mx-auto"
@@ -1053,7 +1082,7 @@ export default function SurveyGraphs() {
                                 textAnchor="middle"
                                 fill="#ec4899"
                               >
-                                {`Item ${items.length}`}
+                                {`Item ${focalIndex + 1}`}
                               </text>
                             </g>
                           );

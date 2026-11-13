@@ -93,6 +93,37 @@ export default function SurveyResponses() {
     load();
   }, [id]);
 
+  // Export des réponses en CSV (séparateur ;, ouvrable directement dans Excel)
+  const echapper = (valeur) => `"${String(valeur ?? "").replace(/"/g, '""')}"`;
+
+  const valeurCellule = (item) => item.choice_label ?? item.text_value ?? item.value ?? "";
+
+  const exporterCsv = () => {
+    const questions = [...(enquete.questions || [])].sort((a, b) => a.id - b.id);
+    const entetes = ["Numéro", "Date", ...questions.map((q) => q.texte)];
+    const lignes = responses.map((r, index) => {
+      const parQuestion = {};
+      r.answers.forEach((a) => {
+        if (!parQuestion[a.question_id]) parQuestion[a.question_id] = [];
+        parQuestion[a.question_id].push(a);
+      });
+      const cellules = questions.map((q) =>
+        (parQuestion[q.id] || []).map(valeurCellule).join("; ")
+      );
+      return [index + 1, new Date(r.created_at).toLocaleString("fr-FR"), ...cellules];
+    });
+    const contenu = [entetes, ...lignes]
+      .map((ligne) => ligne.map(echapper).join(";"))
+      .join("\r\n");
+    const blob = new Blob(["﻿" + contenu], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const lien = document.createElement("a");
+    lien.href = url;
+    lien.download = `reponses_enquete_${enquete.id}.csv`;
+    lien.click();
+    URL.revokeObjectURL(url);
+  };
+
   if (loading) return (
     <div className="flex justify-center items-center p-12">
        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
@@ -144,6 +175,18 @@ export default function SurveyResponses() {
                 </div>
             </div>
         </div>
+
+        {responses.length > 0 && (
+          <div className="mb-8 flex justify-center">
+            <button
+              type="button"
+              onClick={exporterCsv}
+              className="px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-500 transition-colors"
+            >
+              Exporter en CSV (ouvrable dans Excel)
+            </button>
+          </div>
+        )}
 
         {/* Responses Content */}
         {responses.length === 0 ? (
